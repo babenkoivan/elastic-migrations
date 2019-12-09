@@ -14,4 +14,11 @@ class TestCase extends TestbenchTestCase
             ServiceProvider::class
         ];
     }
+
+    protected function getEnvironmentSetUp($app)
+    {
+        parent::getEnvironmentSetUp($app);
+
+        $app['config']->set('elastic.migrations.directory', realpath(__DIR__ . '/../migrations'));
+    }
 }
