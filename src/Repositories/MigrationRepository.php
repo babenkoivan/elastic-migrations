@@ -19,23 +19,25 @@ final class MigrationRepository
         $this->table = config('elastic.migrations.table');
     }
 
-    public function insert(string $migration, int $batch): bool
+    public function insert(string $fileName, int $batch): bool
     {
-        $record = compact('migration', 'batch');
-        return $this->table()->insert($record);
+        return $this->table()->insert([
+            'migration' => $fileName,
+            'batch' => $batch
+        ]);
     }
 
-    public function exists(string $migration): bool
+    public function exists(string $fileName): bool
     {
         return $this->table()
-            ->where('migration', $migration)
+            ->where('migration', $fileName)
             ->exists();
     }
 
-    public function delete(string $migration): bool
+    public function delete(string $fileName): bool
     {
         return (bool)$this->table()
-            ->where('migration', $migration)
+            ->where('migration', $fileName)
             ->delete();
     }
 

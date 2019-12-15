@@ -66,7 +66,7 @@ final class IndexManagerAdapterTest extends TestCase
         $this->indexManagerAdapter->create($indexName, $modifier);
     }
 
-    public function test_index_can_be_created_only_if_it_doesnt_exist(): void
+    public function test_index_can_be_created_only_if_it_does_not_exist(): void
     {
         $indexName = 'test';
 

@@ -37,5 +37,7 @@ final class ServiceProvider extends AbstractServiceProvider
         $this->publishes([
             $this->configPath => config_path(basename($this->configPath))
         ]);
+
+        $this->loadMigrationsFrom(realpath(__DIR__ . '/../database/migrations'));
     }
 }

@@ -8,7 +8,7 @@ use ElasticAdapter\Indices\IndexManager;
 use ElasticAdapter\Indices\Mapping;
 use ElasticAdapter\Indices\Settings;
 
-final class IndexManagerAdapter
+class IndexManagerAdapter
 {
     /**
      * @var IndexManager

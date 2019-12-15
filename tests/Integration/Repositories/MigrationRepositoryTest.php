@@ -5,10 +5,8 @@ namespace ElasticMigrations\Tests\Integration\Repositories;
 
 use ElasticMigrations\Repositories\MigrationRepository;
 use ElasticMigrations\Tests\Integration\TestCase;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
 
 /**
  * @covers \ElasticMigrations\Repositories\MigrationRepository
@@ -33,16 +31,10 @@ final class MigrationRepositoryTest extends TestCase
 
         $this->table = config('elastic.migrations.table');
 
-        // create table
-        Schema::create($this->table, function (Blueprint $table) {
-            $table->string('migration');
-            $table->integer('batch');
-        });
-
         // create fixtures
         DB::table($this->table)->insert([
-            ['migration' => '2019_12_01_081000_create_test_index', 'batch' => 2],
-            ['migration' => '2018_08_10_142230_update_test_index_mapping', 'batch' => 1],
+            ['migration' => '2019_08_10_142230_update_test_index_mapping', 'batch' => 2],
+            ['migration' => '2018_12_01_081000_create_test_index', 'batch' => 1],
         ]);
 
         $this->migrationRepository = new MigrationRepository();
@@ -60,8 +52,8 @@ final class MigrationRepositoryTest extends TestCase
 
     public function test_record_passes_existence_check(): void
     {
-        $this->assertTrue($this->migrationRepository->exists('2019_12_01_081000_create_test_index'));
-        $this->assertFalse($this->migrationRepository->exists('2019_12_05_092345_update_test_index'));
+        $this->assertTrue($this->migrationRepository->exists('2018_12_01_081000_create_test_index'));
+        $this->assertFalse($this->migrationRepository->exists('2019_12_05_092345_drop_test_index'));
     }
 
     public function test_record_can_be_deleted(): void
@@ -79,8 +71,8 @@ final class MigrationRepositoryTest extends TestCase
         $this->assertSame(
             $this->migrationRepository->getAll()->toArray(),
             [
-                '2018_08_10_142230_update_test_index_mapping',
-                '2019_12_01_081000_create_test_index',
+                '2018_12_01_081000_create_test_index',
+                '2019_08_10_142230_update_test_index_mapping',
             ]
         );
     }
@@ -98,7 +90,7 @@ final class MigrationRepositoryTest extends TestCase
         $this->assertSame(
             $this->migrationRepository->getLastBatch()->toArray(),
             [
-                '2019_12_01_081000_create_test_index',
+                '2019_08_10_142230_update_test_index_mapping',
             ]
         );
     }

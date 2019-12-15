@@ -10,12 +10,15 @@ final class UpdateTestIndexMapping implements MigrationInterface
     public function up(): void
     {
         Index::putMapping('test', function (Mapping $mapping) {
+            $mapping->enableSource();
             $mapping->text('title');
         });
     }
 
     public function down(): void
     {
-        //
+        Index::putMapping('test', function (Mapping $mapping) {
+            $mapping->disableSource();
+        });
     }
 }

@@ -3,17 +3,17 @@ declare(strict_types=1);
 
 namespace ElasticMigrations\Factories;
 
+use ElasticMigrations\Filesystem\MigrationFile;
 use ElasticMigrations\MigrationInterface;
 use Illuminate\Support\Str;
 
 final class MigrationFactory
 {
-    public function makeByPath(string $filePath): MigrationInterface
+    public function makeByFile(MigrationFile $file): MigrationInterface
     {
-        require_once $filePath;
+        require_once $file->getPath();
 
-        $baseFileName = basename($filePath, '.php');
-        $className = Str::studly(implode('_', array_slice(explode('_', $baseFileName), 4)));
+        $className = Str::studly(implode('_', array_slice(explode('_', $file->getName()), 4)));
 
         return new $className;
     }
