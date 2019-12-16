@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace ElasticMigrations;
 
+use ElasticMigrations\Adapters\IndexManagerAdapter;
+use ElasticMigrations\Contracts\IndexManagerInterface;
 use Illuminate\Support\ServiceProvider as AbstractServiceProvider;
 
 final class ServiceProvider extends AbstractServiceProvider
@@ -11,6 +13,16 @@ final class ServiceProvider extends AbstractServiceProvider
      * @var string
      */
     private $configPath;
+    /**
+     * @var string
+     */
+    private $migrationsPath;
+    /**
+     * @var array
+     */
+    public $bindings = [
+        IndexManagerInterface::class => IndexManagerAdapter::class,
+    ];
 
     /**
      * {@inheritDoc}
@@ -18,7 +30,9 @@ final class ServiceProvider extends AbstractServiceProvider
     public function __construct($app)
     {
         parent::__construct($app);
+
         $this->configPath = realpath(__DIR__ . '/../config/elastic.migrations.php');
+        $this->migrationsPath = realpath(__DIR__ . '/../database/migrations');
     }
 
     /**
@@ -38,6 +52,6 @@ final class ServiceProvider extends AbstractServiceProvider
             $this->configPath => config_path(basename($this->configPath))
         ]);
 
-        $this->loadMigrationsFrom(realpath(__DIR__ . '/../database/migrations'));
+        $this->loadMigrationsFrom($this->migrationsPath);
     }
 }

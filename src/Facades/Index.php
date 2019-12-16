@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace ElasticMigrations\Facades;
 
-use ElasticMigrations\Adapters\IndexManagerAdapter;
+use ElasticMigrations\Contracts\IndexManagerInterface;
 use Illuminate\Support\Facades\Facade;
 
 /**
@@ -22,6 +22,6 @@ final class Index extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return IndexManagerAdapter::class;
+        return IndexManagerInterface::class;
     }
 }

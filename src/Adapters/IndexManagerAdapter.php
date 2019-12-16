@@ -7,8 +7,9 @@ use ElasticAdapter\Indices\Index;
 use ElasticAdapter\Indices\IndexManager;
 use ElasticAdapter\Indices\Mapping;
 use ElasticAdapter\Indices\Settings;
+use ElasticMigrations\Contracts\IndexManagerInterface;
 
-class IndexManagerAdapter
+class IndexManagerAdapter implements IndexManagerInterface
 {
     /**
      * @var IndexManager
@@ -20,7 +21,7 @@ class IndexManagerAdapter
         $this->indexManager = $indexManager;
     }
 
-    public function create(string $indexName, ?callable $modifier = null): self
+    public function create(string $indexName, ?callable $modifier = null): IndexManagerInterface
     {
         if (isset($modifier)) {
             $mapping = new Mapping();
@@ -38,7 +39,7 @@ class IndexManagerAdapter
         return $this;
     }
 
-    public function createIfNotExists(string $indexName, ?callable $modifier = null): self
+    public function createIfNotExists(string $indexName, ?callable $modifier = null): IndexManagerInterface
     {
         if (!$this->indexManager->exists($indexName)) {
             $this->create($indexName, $modifier);
@@ -47,7 +48,7 @@ class IndexManagerAdapter
         return $this;
     }
 
-    public function putMapping(string $indexName, callable $modifier): self
+    public function putMapping(string $indexName, callable $modifier): IndexManagerInterface
     {
         $mapping = new Mapping();
         $modifier($mapping);
@@ -56,7 +57,7 @@ class IndexManagerAdapter
         return $this;
     }
 
-    public function putSettings(string $indexName, callable $modifier): self
+    public function putSettings(string $indexName, callable $modifier): IndexManagerInterface
     {
         $settings = new Settings();
         $modifier($settings);
@@ -65,7 +66,7 @@ class IndexManagerAdapter
         return $this;
     }
 
-    public function putSettingsHard(string $indexName, callable $modifier): self
+    public function putSettingsHard(string $indexName, callable $modifier): IndexManagerInterface
     {
         $this->indexManager->close($indexName);
         $this->putSettings($indexName, $modifier);
@@ -74,14 +75,14 @@ class IndexManagerAdapter
         return $this;
     }
 
-    public function drop(string $indexName): self
+    public function drop(string $indexName): IndexManagerInterface
     {
         $this->indexManager->drop($indexName);
 
         return $this;
     }
 
-    public function dropIfExists(string $indexName): self
+    public function dropIfExists(string $indexName): IndexManagerInterface
     {
         if ($this->indexManager->exists($indexName)) {
             $this->drop($indexName);

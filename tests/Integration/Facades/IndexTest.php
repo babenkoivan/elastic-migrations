@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace ElasticMigrations\Tests\Integration\Facades;
 
-use ElasticMigrations\Adapters\IndexManagerAdapter;
+use ElasticMigrations\Contracts\IndexManagerInterface;
 use ElasticMigrations\Facades\Index;
 use ElasticMigrations\Tests\Integration\TestCase;
 
@@ -16,6 +16,6 @@ final class IndexTest extends TestCase
 {
     public function test_facade_instantiates_instance_of_correct_type(): void
     {
-        $this->assertInstanceOf(IndexManagerAdapter::class, Index::getFacadeRoot());
+        $this->assertInstanceOf(IndexManagerInterface::class, Index::getFacadeRoot());
     }
 }
