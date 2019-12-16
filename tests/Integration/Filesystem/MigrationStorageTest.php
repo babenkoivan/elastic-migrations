@@ -96,4 +96,17 @@ final class MigrationStorageTest extends TestCase
             })->toArray()
         );
     }
+
+    public function test_storage_is_ready_when_directory_exists(): void
+    {
+        $this->assertTrue($this->migrationStorage->isReady());
+    }
+
+    public function test_storage_is_not_ready_when_directory_does_not_exist(): void
+    {
+        $this->app['config']->set('elastic.migrations.storage_directory', '/non_existing_directory');
+
+        // create a new instance to apply the new config
+        $this->assertFalse(resolve(MigrationStorage::class)->isReady());
+    }
 }

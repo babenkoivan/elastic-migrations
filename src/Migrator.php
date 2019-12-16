@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace ElasticMigrations;
 
+use ElasticMigrations\Contracts\ReadinessInterface;
 use ElasticMigrations\Factories\MigrationFactory;
 use ElasticMigrations\Filesystem\MigrationFile;
 use ElasticMigrations\Filesystem\MigrationStorage;
@@ -10,7 +11,7 @@ use ElasticMigrations\Repositories\MigrationRepository;
 use Illuminate\Support\Collection;
 use Symfony\Component\Console\Style\StyleInterface;
 
-final class Migrator
+final class Migrator implements ReadinessInterface
 {
     /**
      * @var StyleInterface
@@ -181,5 +182,18 @@ final class Migrator
         });
 
         return $this;
+    }
+
+    public function isReady(): bool
+    {
+        if (!$isMigrationRepositoryReady = $this->migrationRepository->isReady()) {
+            $this->output->error('Migration table is not yet created');
+        }
+
+        if (!$isMigrationStorageReady = $this->migrationStorage->isReady()) {
+            $this->output->error('Migration directory is not yet created');
+        }
+
+        return $isMigrationRepositoryReady && $isMigrationStorageReady;
     }
 }

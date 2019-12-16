@@ -3,10 +3,11 @@ declare(strict_types=1);
 
 namespace ElasticMigrations\Filesystem;
 
+use ElasticMigrations\Contracts\ReadinessInterface;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
 
-final class MigrationStorage
+final class MigrationStorage implements ReadinessInterface
 {
     /**
      * @var Filesystem
@@ -49,5 +50,10 @@ final class MigrationStorage
     private function resolvePath(string $fileName): string
     {
         return sprintf('%s/%s.php', $this->directory, $fileName);
+    }
+
+    public function isReady(): bool
+    {
+        return $this->filesystem->isDirectory($this->directory);
     }
 }

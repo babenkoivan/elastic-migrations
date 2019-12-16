@@ -3,11 +3,13 @@ declare(strict_types=1);
 
 namespace ElasticMigrations\Repositories;
 
+use ElasticMigrations\Contracts\ReadinessInterface;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
-final class MigrationRepository
+final class MigrationRepository implements ReadinessInterface
 {
     /**
      * @var string
@@ -69,5 +71,10 @@ final class MigrationRepository
     private function table(): Builder
     {
         return DB::table($this->table);
+    }
+
+    public function isReady(): bool
+    {
+        return Schema::hasTable($this->table);
     }
 }

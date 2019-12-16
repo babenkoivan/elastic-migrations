@@ -7,6 +7,7 @@ use ElasticMigrations\Repositories\MigrationRepository;
 use ElasticMigrations\Tests\Integration\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 /**
  * @covers \ElasticMigrations\Repositories\MigrationRepository
@@ -93,5 +94,17 @@ final class MigrationRepositoryTest extends TestCase
                 '2019_08_10_142230_update_test_index_mapping',
             ]
         );
+    }
+
+    public function test_repository_is_ready_when_table_exists(): void
+    {
+        $this->assertTrue($this->migrationRepository->isReady());
+    }
+
+    public function test_repository_is_not_ready_when_table_does_not_exist(): void
+    {
+        Schema::drop($this->table);
+
+        $this->assertFalse($this->migrationRepository->isReady());
     }
 }
