@@ -20,7 +20,7 @@ final class MigrationStorage
     public function __construct(Filesystem $filesystem)
     {
         $this->filesystem = $filesystem;
-        $this->directory = rtrim(config('elastic.migrations.directory'), '/');
+        $this->directory = rtrim(config('elastic.migrations.storage_directory'), '/');
     }
 
     public function create(string $fileName, string $content): ?MigrationFile

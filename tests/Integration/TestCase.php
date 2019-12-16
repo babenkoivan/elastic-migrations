@@ -21,6 +21,6 @@ class TestCase extends TestbenchTestCase
     {
         parent::getEnvironmentSetUp($app);
 
-        $app['config']->set('elastic.migrations.directory', realpath(__DIR__ . '/../migrations'));
+        $app['config']->set('elastic.migrations.storage_directory', realpath(__DIR__ . '/../migrations'));
     }
 }

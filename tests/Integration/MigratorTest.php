@@ -83,10 +83,10 @@ final class MigratorTest extends TestCase
     public function test_all_migrations_can_not_be_executed_if_directory_is_empty(): void
     {
         // create a temporary empty directory and reconfigure the package to use it
-        $tmpDirectory = config('elastic.migrations.directory') . '/tmp';
+        $tmpDirectory = config('elastic.migrations.storage_directory') . '/tmp';
 
         @mkdir($tmpDirectory);
-        $this->app['config']->set('elastic.migrations.directory', $tmpDirectory);
+        $this->app['config']->set('elastic.migrations.storage_directory', $tmpDirectory);
 
         // check that there is nothing to migrate
         $this->output
