@@ -7,7 +7,7 @@ use ElasticMigrations\Contracts\ReadinessInterface;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
 
-final class MigrationStorage implements ReadinessInterface
+class MigrationStorage implements ReadinessInterface
 {
     /**
      * @var Filesystem
@@ -27,6 +27,10 @@ final class MigrationStorage implements ReadinessInterface
     public function create(string $fileName, string $content): ?MigrationFile
     {
         $filePath = $this->resolvePath($fileName);
+
+        if (!$this->filesystem->isDirectory($this->directory)) {
+            $this->filesystem->makeDirectory($this->directory, 0755, true);
+        }
 
         return $this->filesystem->put($filePath, $content) ? new MigrationFile($filePath) : null;
     }
@@ -49,7 +53,7 @@ final class MigrationStorage implements ReadinessInterface
 
     private function resolvePath(string $fileName): string
     {
-        return sprintf('%s/%s.php', $this->directory, $fileName);
+        return sprintf('%s/%s.php', $this->directory, str_replace('.php', '', trim($fileName)));
     }
 
     public function isReady(): bool

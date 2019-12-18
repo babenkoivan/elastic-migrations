@@ -1,6 +1,6 @@
 {
     "name": "babenkoivan/elastic-migrations",
-    "description": "Elasticsearch Index migrations for Laravel",
+    "description": "Elasticsearch migrations for Laravel",
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -29,5 +29,12 @@
     },
     "config": {
         "bin-dir": "bin"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "ElasticMigrations\\ServiceProvider"
+            ]
+        }
     }
 }

@@ -11,7 +11,7 @@ use ElasticMigrations\Repositories\MigrationRepository;
 use Illuminate\Support\Collection;
 use Symfony\Component\Console\Style\StyleInterface;
 
-final class Migrator implements ReadinessInterface
+class Migrator implements ReadinessInterface
 {
     /**
      * @var StyleInterface
@@ -62,10 +62,10 @@ final class Migrator implements ReadinessInterface
     public function migrateAll(): self
     {
         $files = $this->migrationStorage->findAll();
-        $migratedNames = $this->migrationRepository->getAll();
+        $migratedFileNames = $this->migrationRepository->getAll();
 
-        $nonMigratedFiles = $files->filter(function (MigrationFile $file) use ($migratedNames) {
-            return !$migratedNames->contains($file->getName());
+        $nonMigratedFiles = $files->filter(function (MigrationFile $file) use ($migratedFileNames) {
+            return !$migratedFileNames->contains($file->getName());
         });
 
         $this->migrate($nonMigratedFiles);
@@ -110,15 +110,15 @@ final class Migrator implements ReadinessInterface
     {
         $files = $this->migrationStorage->findAll();
 
-        $migratedNames = $this->migrationRepository->getAll();
-        $migratedLastBatchNames = $this->migrationRepository->getLastBatch();
+        $migratedFileNames = $this->migrationRepository->getAll();
+        $migratedLastBatchFileNames = $this->migrationRepository->getLastBatch();
 
         $headers = ['Ran?', 'Last batch?', 'Migration'];
 
-        $rows = $files->map(function (MigrationFile $file) use ($migratedNames, $migratedLastBatchNames) {
+        $rows = $files->map(function (MigrationFile $file) use ($migratedFileNames, $migratedLastBatchFileNames) {
             return [
-                $migratedNames->contains($file->getName()) ? 'Yes' : 'No',
-                $migratedLastBatchNames->contains($file->getName()) ? 'Yes' : 'No',
+                $migratedFileNames->contains($file->getName()) ? 'Yes' : 'No',
+                $migratedLastBatchFileNames->contains($file->getName()) ? 'Yes' : 'No',
                 $file->getName(),
             ];
         })->toArray();
