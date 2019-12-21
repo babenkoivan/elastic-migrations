@@ -248,7 +248,7 @@ final class MigratorTest extends TestCase
         $this->output
             ->expects($this->once())
             ->method('error')
-            ->with('Migration is not found: 2019_01_01_053550_drop_test_index,2019_03_10_101500_create_test_index');
+            ->with('Migration is not found: 2019_03_10_101500_create_test_index,2019_01_01_053550_drop_test_index');
 
         $this->assertSame(
             $this->migrator,

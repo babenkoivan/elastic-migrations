@@ -46,7 +46,7 @@ class MigrationStorage implements ReadinessInterface
     {
         $files = $this->filesystem->glob($this->directory . '/*_*.php');
 
-        return collect($files)->map(function (string $filePath) {
+        return collect($files)->sort()->map(function (string $filePath) {
             return new MigrationFile($filePath);
         });
     }

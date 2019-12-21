@@ -153,7 +153,7 @@ class Migrator implements ReadinessInterface
 
     private function rollback(Collection $fileNames): self
     {
-        $files = $fileNames->reverse()->map(function (string $fileName) {
+        $files = $fileNames->map(function (string $fileName) {
             return $this->migrationStorage->findByName($fileName);
         })->filter();
 

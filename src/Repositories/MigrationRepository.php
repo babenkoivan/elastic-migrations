@@ -57,14 +57,14 @@ final class MigrationRepository implements ReadinessInterface
     {
         return $this->table()
             ->where('batch', $this->getLastBatchNumber())
-            ->orderBy('migration', 'asc')
+            ->orderBy('migration', 'desc')
             ->pluck('migration');
     }
 
     public function getAll(): Collection
     {
         return $this->table()
-            ->orderBy('migration', 'asc')
+            ->orderBy('migration', 'desc')
             ->pluck('migration');
     }
 

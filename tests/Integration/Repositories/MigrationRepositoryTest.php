@@ -72,8 +72,8 @@ final class MigrationRepositoryTest extends TestCase
         $this->assertSame(
             $this->migrationRepository->getAll()->toArray(),
             [
-                '2018_12_01_081000_create_test_index',
                 '2019_08_10_142230_update_test_index_mapping',
+                '2018_12_01_081000_create_test_index',
             ]
         );
     }
