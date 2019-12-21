@@ -15,6 +15,6 @@ final class MigrationFactory
 
         $className = Str::studly(implode('_', array_slice(explode('_', $file->getName()), 4)));
 
-        return new $className;
+        return resolve($className);
     }
 }
