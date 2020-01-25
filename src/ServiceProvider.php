@@ -4,6 +4,12 @@ declare(strict_types=1);
 namespace ElasticMigrations;
 
 use ElasticMigrations\Adapters\IndexManagerAdapter;
+use ElasticMigrations\Console\MakeCommand;
+use ElasticMigrations\Console\MigrateCommand;
+use ElasticMigrations\Console\RefreshCommand;
+use ElasticMigrations\Console\ResetCommand;
+use ElasticMigrations\Console\RollbackCommand;
+use ElasticMigrations\Console\StatusCommand;
 use ElasticMigrations\Contracts\IndexManagerInterface;
 use Illuminate\Support\ServiceProvider as AbstractServiceProvider;
 
@@ -22,6 +28,17 @@ final class ServiceProvider extends AbstractServiceProvider
      */
     public $bindings = [
         IndexManagerInterface::class => IndexManagerAdapter::class,
+    ];
+    /**
+     * @var array
+     */
+    private $commands = [
+        MakeCommand::class,
+        MigrateCommand::class,
+        RefreshCommand::class,
+        ResetCommand::class,
+        RollbackCommand::class,
+        StatusCommand::class,
     ];
 
     /**
@@ -53,5 +70,7 @@ final class ServiceProvider extends AbstractServiceProvider
         ]);
 
         $this->loadMigrationsFrom($this->migrationsPath);
+
+        $this->commands($this->commands);
     }
 }
