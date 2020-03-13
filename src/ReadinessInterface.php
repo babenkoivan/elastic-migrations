@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace ElasticMigrations\Contracts;
+namespace ElasticMigrations;
 
 interface ReadinessInterface
 {

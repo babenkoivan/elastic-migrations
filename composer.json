@@ -1,6 +1,13 @@
 {
     "name": "babenkoivan/elastic-migrations",
     "description": "Elasticsearch migrations for Laravel",
+    "keywords": [
+        "laravel",
+        "migrations",
+        "elastic",
+        "elasticsearch",
+        "php"
+    ],
     "type": "library",
     "license": "MIT",
     "authors": [

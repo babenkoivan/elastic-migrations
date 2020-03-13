@@ -10,9 +10,6 @@ use ElasticMigrations\Tests\Integration\TestCase;
 
 /**
  * @covers \ElasticMigrations\Filesystem\MigrationStorage
- * @uses   \ElasticMigrations\Filesystem\MigrationFile
- * @uses   \ElasticMigrations\Filesystem\MigrationStorage
- * @uses   \ElasticMigrations\ServiceProvider
  */
 final class MigrationStorageTest extends TestCase
 {

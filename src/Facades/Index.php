@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace ElasticMigrations\Facades;
 
-use ElasticMigrations\Contracts\IndexManagerInterface;
+use ElasticMigrations\IndexManagerInterface;
 use Illuminate\Support\Facades\Facade;
 
 /**

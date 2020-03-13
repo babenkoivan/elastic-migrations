@@ -10,7 +10,6 @@ use ElasticMigrations\Console\RefreshCommand;
 use ElasticMigrations\Console\ResetCommand;
 use ElasticMigrations\Console\RollbackCommand;
 use ElasticMigrations\Console\StatusCommand;
-use ElasticMigrations\Contracts\IndexManagerInterface;
 use Illuminate\Support\ServiceProvider as AbstractServiceProvider;
 
 final class ServiceProvider extends AbstractServiceProvider

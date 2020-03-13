@@ -12,7 +12,6 @@ use Symfony\Component\Console\Output\NullOutput;
 
 /**
  * @covers \ElasticMigrations\Console\ResetCommand
- * @uses   \ElasticMigrations\ServiceProvider
  */
 final class ResetCommandTest extends TestCase
 {

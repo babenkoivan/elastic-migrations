@@ -7,7 +7,7 @@ use ElasticAdapter\Indices\Index;
 use ElasticAdapter\Indices\IndexManager;
 use ElasticAdapter\Indices\Mapping;
 use ElasticAdapter\Indices\Settings;
-use ElasticMigrations\Contracts\IndexManagerInterface;
+use ElasticMigrations\IndexManagerInterface;
 
 class IndexManagerAdapter implements IndexManagerInterface
 {

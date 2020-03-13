@@ -12,7 +12,6 @@ use Symfony\Component\Console\Output\NullOutput;
 
 /**
  * @covers \ElasticMigrations\Console\MakeCommand
- * @uses   \ElasticMigrations\ServiceProvider
  */
 final class MakeCommandTest extends TestCase
 {

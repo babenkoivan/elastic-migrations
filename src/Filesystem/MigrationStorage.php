@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace ElasticMigrations\Filesystem;
 
-use ElasticMigrations\Contracts\ReadinessInterface;
+use ElasticMigrations\ReadinessInterface;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
 

@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Schema;
 
 /**
  * @covers \ElasticMigrations\Repositories\MigrationRepository
- * @uses   \ElasticMigrations\ServiceProvider
  */
 final class MigrationRepositoryTest extends TestCase
 {

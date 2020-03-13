@@ -12,7 +12,6 @@ use Symfony\Component\Console\Output\NullOutput;
 
 /**
  * @covers \ElasticMigrations\Console\MigrateCommand
- * @uses   \ElasticMigrations\ServiceProvider
  */
 final class MigrateCommandTest extends TestCase
 {

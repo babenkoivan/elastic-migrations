@@ -12,7 +12,6 @@ use Symfony\Component\Console\Output\NullOutput;
 
 /**
  * @covers \ElasticMigrations\Console\RollbackCommand
- * @uses   \ElasticMigrations\ServiceProvider
  */
 final class RollbackCommandTest extends TestCase
 {

@@ -38,13 +38,13 @@ php artisan vendor:publish --provider="ElasticClient\ServiceProvider"
 You can change Elasticsearch host and other client settings in the `config/elastic.client.php` file. Please refer to 
 [babenkoivan/elastic-client](https://github.com/babenkoivan/elastic-client) for more details.
 
-If you want to change migrations default table name or directory, publish Elastic Migrations settings as well:
+If you want to change the migrations **default table name** or **migrations directory**, publish Elastic Migrations settings as well:
 
 ```bash
 php artisan vendor:publish --provider="ElasticMigrations\ServiceProvider"
 ```
 
-You can find the mentioned above options in the `config/elastic.migrations.php` file.
+The published configuration can be found in the `config/elastic.migrations.php` file. 
 
 Finally, don't forget to run Laravel database migrations to create Elastic Migrations table:
 
@@ -54,43 +54,54 @@ php artisan migrate
 
 ## Writing Migrations
 
-You can effortlessly create a new migration file using Artisan console:
+You can effortlessly create a new migration file using an Artisan console command:
 
 ```bash
 php artisan elastic:make:migration create_my_index
 ```
 
-This command will create a migration file in the `elastic/migrations` directory (default value). Every migration file has a
-name prefixed with a date and contains a migration class with two methods: `up` and `down`.
+This command creates a migration class in the `elastic/migrations` directory. 
 
-`up` method is used to alternate the index schema and `down` is used to revert that action.
+Every migration includes two methods: `up` and `down`. `up` is used to alternate the index schema and `down` is used to revert that action.
 
 You can use `ElasticMigrations\Facades\Index` facade to perform basic operations over Elasticsearch indices:
 
 #### Create Index
 
-Create an index with default settings: 
+Create an index with the default settings: 
 
 ```php
 Index::create('my-index');
 ``` 
 
-or use a modifier to set up a mapping and settings:
+or use a modifier to configure mapping and settings:
 
 ```php
 Index::create('my-index', function (Mapping $mapping, Settings $settings) {
-    // the mapping fluent setters use the method name as the field type (it will be snake cased), 
-    // the first parameter as the field name and the second (optional) parameter as the field additional settings
+    // to add a new field to the mapping use method name as a field type (in Camel Case), 
+    // first argument as a field name and optional second argument as additional field parameters  
     $mapping->text('title', ['boost' => 2]);
     $mapping->float('price');
     
-    // the settings fluent setters use the method name as the option name (it will be snake cased) and the parameter as the option value
-    $settings->numberOfReplicas(2);
-    $settings->refreshInterval(-1);
+    // you can change the index settings 
+    $settings->index([
+         'number_of_replicas' => 2,
+         'refresh_interval' => -1
+    ]);
+    
+    // and analisys configuration
+    $settings->analysis([
+        'analyzer' => [
+            'title' => [
+                'type' => 'custom',
+                'tokenizer' => 'whitespace'    
+            ]
+        ]
+    ]);
 });
 ```
 
-You can also create an index only if it doesn't exist:
+There is also an option to create an index only if it doesn't exist:
 
 ```php
 Index::createIfNotExists('my-index');
@@ -113,8 +124,10 @@ Use the modifier to change the index configuration:
 
 ```php
 Index::putSettings('my-index', function (Settings $settings) {
-    $settings->numberOfReplicas(2);
-    $settings->refreshInterval(-1);
+    $settings->index([
+         'number_of_replicas' => 2,
+         'refresh_interval' => -1
+    ]);
 });
 ``` 
 
@@ -125,7 +138,7 @@ opens the index again:
 Index::putSettingsHard('my-index', function (Settings $settings) {
     $settings->analysis([
         'analyzer' => [
-            'content' => [
+            'title' => [
                 'type' => 'custom',
                 'tokenizer' => 'whitespace'
             ]
@@ -142,7 +155,7 @@ You can unconditionally delete the index:
 Index::drop('my-index');
 ```
 
-or make sure, that the index exists before deleting it:
+or delete it only if it exists:
 
 ```php
 Index::dropIfExists('my-index');
@@ -150,7 +163,7 @@ Index::dropIfExists('my-index');
 
 #### More
 
-Finally, you are free to inject `Elasticsearch\Client` in the migration constructor and execute any actions, that client supports.
+Finally, you are free to inject `Elasticsearch\Client` in the migration constructor and execute any supported by client actions.
 
 ## Running Migrations
 
@@ -160,7 +173,7 @@ You can either run all migrations:
 php artisan elastic:migrate
 ```
 
-or run a specific file:
+or run a specific one:
 
 ```bash
 php artisan elastic:migrate 2018_12_01_081000_create_my_index
@@ -174,13 +187,13 @@ php artisan elastic:migrate --force
 
 ## Reverting Migrations
 
-You can either revert the last migrated files:
+You can either revert the last executed migrations:
 
 ```bash
 php artisan elastic:migrate:rollback 
 ```
 
-or rollback a specific migration:
+or rollback a specific one:
 
 ```bash
 php artisan elastic:migrate:rollback 2018_12_01_081000_create_my_index
@@ -202,7 +215,7 @@ php artisan elastic:migrate:refresh
 
 ## Migration Status
 
-You can always check which files has been already migrated and what can be reverted by the `elastic:migrate:rollback` command (the last batch):
+You can always check which files have been already migrated and what can be reverted by the `elastic:migrate:rollback` command (the last batch):
 
 ```bash
 php artisan elastic:migrate:status
@@ -214,4 +227,4 @@ If you see one of the messages below, please execute the mentioned action:
 
 * `Migration table is not yet created` - run the `php artisan migrate` command
 * `Migration directory is not yet created` - create a migration file using the `elastic:make:migration` command or 
-create a configured migrations directory manually   
+create a the migrations directory manually   

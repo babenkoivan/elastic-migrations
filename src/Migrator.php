@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace ElasticMigrations;
 
-use ElasticMigrations\Contracts\ReadinessInterface;
 use ElasticMigrations\Factories\MigrationFactory;
 use ElasticMigrations\Filesystem\MigrationFile;
 use ElasticMigrations\Filesystem\MigrationStorage;

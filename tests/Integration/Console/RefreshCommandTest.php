@@ -12,7 +12,6 @@ use Symfony\Component\Console\Output\NullOutput;
 
 /**
  * @covers \ElasticMigrations\Console\RefreshCommand
- * @uses   \ElasticMigrations\ServiceProvider
  */
 final class RefreshCommandTest extends TestCase
 {

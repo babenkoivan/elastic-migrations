@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace ElasticMigrations\Repositories;
 
-use ElasticMigrations\Contracts\ReadinessInterface;
+use ElasticMigrations\ReadinessInterface;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;

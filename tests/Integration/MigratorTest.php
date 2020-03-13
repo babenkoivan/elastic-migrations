@@ -13,13 +13,6 @@ use Symfony\Component\Console\Style\StyleInterface;
 
 /**
  * @covers \ElasticMigrations\Migrator
- * @uses   \ElasticMigrations\Filesystem\MigrationFile
- * @uses   \ElasticMigrations\Filesystem\MigrationStorage
- * @uses   \ElasticMigrations\Factories\MigrationFactory
- * @uses   \ElasticMigrations\Adapters\IndexManagerAdapter
- * @uses   \ElasticMigrations\Repositories\MigrationRepository
- * @uses   \ElasticMigrations\Facades\Index
- * @uses   \ElasticMigrations\ServiceProvider
  */
 final class MigratorTest extends TestCase
 {

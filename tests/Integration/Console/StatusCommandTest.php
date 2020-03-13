@@ -12,7 +12,6 @@ use Symfony\Component\Console\Output\NullOutput;
 
 /**
  * @covers \ElasticMigrations\Console\StatusCommand
- * @uses   \ElasticMigrations\ServiceProvider
  */
 final class StatusCommandTest extends TestCase
 {
