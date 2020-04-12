@@ -285,8 +285,8 @@ final class MigratorTest extends TestCase
             ->with(
                 ['Ran?', 'Last batch?', 'Migration'],
                 [
-                    ['Yes', 'Yes', '2018_12_01_081000_create_test_index'],
-                    ['No', 'No', '2019_08_10_142230_update_test_index_mapping'],
+                    ['<info>Yes</info>', '<info>Yes</info>', '2018_12_01_081000_create_test_index'],
+                    ['<comment>No</comment>', '<comment>No</comment>', '2019_08_10_142230_update_test_index_mapping'],
                 ]
             );
 

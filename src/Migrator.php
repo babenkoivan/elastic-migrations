@@ -116,8 +116,8 @@ class Migrator implements ReadinessInterface
 
         $rows = $files->map(function (MigrationFile $file) use ($migratedFileNames, $migratedLastBatchFileNames) {
             return [
-                $migratedFileNames->contains($file->getName()) ? 'Yes' : 'No',
-                $migratedLastBatchFileNames->contains($file->getName()) ? 'Yes' : 'No',
+                $migratedFileNames->contains($file->getName()) ? '<info>Yes</info>' : '<comment>No</comment>',
+                $migratedLastBatchFileNames->contains($file->getName()) ? '<info>Yes</info>' : '<comment>No</comment>',
                 $file->getName(),
             ];
         })->toArray();
