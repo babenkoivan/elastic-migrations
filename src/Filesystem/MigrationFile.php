@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace ElasticMigrations\Filesystem;
 
-final class MigrationFile
+class MigrationFile
 {
     /**
      * @var string

@@ -24,15 +24,16 @@ class MigrationStorage implements ReadinessInterface
         $this->directory = rtrim(config('elastic.migrations.storage_directory'), '/');
     }
 
-    public function create(string $fileName, string $content): ?MigrationFile
+    public function create(string $fileName, string $content): MigrationFile
     {
-        $filePath = $this->resolvePath($fileName);
-
         if (!$this->filesystem->isDirectory($this->directory)) {
             $this->filesystem->makeDirectory($this->directory, 0755, true);
         }
 
-        return $this->filesystem->put($filePath, $content) ? new MigrationFile($filePath) : null;
+        $filePath = $this->resolvePath($fileName);
+        $this->filesystem->put($filePath, $content);
+
+        return new MigrationFile($filePath);
     }
 
     public function findByName(string $fileName): ?MigrationFile

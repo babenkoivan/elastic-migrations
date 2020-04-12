@@ -44,9 +44,11 @@ final class MakeCommand extends Command
         $fileName = sprintf('%s_%s', (new Carbon())->format('Y_m_d_His'), $name);
         $className = Str::studly($name);
 
-        $stub = $this->filesystem->get(realpath(__DIR__ . '/stubs/migration.blank.stub'));
+        $stub = $this->filesystem->get(realpath(__DIR__.'/stubs/migration.blank.stub'));
         $content = str_replace('DummyClass', $className, $stub);
 
         $this->migrationStorage->create($fileName, $content);
+
+        $this->output->success('Created migration: '.$fileName);
     }
 }

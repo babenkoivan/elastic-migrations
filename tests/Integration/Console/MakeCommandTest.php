@@ -8,7 +8,7 @@ use ElasticMigrations\Filesystem\MigrationStorage;
 use ElasticMigrations\Tests\Integration\TestCase;
 use Illuminate\Filesystem\Filesystem;
 use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Output\NullOutput;
+use Symfony\Component\Console\Output\BufferedOutput;
 
 /**
  * @covers \ElasticMigrations\Console\MakeCommand
@@ -35,9 +35,11 @@ final class MakeCommandTest extends TestCase
         $command = new MakeCommand($fileSystem, $migrationStorageMock);
         $command->setLaravel($this->app);
 
-        $command->run(
-            new ArrayInput(['name' => 'test_migration_creation']),
-            new NullOutput()
-        );
+        $input = new ArrayInput(['name' => 'test_migration_creation']);
+        $output = new BufferedOutput();
+
+        $command->run($input, $output);
+
+        $this->assertRegExp('/Created migration: .+?_test_migration_creation/', $output->fetch());
     }
 }
