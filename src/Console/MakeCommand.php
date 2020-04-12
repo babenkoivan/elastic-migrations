@@ -49,6 +49,6 @@ final class MakeCommand extends Command
 
         $this->migrationStorage->create($fileName, $content);
 
-        $this->output->success('Created migration: '.$fileName);
+        $this->output->writeln('<info>Created migration:</info> '.$fileName);
     }
 }

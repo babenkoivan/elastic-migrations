@@ -7,13 +7,13 @@ use ElasticMigrations\Factories\MigrationFactory;
 use ElasticMigrations\Filesystem\MigrationFile;
 use ElasticMigrations\Filesystem\MigrationStorage;
 use ElasticMigrations\Repositories\MigrationRepository;
+use Illuminate\Console\OutputStyle;
 use Illuminate\Support\Collection;
-use Symfony\Component\Console\Style\StyleInterface;
 
 class Migrator implements ReadinessInterface
 {
     /**
-     * @var StyleInterface
+     * @var OutputStyle
      */
     private $output;
     /**
@@ -39,7 +39,7 @@ class Migrator implements ReadinessInterface
         $this->migrationFactory = $migrationFactory;
     }
 
-    public function setOutput(StyleInterface $output): self
+    public function setOutput(OutputStyle $output): self
     {
         $this->output = $output;
         return $this;
@@ -50,7 +50,7 @@ class Migrator implements ReadinessInterface
         $file = $this->migrationStorage->findByName($fileName);
 
         if (is_null($file)) {
-            $this->output->error('Migration is not found: ' . $fileName);
+            $this->output->writeln('<error>Migration is not found:</error> '.$fileName);
         } else {
             $this->migrate(collect([$file]));
         }
@@ -77,9 +77,9 @@ class Migrator implements ReadinessInterface
         $file = $this->migrationStorage->findByName($fileName);
 
         if (is_null($file)) {
-            $this->output->error('Migration is not found: ' . $fileName);
+            $this->output->writeln('<error>Migration is not found:</error> '.$fileName);
         } elseif (!$this->migrationRepository->exists($file->getName())) {
-            $this->output->error('Migration is not yet migrated: ' . $file->getName());
+            $this->output->writeln('<error>Migration is not yet migrated:</error> '.$file->getName());
         } else {
             $this->rollback(collect([$file->getName()]));
         }
@@ -130,21 +130,21 @@ class Migrator implements ReadinessInterface
     private function migrate(Collection $files): self
     {
         if ($files->isEmpty()) {
-            $this->output->warning('Nothing to migrate');
+            $this->output->writeln('<info>Nothing to migrate</info>');
             return $this;
         }
 
         $nextBatchNumber = $this->migrationRepository->getLastBatchNumber() + 1;
 
         $files->each(function (MigrationFile $file) use ($nextBatchNumber) {
-            $this->output->note('Migrating: ' . $file->getName());
+            $this->output->writeln('<comment>Migrating:</comment> '.$file->getName());
 
             $migration = $this->migrationFactory->makeByFile($file);
             $migration->up();
 
             $this->migrationRepository->insert($file->getName(), $nextBatchNumber);
 
-            $this->output->success('Migrated: ' . $file->getName());
+            $this->output->writeln('<info>Migrated:</info> '.$file->getName());
         });
 
         return $this;
@@ -157,11 +157,12 @@ class Migrator implements ReadinessInterface
         })->filter();
 
         if ($fileNames->isEmpty()) {
-            $this->output->warning('Nothing to roll back');
+            $this->output->writeln('<info>Nothing to roll back</info>');
             return $this;
         } elseif ($fileNames->count() != $files->count()) {
-            $this->output->error(
-                'Migration is not found: ' . implode(',', $fileNames->diff($files->map(function (MigrationFile $file) {
+            $this->output->writeln(
+                '<error>Migration is not found:</error> '.
+                implode(',', $fileNames->diff($files->map(function (MigrationFile $file) {
                     return $file->getName();
                 }))->toArray())
             );
@@ -170,14 +171,14 @@ class Migrator implements ReadinessInterface
         }
 
         $files->each(function (MigrationFile $file) {
-            $this->output->note(sprintf('Rolling back: %s', $file->getName()));
+            $this->output->writeln('<comment>Rolling back:</comment> '.$file->getName());
 
             $migration = $this->migrationFactory->makeByFile($file);
             $migration->down();
 
             $this->migrationRepository->delete($file->getName());
 
-            $this->output->success(sprintf('Rolled back: %s', $file->getName()));
+            $this->output->writeln('<info>Rolled back:</info> '.$file->getName());
         });
 
         return $this;
@@ -186,11 +187,11 @@ class Migrator implements ReadinessInterface
     public function isReady(): bool
     {
         if (!$isMigrationRepositoryReady = $this->migrationRepository->isReady()) {
-            $this->output->error('Migration table is not yet created');
+            $this->output->writeln('<error>Migration table is not yet created</error>');
         }
 
         if (!$isMigrationStorageReady = $this->migrationStorage->isReady()) {
-            $this->output->error('Migration directory is not yet created');
+            $this->output->writeln('<error>Migration directory is not yet created</error>');
         }
 
         return $isMigrationRepositoryReady && $isMigrationStorageReady;

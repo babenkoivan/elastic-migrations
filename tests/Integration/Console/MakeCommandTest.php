@@ -40,6 +40,6 @@ final class MakeCommandTest extends TestCase
 
         $command->run($input, $output);
 
-        $this->assertRegExp('/Created migration: .+?_test_migration_creation/', $output->fetch());
+        $this->assertRegExp('/^Created migration: .+?_test_migration_creation$/', $output->fetch());
     }
 }

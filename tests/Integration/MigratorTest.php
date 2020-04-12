@@ -5,11 +5,11 @@ namespace ElasticMigrations\Tests\Integration;
 
 use ElasticMigrations\Facades\Index;
 use ElasticMigrations\Migrator;
+use Illuminate\Console\OutputStyle;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use Mockery\MockInterface;
-use Symfony\Component\Console\Style\StyleInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @covers \ElasticMigrations\Migrator
@@ -23,7 +23,7 @@ final class MigratorTest extends TestCase
      */
     private $table;
     /**
-     * @var MockInterface
+     * @var MockObject
      */
     private $output;
     /**
@@ -36,7 +36,7 @@ final class MigratorTest extends TestCase
         parent::setUp();
 
         $this->table = config('elastic.migrations.table');
-        $this->output = $this->createMock(StyleInterface::class);
+        $this->output = $this->createMock(OutputStyle::class);
         $this->migrator = resolve(Migrator::class)->setOutput($this->output);
 
         // create fixtures
@@ -49,8 +49,8 @@ final class MigratorTest extends TestCase
     {
         $this->output
             ->expects($this->once())
-            ->method('error')
-            ->with('Migration is not found: 3020_11_01_045023_drop_test_index');
+            ->method('writeln')
+            ->with('<error>Migration is not found:</error> 3020_11_01_045023_drop_test_index');
 
         $this->assertSame(
             $this->migrator,
@@ -63,14 +63,12 @@ final class MigratorTest extends TestCase
         Index::shouldReceive('putMapping')->once();
 
         $this->output
-            ->expects($this->once())
-            ->method('note')
-            ->with('Migrating: 2019_08_10_142230_update_test_index_mapping');
-
-        $this->output
-            ->expects($this->once())
-            ->method('success')
-            ->with('Migrated: 2019_08_10_142230_update_test_index_mapping');
+            ->expects($this->exactly(2))
+            ->method('writeln')
+            ->withConsecutive(
+                ['<comment>Migrating:</comment> 2019_08_10_142230_update_test_index_mapping'],
+                ['<info>Migrated:</info> 2019_08_10_142230_update_test_index_mapping']
+            );
 
         $this->assertSame(
             $this->migrator,
@@ -94,8 +92,8 @@ final class MigratorTest extends TestCase
         // check that there is nothing to migrate
         $this->output
             ->expects($this->once())
-            ->method('warning')
-            ->with('Nothing to migrate');
+            ->method('writeln')
+            ->with('<info>Nothing to migrate</info>');
 
         // create a new instance to apply the new config
         $migrator = resolve(Migrator::class)->setOutput($this->output);
@@ -111,14 +109,12 @@ final class MigratorTest extends TestCase
         Index::shouldReceive('putMapping')->once();
 
         $this->output
-            ->expects($this->once())
-            ->method('note')
-            ->with('Migrating: 2019_08_10_142230_update_test_index_mapping');
-
-        $this->output
-            ->expects($this->once())
-            ->method('success')
-            ->with('Migrated: 2019_08_10_142230_update_test_index_mapping');
+            ->expects($this->exactly(2))
+            ->method('writeln')
+            ->withConsecutive(
+                ['<comment>Migrating:</comment> 2019_08_10_142230_update_test_index_mapping'],
+                ['<info>Migrated:</info> 2019_08_10_142230_update_test_index_mapping']
+            );
 
         $this->assertSame(
             $this->migrator,
@@ -135,8 +131,8 @@ final class MigratorTest extends TestCase
     {
         $this->output
             ->expects($this->once())
-            ->method('error')
-            ->with('Migration is not found: 3020_11_01_045023_drop_test_index');
+            ->method('writeln')
+            ->with('<error>Migration is not found:</error> 3020_11_01_045023_drop_test_index');
 
         $this->assertSame(
             $this->migrator,
@@ -148,8 +144,8 @@ final class MigratorTest extends TestCase
     {
         $this->output
             ->expects($this->once())
-            ->method('error')
-            ->with('Migration is not yet migrated: 2019_08_10_142230_update_test_index_mapping');
+            ->method('writeln')
+            ->with('<error>Migration is not yet migrated:</error> 2019_08_10_142230_update_test_index_mapping');
 
         $this->assertSame(
             $this->migrator,
@@ -162,14 +158,12 @@ final class MigratorTest extends TestCase
         Index::shouldReceive('drop')->once();
 
         $this->output
-            ->expects($this->once())
-            ->method('note')
-            ->with('Rolling back: 2018_12_01_081000_create_test_index');
-
-        $this->output
-            ->expects($this->once())
-            ->method('success')
-            ->with('Rolled back: 2018_12_01_081000_create_test_index');
+            ->expects($this->exactly(2))
+            ->method('writeln')
+            ->withConsecutive(
+                ['<comment>Rolling back:</comment> 2018_12_01_081000_create_test_index'],
+                ['<info>Rolled back:</info> 2018_12_01_081000_create_test_index']
+            );
 
         $this->assertSame(
             $this->migrator,
@@ -191,8 +185,8 @@ final class MigratorTest extends TestCase
 
         $this->output
             ->expects($this->once())
-            ->method('error')
-            ->with('Migration is not found: 2019_03_10_101500_create_test_index');
+            ->method('writeln')
+            ->with('<error>Migration is not found:</error> 2019_03_10_101500_create_test_index');
 
         $this->assertSame(
             $this->migrator,
@@ -210,14 +204,12 @@ final class MigratorTest extends TestCase
         Index::shouldReceive('putMapping')->once();
 
         $this->output
-            ->expects($this->once())
-            ->method('note')
-            ->with('Rolling back: 2019_08_10_142230_update_test_index_mapping');
-
-        $this->output
-            ->expects($this->once())
-            ->method('success')
-            ->with('Rolled back: 2019_08_10_142230_update_test_index_mapping');
+            ->expects($this->exactly(2))
+            ->method('writeln')
+            ->withConsecutive(
+                ['<comment>Rolling back:</comment> 2019_08_10_142230_update_test_index_mapping'],
+                ['<info>Rolled back:</info> 2019_08_10_142230_update_test_index_mapping']
+            );
 
         $this->assertSame(
             $this->migrator,
@@ -240,8 +232,8 @@ final class MigratorTest extends TestCase
 
         $this->output
             ->expects($this->once())
-            ->method('error')
-            ->with('Migration is not found: 2019_03_10_101500_create_test_index,2019_01_01_053550_drop_test_index');
+            ->method('writeln')
+            ->with('<error>Migration is not found:</error> 2019_03_10_101500_create_test_index,2019_01_01_053550_drop_test_index');
 
         $this->assertSame(
             $this->migrator,
@@ -260,19 +252,13 @@ final class MigratorTest extends TestCase
         Index::shouldReceive('drop')->once();
 
         $this->output
-            ->expects($this->exactly(2))
-            ->method('note')
+            ->expects($this->exactly(4))
+            ->method('writeln')
             ->withConsecutive(
-                ['Rolling back: 2019_08_10_142230_update_test_index_mapping'],
-                ['Rolling back: 2018_12_01_081000_create_test_index']
-            );
-
-        $this->output
-            ->expects($this->exactly(2))
-            ->method('success')
-            ->withConsecutive(
-                ['Rolled back: 2019_08_10_142230_update_test_index_mapping'],
-                ['Rolled back: 2018_12_01_081000_create_test_index']
+                ['<comment>Rolling back:</comment> 2019_08_10_142230_update_test_index_mapping'],
+                ['<info>Rolled back:</info> 2019_08_10_142230_update_test_index_mapping'],
+                ['<comment>Rolling back:</comment> 2018_12_01_081000_create_test_index'],
+                ['<info>Rolled back:</info> 2018_12_01_081000_create_test_index']
             );
 
         $this->assertSame(
@@ -321,8 +307,8 @@ final class MigratorTest extends TestCase
 
         $this->output
             ->expects($this->once())
-            ->method('error')
-            ->with('Migration table is not yet created');
+            ->method('writeln')
+            ->with('<error>Migration table is not yet created</error>');
 
         $this->assertFalse($this->migrator->isReady());
     }
@@ -333,8 +319,8 @@ final class MigratorTest extends TestCase
 
         $this->output
             ->expects($this->once())
-            ->method('error')
-            ->with('Migration directory is not yet created');
+            ->method('writeln')
+            ->with('<error>Migration directory is not yet created</error>');
 
         // create a new instance to apply the new config
         $migrator = resolve(Migrator::class)->setOutput($this->output);
