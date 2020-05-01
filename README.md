@@ -1,7 +1,11 @@
 # Elastic Migrations
 
+[![Latest Stable Version](https://poser.pugx.org/babenkoivan/elastic-migrations/v/stable)](https://packagist.org/packages/babenkoivan/elastic-migrations)
+[![Total Downloads](https://poser.pugx.org/babenkoivan/elastic-migrations/downloads)](https://packagist.org/packages/babenkoivan/elastic-migrations)
+[![License](https://poser.pugx.org/babenkoivan/elastic-migrations/license)](https://packagist.org/packages/babenkoivan/elastic-migrations)
 [![Build Status](https://travis-ci.com/babenkoivan/elastic-migrations.svg?branch=master)](https://travis-ci.com/babenkoivan/elastic-migrations)
-[![WIP](https://img.shields.io/static/v1?label=WIP&message=work%20in%20progress&color=red)](#)
+[![Donate PayPal](https://img.shields.io/badge/donate-paypal-blue)](https://paypal.me/babenkoi)
+[![Donate Amazon](https://img.shields.io/badge/donate-amazon-black)](https://www.amazon.de/Amazon-de-e-Gift-Voucher-Various-Designs/dp/B07Q1JNC7R)
 
 ---
 
