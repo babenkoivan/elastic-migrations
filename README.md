@@ -9,7 +9,7 @@
 
 ---
 
-Elasticsearch migrations for Laravel allows you easily modify and share indices schema across the application's environments.
+Elasticsearch migrations for Laravel allow you to easily modify and share indices schema across the application's environments.
 
 ## Contents
 
