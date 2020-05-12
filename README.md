@@ -13,6 +13,7 @@ Elasticsearch migrations for Laravel allow you to easily modify and share indice
 
 ## Contents
 
+* [Compatibility](#compatibility)
 * [Installation](#installation) 
 * [Configuration](#configuration)
 * [Writing Migrations](#writing-migrations)
@@ -21,6 +22,14 @@ Elasticsearch migrations for Laravel allow you to easily modify and share indice
 * [Starting Over](#starting-over)
 * [Migration Status](#migration-status)
 * [Troubleshooting](#migration-status)
+
+## Compatibility
+
+The current version of Elastic Migrations has been tested with the following configuration:
+
+* PHP 7.2-7.4
+* Elasticsearch 7.x
+* Laravel 6.x-7.x
 
 ## Installation
 

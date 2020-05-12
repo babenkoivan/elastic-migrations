@@ -7,10 +7,15 @@ language: php
 php:
   - 7.2
   - 7.3
+  - 7.4
+
+env:
+  - TESTBENCH_VERSION=4.0
+  - TESTBENCH_VERSION=5.0
 
 before_script:
   - composer global require --no-interaction --prefer-dist --update-no-dev hirak/prestissimo
-  - composer install --no-interaction --prefer-dist
+  - composer require --no-interaction --prefer-dist orchestra/testbench:$TESTBENCH_VERSION
 
 script:
   - bin/phpunit --testsuit unit --testdox
