@@ -51,7 +51,8 @@ php artisan vendor:publish --provider="ElasticClient\ServiceProvider"
 You can change Elasticsearch host and other client settings in the `config/elastic.client.php` file. Please refer to 
 [babenkoivan/elastic-client](https://github.com/babenkoivan/elastic-client) for more details.
 
-If you want to change the migrations **default table name** or **migrations directory**, publish Elastic Migrations settings as well:
+If you want to change the migration **default table name**, the **migrations directory** or set an **index name prefix**, 
+publish Elastic Migrations settings as well:
 
 ```bash
 php artisan vendor:publish --provider="ElasticMigrations\ServiceProvider"
