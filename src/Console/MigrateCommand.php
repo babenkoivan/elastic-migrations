@@ -1,5 +1,4 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace ElasticMigrations\Console;
 
@@ -7,7 +6,7 @@ use ElasticMigrations\Migrator;
 use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
 
-final class MigrateCommand extends Command
+class MigrateCommand extends Command
 {
     use ConfirmableTrait;
 
@@ -33,12 +32,15 @@ final class MigrateCommand extends Command
         $this->migrator = $migrator;
     }
 
+    /**
+     * @return int
+     */
     public function handle()
     {
         $this->migrator->setOutput($this->output);
 
         if (!$this->confirmToProceed() || !$this->migrator->isReady()) {
-            return;
+            return 1;
         }
 
         if ($fileName = $this->argument('fileName')) {
@@ -46,5 +48,7 @@ final class MigrateCommand extends Command
         } else {
             $this->migrator->migrateAll();
         }
+
+        return 0;
     }
 }

@@ -1,5 +1,4 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace ElasticMigrations\Tests\Integration\Filesystem;
 
@@ -76,6 +75,7 @@ final class MigrationStorageTest extends TestCase
      */
     public function test_file_can_be_found_if_exists(string $fileName): void
     {
+        /** @var MigrationFile $file */
         $file = $this->migrationStorage->findByName($fileName);
 
         $this->assertSame(basename(trim($fileName), '.php'), $file->getName());
@@ -110,7 +110,7 @@ final class MigrationStorageTest extends TestCase
                 '2018_12_01_081000_create_test_index',
                 '2019_08_10_142230_update_test_index_mapping',
             ],
-            $files->map(function (MigrationFile $file) {
+            $files->map(static function (MigrationFile $file) {
                 return $file->getName();
             })->toArray()
         );

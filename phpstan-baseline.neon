@@ -1,0 +1,17 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Parameter \\#1 \\$str of function trim expects string, array\\|string\\|null given\\.$#"
+			count: 1
+			path: src/Console/MakeCommand.php
+
+		-
+			message: "#^Parameter \\#1 \\$fileName of method ElasticMigrations\\\\Migrator\\:\\:migrateOne\\(\\) expects string, \\(array\\)\\|string given\\.$#"
+			count: 1
+			path: src/Console/MigrateCommand.php
+
+		-
+			message: "#^Parameter \\#1 \\$fileName of method ElasticMigrations\\\\Migrator\\:\\:rollbackOne\\(\\) expects string, \\(array\\)\\|string given\\.$#"
+			count: 1
+			path: src/Console/RollbackCommand.php
+

@@ -1,10 +1,9 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace ElasticMigrations\Tests\Integration\Facades;
 
-use ElasticMigrations\IndexManagerInterface;
 use ElasticMigrations\Facades\Index;
+use ElasticMigrations\IndexManagerInterface;
 use ElasticMigrations\Tests\Integration\TestCase;
 
 /**

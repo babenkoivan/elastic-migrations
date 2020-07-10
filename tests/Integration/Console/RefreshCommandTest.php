@@ -1,5 +1,4 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace ElasticMigrations\Tests\Integration\Console;
 
@@ -20,7 +19,7 @@ final class RefreshCommandTest extends TestCase
      */
     private $migrator;
     /**
-     * @var MigrateCommand
+     * @var RefreshCommand
      */
     private $command;
 
@@ -49,10 +48,12 @@ final class RefreshCommandTest extends TestCase
             ->expects($this->never())
             ->method('migrateAll');
 
-        $this->command->run(
+        $result = $this->command->run(
             new ArrayInput(['--force' => true]),
             new NullOutput()
         );
+
+        $this->assertSame(1, $result);
     }
 
     public function test_resets_and_reruns_all_migrations_if_migrator_is_ready(): void
@@ -70,9 +71,11 @@ final class RefreshCommandTest extends TestCase
             ->expects($this->once())
             ->method('migrateAll');
 
-        $this->command->run(
+        $result = $this->command->run(
             new ArrayInput(['--force' => true]),
             new NullOutput()
         );
+
+        $this->assertSame(0, $result);
     }
 }

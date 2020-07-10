@@ -1,5 +1,4 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace ElasticMigrations\Tests\Integration\Console;
 
@@ -20,7 +19,7 @@ final class ResetCommandTest extends TestCase
      */
     private $migrator;
     /**
-     * @var MigrateCommand
+     * @var ResetCommand
      */
     private $command;
 
@@ -45,10 +44,12 @@ final class ResetCommandTest extends TestCase
             ->expects($this->never())
             ->method('rollbackAll');
 
-        $this->command->run(
+        $result = $this->command->run(
             new ArrayInput(['--force' => true]),
             new NullOutput()
         );
+
+        $this->assertSame(1, $result);
     }
 
     public function test_rollbacks_all_migrations_if_migrator_is_ready(): void
@@ -62,9 +63,11 @@ final class ResetCommandTest extends TestCase
             ->expects($this->once())
             ->method('rollbackAll');
 
-        $this->command->run(
+        $result = $this->command->run(
             new ArrayInput(['--force' => true]),
             new NullOutput()
         );
+
+        $this->assertSame(0, $result);
     }
 }

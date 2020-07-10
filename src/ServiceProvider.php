@@ -1,5 +1,4 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace ElasticMigrations;
 
@@ -47,8 +46,8 @@ final class ServiceProvider extends AbstractServiceProvider
     {
         parent::__construct($app);
 
-        $this->configPath = realpath(__DIR__ . '/../config/elastic.migrations.php');
-        $this->migrationsPath = realpath(__DIR__ . '/../database/migrations');
+        $this->configPath = dirname(__DIR__) . '/config/elastic.migrations.php';
+        $this->migrationsPath = dirname(__DIR__) . '/database/migrations';
     }
 
     /**
@@ -62,10 +61,13 @@ final class ServiceProvider extends AbstractServiceProvider
         );
     }
 
+    /**
+     * @return void
+     */
     public function boot()
     {
         $this->publishes([
-            $this->configPath => config_path(basename($this->configPath))
+            $this->configPath => config_path(basename($this->configPath)),
         ]);
 
         $this->loadMigrationsFrom($this->migrationsPath);

@@ -1,5 +1,4 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace ElasticMigrations\Tests\Integration\Console;
 
@@ -20,16 +19,15 @@ final class MakeCommandTest extends TestCase
         $fileSystem = resolve(Filesystem::class);
         $migrationStorageMock = $this->createMock(MigrationStorage::class);
 
+        /** @var string $migrationStub */
+        $migrationStub = file_get_contents(dirname(__DIR__, 3) . '/src/Console/stubs/migration.blank.stub');
+
         $migrationStorageMock
             ->expects($this->once())
             ->method('create')
             ->with(
                 $this->stringEndsWith('_test_migration_creation'),
-                str_replace(
-                    'DummyClass',
-                    'TestMigrationCreation',
-                    file_get_contents(realpath(__DIR__ . '/../../../src/Console/stubs/migration.blank.stub'))
-                )
+                str_replace('DummyClass', 'TestMigrationCreation', $migrationStub)
             );
 
         $command = new MakeCommand($fileSystem, $migrationStorageMock);
@@ -38,8 +36,9 @@ final class MakeCommandTest extends TestCase
         $input = new ArrayInput(['name' => 'test_migration_creation']);
         $output = new BufferedOutput();
 
-        $command->run($input, $output);
+        $result = $command->run($input, $output);
 
+        $this->assertSame(0, $result);
         $this->assertRegExp('/^Created migration: .+?_test_migration_creation$/', $output->fetch());
     }
 }

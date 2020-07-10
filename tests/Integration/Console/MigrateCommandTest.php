@@ -1,5 +1,4 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace ElasticMigrations\Tests\Integration\Console;
 
@@ -49,10 +48,12 @@ final class MigrateCommandTest extends TestCase
             ->expects($this->never())
             ->method('migrateAll');
 
-        $this->command->run(
+        $result = $this->command->run(
             new ArrayInput(['--force' => true]),
             new NullOutput()
         );
+
+        $this->assertSame(1, $result);
     }
 
     public function test_runs_one_migration_if_file_name_is_provided(): void
@@ -67,10 +68,12 @@ final class MigrateCommandTest extends TestCase
             ->method('migrateOne')
             ->with('test_file_name');
 
-        $this->command->run(
+        $result = $this->command->run(
             new ArrayInput(['--force' => true, 'fileName' => 'test_file_name']),
             new NullOutput()
         );
+
+        $this->assertSame(0, $result);
     }
 
     public function test_runs_all_migrations_if_file_name_is_not_provided(): void
@@ -84,9 +87,11 @@ final class MigrateCommandTest extends TestCase
             ->expects($this->once())
             ->method('migrateAll');
 
-        $this->command->run(
+        $result = $this->command->run(
             new ArrayInput(['--force' => true]),
             new NullOutput()
         );
+
+        $this->assertSame(0, $result);
     }
 }

@@ -1,5 +1,4 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace ElasticMigrations\Tests\Integration;
 
@@ -77,7 +76,7 @@ final class MigratorTest extends TestCase
 
         $this->assertDatabaseHas($this->table, [
             'migration' => '2019_08_10_142230_update_test_index_mapping',
-            'batch' => 2
+            'batch' => 2,
         ]);
     }
 
@@ -123,7 +122,7 @@ final class MigratorTest extends TestCase
 
         $this->assertDatabaseHas($this->table, [
             'migration' => '2019_08_10_142230_update_test_index_mapping',
-            'batch' => 2
+            'batch' => 2,
         ]);
     }
 
@@ -172,7 +171,7 @@ final class MigratorTest extends TestCase
 
         $this->assertDatabaseMissing($this->table, [
             'migration' => '2018_12_01_081000_create_test_index',
-            'batch' => 1
+            'batch' => 1,
         ]);
     }
 
@@ -218,7 +217,7 @@ final class MigratorTest extends TestCase
 
         $this->assertDatabaseMissing($this->table, [
             'migration' => '2019_08_10_142230_update_test_index_mapping',
-            'batch' => 4
+            'batch' => 4,
         ]);
     }
 
@@ -268,12 +267,12 @@ final class MigratorTest extends TestCase
 
         $this->assertDatabaseMissing($this->table, [
             'migration' => '2019_08_10_142230_update_test_index_mapping',
-            'batch' => 2
+            'batch' => 2,
         ]);
 
         $this->assertDatabaseMissing($this->table, [
             'migration' => '2018_12_01_081000_create_test_index',
-            'batch' => 1
+            'batch' => 1,
         ]);
     }
 

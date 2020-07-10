@@ -1,5 +1,4 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace ElasticMigrations\Tests\Integration\Adapters;
 
@@ -45,7 +44,7 @@ final class IndexManagerAdapterTest extends TestCase
         $this->indexManagerMock
             ->expects($this->once())
             ->method('create')
-            ->with(new Index($indexNamePrefix.$indexName));
+            ->with(new Index($indexNamePrefix . $indexName));
 
         $this->indexManagerAdapter->create($indexName);
     }
@@ -59,18 +58,18 @@ final class IndexManagerAdapterTest extends TestCase
 
         $indexName = 'test';
 
-        $modifier = function (Mapping $mapping, Settings $settings) {
+        $modifier = static function (Mapping $mapping, Settings $settings) {
             $mapping->text('title');
-            $settings->numberOfReplicas(2);
+            $settings->index(['number_of_replicas' => 2]);
         };
 
         $this->indexManagerMock
             ->expects($this->once())
             ->method('create')
             ->with(new Index(
-                $indexNamePrefix.$indexName,
+                $indexNamePrefix . $indexName,
                 (new Mapping())->text('title'),
-                (new Settings())->numberOfReplicas(2)
+                (new Settings())->index(['number_of_replicas' => 2])
             ));
 
         $this->indexManagerAdapter->create($indexName, $modifier);
@@ -88,13 +87,13 @@ final class IndexManagerAdapterTest extends TestCase
         $this->indexManagerMock
             ->expects($this->once())
             ->method('exists')
-            ->with($indexNamePrefix.$indexName)
+            ->with($indexNamePrefix . $indexName)
             ->willReturn(false);
 
         $this->indexManagerMock
             ->expects($this->once())
             ->method('create')
-            ->with(new Index($indexNamePrefix.$indexName));
+            ->with(new Index($indexNamePrefix . $indexName));
 
         $this->indexManagerAdapter->createIfNotExists($indexName);
     }
@@ -108,7 +107,7 @@ final class IndexManagerAdapterTest extends TestCase
 
         $indexName = 'test';
 
-        $modifier = function (Mapping $mapping) {
+        $modifier = static function (Mapping $mapping) {
             $mapping->disableSource()->text('title');
         };
 
@@ -116,7 +115,7 @@ final class IndexManagerAdapterTest extends TestCase
             ->expects($this->once())
             ->method('putMapping')
             ->with(
-                $indexNamePrefix.$indexName,
+                $indexNamePrefix . $indexName,
                 (new Mapping())->disableSource()->text('title')
             );
 
@@ -132,16 +131,16 @@ final class IndexManagerAdapterTest extends TestCase
 
         $indexName = 'test';
 
-        $modifier = function (Settings $settings) {
-            $settings->numberOfReplicas(2)->refreshInterval(-1);
+        $modifier = static function (Settings $settings) {
+            $settings->index(['number_of_replicas' => 2, 'refresh_interval' => -1]);
         };
 
         $this->indexManagerMock
             ->expects($this->once())
             ->method('putSettings')
             ->with(
-                $indexNamePrefix.$indexName,
-                (new Settings())->numberOfReplicas(2)->refreshInterval(-1)
+                $indexNamePrefix . $indexName,
+                (new Settings())->index(['number_of_replicas' => 2, 'refresh_interval' => -1])
             );
 
         $this->indexManagerAdapter->putSettings($indexName, $modifier);
@@ -156,27 +155,27 @@ final class IndexManagerAdapterTest extends TestCase
 
         $indexName = 'test';
 
-        $modifier = function (Settings $settings) {
-            $settings->numberOfReplicas(2);
+        $modifier = static function (Settings $settings) {
+            $settings->index(['number_of_replicas' => 2]);
         };
 
         $this->indexManagerMock
             ->expects($this->once())
             ->method('close')
-            ->with($indexNamePrefix.$indexName);
+            ->with($indexNamePrefix . $indexName);
 
         $this->indexManagerMock
             ->expects($this->once())
             ->method('putSettings')
             ->with(
-                $indexNamePrefix.$indexName,
-                (new Settings())->numberOfReplicas(2)
+                $indexNamePrefix . $indexName,
+                (new Settings())->index(['number_of_replicas' => 2])
             );
 
         $this->indexManagerMock
             ->expects($this->once())
             ->method('open')
-            ->with($indexNamePrefix.$indexName);
+            ->with($indexNamePrefix . $indexName);
 
         $this->indexManagerAdapter->putSettingsHard($indexName, $modifier);
     }
@@ -193,7 +192,7 @@ final class IndexManagerAdapterTest extends TestCase
         $this->indexManagerMock
             ->expects($this->once())
             ->method('drop')
-            ->with($indexNamePrefix.$indexName);
+            ->with($indexNamePrefix . $indexName);
 
         $this->indexManagerAdapter->drop($indexName);
     }
@@ -210,13 +209,13 @@ final class IndexManagerAdapterTest extends TestCase
         $this->indexManagerMock
             ->expects($this->once())
             ->method('exists')
-            ->with($indexNamePrefix.$indexName)
+            ->with($indexNamePrefix . $indexName)
             ->willReturn(true);
 
         $this->indexManagerMock
             ->expects($this->once())
             ->method('drop')
-            ->with($indexNamePrefix.$indexName);
+            ->with($indexNamePrefix . $indexName);
 
         $this->indexManagerAdapter->dropIfExists($indexName);
     }

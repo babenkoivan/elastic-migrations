@@ -1,5 +1,4 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace ElasticMigrations\Repositories;
 
@@ -8,6 +7,7 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use stdClass;
 
 final class MigrationRepository implements ReadinessInterface
 {
@@ -25,7 +25,7 @@ final class MigrationRepository implements ReadinessInterface
     {
         return $this->table()->insert([
             'migration' => $fileName,
-            'batch' => $batch
+            'batch' => $batch,
         ]);
     }
 
@@ -45,6 +45,7 @@ final class MigrationRepository implements ReadinessInterface
 
     public function getLastBatchNumber(): ?int
     {
+        /** @var stdClass|null $record */
         $record = $this->table()
             ->select('batch')
             ->orderBy('batch', 'desc')

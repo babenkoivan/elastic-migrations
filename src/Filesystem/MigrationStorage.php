@@ -1,5 +1,4 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace ElasticMigrations\Filesystem;
 
@@ -47,7 +46,7 @@ class MigrationStorage implements ReadinessInterface
     {
         $files = $this->filesystem->glob($this->directory . '/*_*.php');
 
-        return collect($files)->sort()->map(function (string $filePath) {
+        return collect($files)->sort()->map(static function (string $filePath) {
             return new MigrationFile($filePath);
         });
     }

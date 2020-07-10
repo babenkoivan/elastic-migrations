@@ -1,12 +1,11 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace ElasticMigrations\Console;
 
 use ElasticMigrations\Migrator;
 use Illuminate\Console\Command;
 
-final class StatusCommand extends Command
+class StatusCommand extends Command
 {
     /**
      * @var string
@@ -28,14 +27,19 @@ final class StatusCommand extends Command
         $this->migrator = $migrator;
     }
 
+    /**
+     * @return int
+     */
     public function handle()
     {
         $this->migrator->setOutput($this->output);
 
         if (!$this->migrator->isReady()) {
-            return;
+            return 1;
         }
 
         $this->migrator->showStatus();
+
+        return 0;
     }
 }

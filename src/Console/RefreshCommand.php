@@ -1,5 +1,4 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace ElasticMigrations\Console;
 
@@ -7,7 +6,7 @@ use ElasticMigrations\Migrator;
 use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
 
-final class RefreshCommand extends Command
+class RefreshCommand extends Command
 {
     use ConfirmableTrait;
 
@@ -32,15 +31,20 @@ final class RefreshCommand extends Command
         $this->migrator = $migrator;
     }
 
+    /**
+     * @return int
+     */
     public function handle()
     {
         $this->migrator->setOutput($this->output);
 
         if (!$this->confirmToProceed() || !$this->migrator->isReady()) {
-            return;
+            return 1;
         }
 
         $this->migrator->rollbackAll();
         $this->migrator->migrateAll();
+
+        return 0;
     }
 }

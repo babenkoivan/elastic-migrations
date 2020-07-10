@@ -1,5 +1,4 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 use ElasticMigrations\Facades\Index;
 use ElasticMigrations\MigrationInterface;
@@ -16,13 +15,13 @@ final class CreateTestIndex implements MigrationInterface
     {
         $this->client = $client;
     }
-    
+
     public function up(): void
     {
         Index::create('test');
 
         $this->client->indices()->clearCache([
-            'index' => 'test'
+            'index' => 'test',
         ]);
     }
 

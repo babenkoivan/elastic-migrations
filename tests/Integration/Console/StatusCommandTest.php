@@ -1,5 +1,4 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace ElasticMigrations\Tests\Integration\Console;
 
@@ -20,7 +19,7 @@ final class StatusCommandTest extends TestCase
      */
     private $migrator;
     /**
-     * @var MigrateCommand
+     * @var StatusCommand
      */
     private $command;
 
@@ -45,10 +44,12 @@ final class StatusCommandTest extends TestCase
             ->expects($this->never())
             ->method('showStatus');
 
-        $this->command->run(
+        $result = $this->command->run(
             new ArrayInput([]),
             new NullOutput()
         );
+
+        $this->assertSame(1, $result);
     }
 
     public function test_displays_each_migration_status_if_migrator_is_ready(): void
@@ -62,9 +63,11 @@ final class StatusCommandTest extends TestCase
             ->expects($this->once())
             ->method('showStatus');
 
-        $this->command->run(
+        $result = $this->command->run(
             new ArrayInput([]),
             new NullOutput()
         );
+
+        $this->assertSame(0, $result);
     }
 }

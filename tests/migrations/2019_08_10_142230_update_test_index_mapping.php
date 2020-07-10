@@ -1,5 +1,4 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 use ElasticAdapter\Indices\Mapping;
 use ElasticMigrations\Facades\Index;
@@ -9,7 +8,7 @@ final class UpdateTestIndexMapping implements MigrationInterface
 {
     public function up(): void
     {
-        Index::putMapping('test', function (Mapping $mapping) {
+        Index::putMapping('test', static function (Mapping $mapping) {
             $mapping->enableSource();
             $mapping->text('title');
         });
@@ -17,7 +16,7 @@ final class UpdateTestIndexMapping implements MigrationInterface
 
     public function down(): void
     {
-        Index::putMapping('test', function (Mapping $mapping) {
+        Index::putMapping('test', static function (Mapping $mapping) {
             $mapping->disableSource();
         });
     }
