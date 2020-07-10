@@ -18,7 +18,7 @@
 
 ## Running the Test Suite
 
-To run tests locally you need PHP (7.2 or higher) and [Composer](https://getcomposer.org/download/).
+To run tests locally you need PHP (7.2 or higher), [Composer](https://getcomposer.org/download/) and [SQLite 3](https://www.sqlite.org/download.html).
 
 Install the project dependencies:
 ```
