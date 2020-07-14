@@ -39,6 +39,8 @@ The library can be installed via Composer:
 composer require babenkoivan/elastic-migrations
 ```
 
+If you want to use Elastic Migrations with [Lumen framework](https://lumen.laravel.com/) check [this guide](https://github.com/babenkoivan/elastic-migrations/wiki/Lumen-Installation).
+
 ## Configuration
 
 Elastic Migrations uses [babenkoivan/elastic-client](https://github.com/babenkoivan/elastic-client) as a dependency. 
