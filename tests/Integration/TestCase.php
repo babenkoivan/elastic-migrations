@@ -21,6 +21,7 @@ class TestCase extends TestbenchTestCase
     {
         parent::getEnvironmentSetUp($app);
 
+        $app['config']->set('elastic.migrations.table', 'test_elastic_migrations');
         $app['config']->set('elastic.migrations.storage_directory', realpath(__DIR__ . '/../migrations'));
 
         $app->instance(Client::class, $this->createMock(Client::class));

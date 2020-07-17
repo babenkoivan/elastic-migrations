@@ -6,9 +6,19 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateElasticMigrationsTable extends Migration
 {
+    /**
+     * @var string
+     */
+    private $table;
+
+    public function __construct()
+    {
+        $this->table = config('elastic.migrations.table');
+    }
+
     public function up()
     {
-        Schema::create('elastic_migrations', function (Blueprint $table) {
+        Schema::create($this->table, function (Blueprint $table) {
             $table->string('migration');
             $table->integer('batch');
         });
@@ -16,6 +26,6 @@ class CreateElasticMigrationsTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('elastic_migrations');
+        Schema::dropIfExists($this->table);
     }
 }
