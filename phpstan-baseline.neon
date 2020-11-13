@@ -6,12 +6,12 @@ parameters:
 			path: src/Console/MakeCommand.php
 
 		-
-			message: "#^Parameter \\#1 \\$fileName of method ElasticMigrations\\\\Migrator\\:\\:migrateOne\\(\\) expects string, \\(array\\)\\|string given\\.$#"
+			message: "#^Parameter \\#1 \\$fileName of method ElasticMigrations\\\\Migrator\\:\\:migrateOne\\(\\) expects string, array\\|string given\\.$#"
 			count: 1
 			path: src/Console/MigrateCommand.php
 
 		-
-			message: "#^Parameter \\#1 \\$fileName of method ElasticMigrations\\\\Migrator\\:\\:rollbackOne\\(\\) expects string, \\(array\\)\\|string given\\.$#"
+			message: "#^Parameter \\#1 \\$fileName of method ElasticMigrations\\\\Migrator\\:\\:rollbackOne\\(\\) expects string, array\\|string given\\.$#"
 			count: 1
 			path: src/Console/RollbackCommand.php
 

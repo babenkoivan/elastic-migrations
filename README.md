@@ -29,7 +29,7 @@ The current version of Elastic Migrations has been tested with the following con
 
 * PHP 7.2-7.4
 * Elasticsearch 7.x
-* Laravel 6.x-7.x
+* Laravel 6.x-8.x
 
 ## Installation
 
@@ -98,8 +98,16 @@ Index::create('my-index', function (Mapping $mapping, Settings $settings) {
     // first argument as a field name and optional second argument as additional field parameters  
     $mapping->text('title', ['boost' => 2]);
     $mapping->float('price');
+
+    // you can define a dynamic template as follows
+    $mapping->dynamicTemplate('my_template_name', [
+        'match_mapping_type' => 'long',
+        'mapping' => [
+            'type' => 'integer',
+        ],
+    ]);
     
-    // you can change the index settings 
+    // you can also change the index settings 
     $settings->index([
          'number_of_replicas' => 2,
          'refresh_interval' => -1

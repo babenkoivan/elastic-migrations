@@ -14,24 +14,27 @@ php:
   - 7.4
 
 env:
-  - TESTBENCH_VERSION=4.0
-  - TESTBENCH_VERSION=5.0
+  - TESTBENCH_VERSION=^4.0
+  - TESTBENCH_VERSION=^5.0
+  - TESTBENCH_VERSION=^6.0
 
 install:
-  - composer global require --no-interaction --prefer-dist --update-no-dev hirak/prestissimo
-  - composer require --no-interaction --prefer-dist orchestra/testbench:$TESTBENCH_VERSION
+  - composer require --no-interaction orchestra/testbench:$TESTBENCH_VERSION
 
 script: make test
 
 jobs:
+  exclude:
+    - php: 7.2
+      env: TESTBENCH_VERSION=^6.0
   include:
     - stage: code-analysis
       name: Code Style Check
-      php: 7.2
-      env: TESTBENCH_VERSION=^5.0
+      php: 7.4
+      env: TESTBENCH_VERSION=^6.0
       script: make style-check
     - stage: code-analysis
       name: Static Code Analysis
-      php: 7.2
-      env: TESTBENCH_VERSION=^5.0
+      php: 7.4
+      env: TESTBENCH_VERSION=^6.0
       script: make static-analysis
