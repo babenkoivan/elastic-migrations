@@ -21,6 +21,9 @@ env:
 install:
   - composer require --no-interaction orchestra/testbench:$TESTBENCH_VERSION
 
+before_script:
+  - phpenv config-rm xdebug.ini
+
 script: make test
 
 jobs:
