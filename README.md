@@ -252,8 +252,14 @@ php artisan elastic:migrate:status
 
 ## Troubleshooting
 
-If you see one of the messages below, please execute the mentioned action:
+If you see one of the messages below, follow the instructions:
 
 * `Migration table is not yet created` - run the `php artisan migrate` command
 * `Migration directory is not yet created` - create a migration file using the `elastic:make:migration` command or 
-create a the migrations directory manually   
+create `migrations` directory manually
+  
+In case one of the commands doesn't work as expected, try to publish configuration:
+
+```bash
+php artisan vendor:publish --provider="ElasticMigrations\ServiceProvider"
+```
