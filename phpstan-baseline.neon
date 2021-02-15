@@ -1,7 +1,7 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Parameter \\#1 \\$str of function trim expects string, array\\|string\\|null given\\.$#"
+			message: "#^Parameter \\#1 \\$string of function trim expects string, array\\|string\\|null given\\.$#"
 			count: 1
 			path: src/Console/MakeCommand.php
 
