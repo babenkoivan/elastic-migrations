@@ -36,9 +36,12 @@ final class MakeCommandTest extends TestCase
         $input = new ArrayInput(['name' => 'test_migration_creation']);
         $output = new BufferedOutput();
 
-        $result = $command->run($input, $output);
+        $resultCode = $command->run($input, $output);
+        $resultMessage = $output->fetch();
 
-        $this->assertSame(0, $result);
-        $this->assertMatchesRegularExpression('/^Created migration: .+?_test_migration_creation$/', $output->fetch());
+        $this->assertSame(0, $resultCode);
+
+        $this->assertStringContainsString('Created migration', $resultMessage);
+        $this->assertStringContainsString('_test_migration_creation', $resultMessage);
     }
 }
