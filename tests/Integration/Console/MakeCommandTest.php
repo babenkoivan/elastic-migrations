@@ -39,6 +39,6 @@ final class MakeCommandTest extends TestCase
         $result = $command->run($input, $output);
 
         $this->assertSame(0, $result);
-        $this->assertRegExp('/^Created migration: .+?_test_migration_creation$/', $output->fetch());
+        $this->assertMatchesRegularExpression('/^Created migration: .+?_test_migration_creation$/', $output->fetch());
     }
 }

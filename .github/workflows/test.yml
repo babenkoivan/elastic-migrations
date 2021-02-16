@@ -11,15 +11,19 @@ jobs:
         include:
           - php: 7.2
             testbench: 4.0
+            phpunit: 8.5
 
           - php: 7.3
             testbench: 5.0
+            phpunit: 9.5
 
           - php: 7.4
             testbench: 6.0
+            phpunit: 9.5
 
           - php: 8.0
             testbench: 6.0
+            phpunit: 9.5
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -43,7 +47,7 @@ jobs:
           restore-keys: ${{ runner.os }}-composer-
 
       - name: Install dependencies
-        run: composer require --no-interaction orchestra/testbench:^${{ matrix.testbench }}
+        run: composer require --no-interaction orchestra/testbench:^${{ matrix.testbench }} phpunit/phpunit:^${{ matrix.phpunit }}
 
       - name: Run tests
         run: make test
