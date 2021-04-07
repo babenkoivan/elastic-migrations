@@ -2,11 +2,13 @@
 
 namespace ElasticMigrations\Adapters;
 
+use ElasticAdapter\Indices\Alias;
 use ElasticAdapter\Indices\Index;
 use ElasticAdapter\Indices\IndexManager;
 use ElasticAdapter\Indices\Mapping;
 use ElasticAdapter\Indices\Settings;
 use ElasticMigrations\IndexManagerInterface;
+use function ElasticMigrations\prefix_alias_name;
 use function ElasticMigrations\prefix_index_name;
 
 class IndexManagerAdapter implements IndexManagerInterface
@@ -101,6 +103,26 @@ class IndexManagerAdapter implements IndexManagerInterface
         if ($this->indexManager->exists($prefixedIndexName)) {
             $this->drop($indexName);
         }
+
+        return $this;
+    }
+
+    public function putAlias(string $indexName, string $aliasName, array $filter = null): IndexManagerInterface
+    {
+        $prefixedIndexName = prefix_index_name($indexName);
+        $prefixedAliasName = prefix_alias_name($aliasName);
+
+        $this->indexManager->putAlias($prefixedIndexName, new Alias($prefixedAliasName, $filter));
+
+        return $this;
+    }
+
+    public function deleteAlias(string $indexName, string $aliasName): IndexManagerInterface
+    {
+        $prefixedIndexName = prefix_index_name($indexName);
+        $prefixedAliasName = prefix_alias_name($aliasName);
+
+        $this->indexManager->deleteAlias($prefixedIndexName, $prefixedAliasName);
 
         return $this;
     }

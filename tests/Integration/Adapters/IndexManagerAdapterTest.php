@@ -2,6 +2,7 @@
 
 namespace ElasticMigrations\Tests\Integration\Adapters;
 
+use ElasticAdapter\Indices\Alias;
 use ElasticAdapter\Indices\Index;
 use ElasticAdapter\Indices\IndexManager;
 use ElasticAdapter\Indices\Mapping;
@@ -33,7 +34,7 @@ final class IndexManagerAdapterTest extends TestCase
     }
 
     /**
-     * @dataProvider indexNamePrefixProvider
+     * @dataProvider prefixProvider
      */
     public function test_index_can_be_created_without_modifier(string $indexNamePrefix): void
     {
@@ -50,7 +51,7 @@ final class IndexManagerAdapterTest extends TestCase
     }
 
     /**
-     * @dataProvider indexNamePrefixProvider
+     * @dataProvider prefixProvider
      */
     public function test_index_can_be_created_with_modifier(string $indexNamePrefix): void
     {
@@ -76,7 +77,7 @@ final class IndexManagerAdapterTest extends TestCase
     }
 
     /**
-     * @dataProvider indexNamePrefixProvider
+     * @dataProvider prefixProvider
      */
     public function test_index_can_be_created_only_if_it_does_not_exist(string $indexNamePrefix): void
     {
@@ -99,7 +100,7 @@ final class IndexManagerAdapterTest extends TestCase
     }
 
     /**
-     * @dataProvider indexNamePrefixProvider
+     * @dataProvider prefixProvider
      */
     public function test_mapping_can_be_updated(string $indexNamePrefix): void
     {
@@ -123,7 +124,7 @@ final class IndexManagerAdapterTest extends TestCase
     }
 
     /**
-     * @dataProvider indexNamePrefixProvider
+     * @dataProvider prefixProvider
      */
     public function test_settings_can_be_updated(string $indexNamePrefix): void
     {
@@ -147,7 +148,7 @@ final class IndexManagerAdapterTest extends TestCase
     }
 
     /**
-     * @dataProvider indexNamePrefixProvider
+     * @dataProvider prefixProvider
      */
     public function test_settings_can_be_updated_in_a_hard_way(string $indexNamePrefix): void
     {
@@ -181,7 +182,7 @@ final class IndexManagerAdapterTest extends TestCase
     }
 
     /**
-     * @dataProvider indexNamePrefixProvider
+     * @dataProvider prefixProvider
      */
     public function test_index_can_be_dropped(string $indexNamePrefix): void
     {
@@ -198,7 +199,7 @@ final class IndexManagerAdapterTest extends TestCase
     }
 
     /**
-     * @dataProvider indexNamePrefixProvider
+     * @dataProvider prefixProvider
      */
     public function test_index_can_be_dropped_only_if_exists(string $indexNamePrefix): void
     {
@@ -220,7 +221,43 @@ final class IndexManagerAdapterTest extends TestCase
         $this->indexManagerAdapter->dropIfExists($indexName);
     }
 
-    public function indexNamePrefixProvider(): array
+    /**
+     * @dataProvider prefixProvider
+     */
+    public function test_alias_can_be_created(string $aliasNamePrefix): void
+    {
+        $this->app['config']->set('elastic.migrations.alias_name_prefix', $aliasNamePrefix);
+
+        $indexName = 'foo';
+        $aliasName = 'bar';
+
+        $this->indexManagerMock
+            ->expects($this->once())
+            ->method('putAlias')
+            ->with($indexName, new Alias($aliasNamePrefix . $aliasName));
+
+        $this->indexManagerAdapter->putAlias($indexName, $aliasName);
+    }
+
+    /**
+     * @dataProvider prefixProvider
+     */
+    public function test_alias_can_be_deleted(string $aliasNamePrefix): void
+    {
+        $this->app['config']->set('elastic.migrations.alias_name_prefix', $aliasNamePrefix);
+
+        $indexName = 'foo';
+        $aliasName = 'bar';
+
+        $this->indexManagerMock
+            ->expects($this->once())
+            ->method('deleteAlias')
+            ->with($indexName, $aliasNamePrefix . $aliasName);
+
+        $this->indexManagerAdapter->deleteAlias($indexName, $aliasName);
+    }
+
+    public function prefixProvider(): array
     {
         return [
             'no prefix' => [''],

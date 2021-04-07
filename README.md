@@ -58,8 +58,8 @@ php artisan vendor:publish --provider="ElasticClient\ServiceProvider"
 You can change Elasticsearch host and other client settings in the `config/elastic.client.php` file. Please refer to 
 [babenkoivan/elastic-client](https://github.com/babenkoivan/elastic-client) for more details.
 
-If you want to change the migration **default table name**, the **migrations directory** or set an **index name prefix**, 
-publish Elastic Migrations settings as well:
+If you want to change the migration **table name**, the default **migrations directory** or set **prefixes** for indices 
+and aliases, publish Elastic Migrations settings as well:
 
 ```bash
 php artisan vendor:publish --provider="ElasticMigrations\ServiceProvider"
@@ -188,6 +188,22 @@ or delete it only if it exists:
 
 ```php
 Index::dropIfExists('my-index');
+```
+
+#### Create Alias
+
+You can create an alias with optional filter query:
+
+```php
+Index::putAlias('my-index', 'my-alias', ['term' => ['user_id' => 1]]);
+```
+
+#### Delete Alias
+
+You can delete an alias by its name:
+
+```php
+Index::deleteAlias('my-index', 'my-alias');
 ```
 
 #### More
