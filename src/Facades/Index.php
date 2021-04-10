@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Facade;
  * @method static self putSettingsHard(string $indexName, callable $modifier)
  * @method static self drop(string $indexName)
  * @method static self dropIfExists(string $indexName)
+ * @method static self putAlias(string $indexName, string $aliasName, array $filter = null)
+ * @method static self deleteAlias(string $indexName, string $aliasName)
  */
 final class Index extends Facade
 {
