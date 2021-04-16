@@ -26,6 +26,7 @@ Elasticsearch migrations for Laravel allow you to easily modify and share indice
 * [Reverting Migrations](#reverting-migrations)
 * [Starting Over](#starting-over)
 * [Migration Status](#migration-status)
+* [Zero Downtime Migration](#zero-downtime-migration)
 * [Troubleshooting](#migration-status)
 
 ## Compatibility
@@ -265,6 +266,11 @@ You can always check which files have been already migrated and what can be reve
 ```bash
 php artisan elastic:migrate:status
 ```
+
+## Zero Downtime Migration
+
+Changing an index mapping with zero downtime is not a trivial process and might vary from one project to another.
+Elastic Migrations library doesn't include such feature out of the box, but you can implement it in your project by [following this guide](https://github.com/babenkoivan/elastic-migrations/wiki/Changing-Mapping-with-Zero-Downtime).
 
 ## Troubleshooting
 
