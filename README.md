@@ -119,7 +119,7 @@ Index::create('my-index', function (Mapping $mapping, Settings $settings) {
          'refresh_interval' => -1
     ]);
     
-    // and analisys configuration
+    // and analysis configuration
     $settings->analysis([
         'analyzer' => [
             'title' => [
