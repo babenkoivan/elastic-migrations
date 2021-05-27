@@ -62,7 +62,7 @@ final class FreshCommandTest extends TestCase
         $this->assertSame(1, $result);
     }
 
-    public function test_truncates_indicies_and_migration(): void
+    public function test_drops_indicies_and_migration(): void
     {
         $this->migrator
             ->expects($this->once())
