@@ -43,6 +43,11 @@ final class MigrationRepository implements ReadinessInterface
             ->delete();
     }
 
+    public function clear(): void
+    {
+        $this->table()->truncate();
+    }
+
     public function getLastBatchNumber(): ?int
     {
         /** @var stdClass|null $record */

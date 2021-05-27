@@ -104,6 +104,13 @@ class Migrator implements ReadinessInterface
         return $this;
     }
 
+    public function reset(): self
+    {
+        $this->migrationRepository->clear();
+
+        return $this;
+    }
+
     public function showStatus(): self
     {
         $files = $this->migrationStorage->findAll();
