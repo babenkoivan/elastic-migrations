@@ -14,7 +14,7 @@ class FreshCommand extends Command
     /**
      * @var string
      */
-    protected $signature = 'elastic:fresh 
+    protected $signature = 'elastic:migrate:fresh 
         {--force : Force the operation to run when in production}';
 
     /**
