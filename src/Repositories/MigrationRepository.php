@@ -15,10 +15,15 @@ final class MigrationRepository implements ReadinessInterface
      * @var string
      */
     private $table;
+    /**
+     * @var string
+     */
+    private $connection;
 
     public function __construct()
     {
         $this->table = config('elastic.migrations.table');
+        $this->connection = config('elastic.migrations.connection');
     }
 
     public function insert(string $fileName, int $batch): bool
@@ -71,11 +76,11 @@ final class MigrationRepository implements ReadinessInterface
 
     private function table(): Builder
     {
-        return DB::table($this->table);
+        return DB::connection($this->connection)->table($this->table);
     }
 
     public function isReady(): bool
     {
-        return Schema::hasTable($this->table);
+        return Schema::connection($this->connection)->hasTable($this->table);
     }
 }
