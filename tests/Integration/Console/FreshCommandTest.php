@@ -25,6 +25,10 @@ final class FreshCommandTest extends TestCase
      */
     private $migrationRepository;
     /**
+     * @var MockObject
+     */
+    private $indexManager;
+    /**
      * @var FreshCommand
      */
     private $command;
