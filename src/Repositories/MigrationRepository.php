@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use stdClass;
 
-final class MigrationRepository implements ReadinessInterface
+class MigrationRepository implements ReadinessInterface
 {
     /**
      * @var string

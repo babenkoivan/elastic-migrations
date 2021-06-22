@@ -5,6 +5,7 @@ namespace ElasticMigrations\Tests\Integration\Console;
 use ElasticMigrations\Console\FreshCommand;
 use ElasticMigrations\IndexManagerInterface;
 use ElasticMigrations\Migrator;
+use ElasticMigrations\Repositories\MigrationRepository;
 use ElasticMigrations\Tests\Integration\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -20,6 +21,10 @@ final class FreshCommandTest extends TestCase
      */
     private $migrator;
     /**
+     * @var MockObject
+     */
+    private $migrationRepository;
+    /**
      * @var FreshCommand
      */
     private $command;
@@ -29,9 +34,10 @@ final class FreshCommandTest extends TestCase
         parent::setUp();
 
         $this->migrator = $this->createMock(Migrator::class);
+        $this->migrationRepository = $this->createMock(MigrationRepository::class);
         $this->indexManager = $this->createMock(IndexManagerInterface::class);
 
-        $this->command = new FreshCommand($this->migrator, $this->indexManager);
+        $this->command = new FreshCommand($this->migrator, $this->migrationRepository, $this->indexManager);
         $this->command->setLaravel($this->app);
     }
 
@@ -44,11 +50,11 @@ final class FreshCommandTest extends TestCase
 
         $this->indexManager
             ->expects($this->never())
-            ->method('dropAll');
+            ->method('drop');
 
-        $this->migrator
+        $this->migrationRepository
             ->expects($this->never())
-            ->method('reset');
+            ->method('truncate');
 
         $this->migrator
             ->expects($this->never())
@@ -71,11 +77,12 @@ final class FreshCommandTest extends TestCase
 
         $this->indexManager
             ->expects($this->once())
-            ->method('dropAll');
+            ->method('drop')
+            ->with('*');
 
-        $this->migrator
+        $this->migrationRepository
             ->expects($this->once())
-            ->method('reset');
+            ->method('truncate');
 
         $this->migrator
             ->expects($this->once())

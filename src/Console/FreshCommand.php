@@ -4,6 +4,7 @@ namespace ElasticMigrations\Console;
 
 use ElasticMigrations\IndexManagerInterface;
 use ElasticMigrations\Migrator;
+use ElasticMigrations\Repositories\MigrationRepository;
 use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
 
@@ -16,27 +17,29 @@ class FreshCommand extends Command
      */
     protected $signature = 'elastic:migrate:fresh 
         {--force : Force the operation to run when in production}';
-
     /**
      * @var string
      */
     protected $description = 'Drop all indicies and re-run all migrations';
-
     /**
      * @var Migrator
      */
     private $migrator;
-    
+    /**
+     * @var MigrationRepository
+     */
+    private $migrationRepository;
     /**
      * @var IndexManagerInterface
      */
     private $indexManager;
 
-    public function __construct(Migrator $migrator, IndexManagerInterface $indexManager)
+    public function __construct(Migrator $migrator, MigrationRepository $migrationRepository, IndexManagerInterface $indexManager)
     {
         parent::__construct();
 
         $this->migrator = $migrator;
+        $this->migrationRepository = $migrationRepository;
         $this->indexManager = $indexManager;
     }
 
@@ -51,9 +54,9 @@ class FreshCommand extends Command
             return 1;
         }
 
-        $this->indexManager->dropAll();
+        $this->indexManager->drop('*');
 
-        $this->migrator->reset();
+        $this->migrationRepository->truncate();
 
         $this->migrator->migrateAll();
 
