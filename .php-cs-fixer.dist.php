@@ -8,7 +8,7 @@ $finder = Finder::create()
     ->in(__DIR__ . '/tests')
     ->name('*.php');
 
-return Config::create()
+return (new Config())
     ->setFinder($finder)
     ->setRules([
         '@PSR2' => true,
