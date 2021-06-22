@@ -43,7 +43,7 @@ final class MigrationRepository implements ReadinessInterface
             ->delete();
     }
 
-    public function clear(): void
+    public function truncate(): void
     {
         $this->table()->truncate();
     }

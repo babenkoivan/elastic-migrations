@@ -106,7 +106,7 @@ class Migrator implements ReadinessInterface
 
     public function reset(): self
     {
-        $this->migrationRepository->clear();
+        $this->migrationRepository->truncate();
 
         return $this;
     }
