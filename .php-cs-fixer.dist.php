@@ -17,7 +17,7 @@ return (new Config())
         'concat_space' => ['spacing' => 'one'],
         'declare_strict_types' => true,
         'dir_constant' => true,
-        'final_static_access' => false,
+        'self_static_accessor' => false,
         'fully_qualified_strict_types' => true,
         'function_to_constant' => true,
         'function_typehint_space' => true,
@@ -76,7 +76,7 @@ return (new Config())
         'ternary_to_null_coalescing' => true,
         'trim_array_spaces' => true,
         'array_indentation' => true,
-        'trailing_comma_in_multiline_array' => true,
+        'trailing_comma_in_multiline' => true,
         'visibility_required' => true,
         'yoda_style' => false,
     ]);

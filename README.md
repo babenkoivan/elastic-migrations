@@ -253,10 +253,16 @@ php artisan elastic:migrate:reset
 
 ## Starting Over
 
-Sometimes you just want to start over and rollback all the changes to migrate them again immediately:
+Sometimes you just want to start over, rollback all the changes and apply them again:
 
 ```bash
 php artisan elastic:migrate:refresh
+```
+
+Alternatively you can also drop all existing indices and rerun the migrations:
+
+```bash
+php artisan elastic:migrate:fresh
 ```
 
 ## Migration Status
