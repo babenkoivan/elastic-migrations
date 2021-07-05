@@ -3,6 +3,7 @@
 namespace ElasticMigrations;
 
 use ElasticMigrations\Adapters\IndexManagerAdapter;
+use ElasticMigrations\Console\FreshCommand;
 use ElasticMigrations\Console\MakeCommand;
 use ElasticMigrations\Console\MigrateCommand;
 use ElasticMigrations\Console\RefreshCommand;
@@ -37,6 +38,7 @@ final class ServiceProvider extends AbstractServiceProvider
         ResetCommand::class,
         RollbackCommand::class,
         StatusCommand::class,
+        FreshCommand::class,
     ];
 
     /**
