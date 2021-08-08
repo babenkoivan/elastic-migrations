@@ -20,7 +20,7 @@ class FreshCommand extends Command
     /**
      * @var string
      */
-    protected $description = 'Drop all indicies and re-run all migrations';
+    protected $description = 'Drop all indices and re-run all migrations';
     /**
      * @var Migrator
      */
@@ -34,8 +34,11 @@ class FreshCommand extends Command
      */
     private $indexManager;
 
-    public function __construct(Migrator $migrator, MigrationRepository $migrationRepository, IndexManagerInterface $indexManager)
-    {
+    public function __construct(
+        Migrator $migrator,
+        MigrationRepository $migrationRepository,
+        IndexManagerInterface $indexManager
+    ) {
         parent::__construct();
 
         $this->migrator = $migrator;
