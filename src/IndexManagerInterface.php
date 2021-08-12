@@ -12,7 +12,7 @@ interface IndexManagerInterface
 
     public function putSettings(string $indexName, callable $modifier): self;
 
-    public function putSettingsHard(string $indexName, callable $modifier): self;
+    public function pushSettings(string $indexName, callable $modifier): self;
 
     public function drop(string $indexName): self;
 

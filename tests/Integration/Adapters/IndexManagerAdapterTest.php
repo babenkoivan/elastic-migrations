@@ -3,7 +3,7 @@
 namespace ElasticMigrations\Tests\Integration\Adapters;
 
 use ElasticAdapter\Indices\Alias;
-use ElasticAdapter\Indices\Index;
+use ElasticAdapter\Indices\IndexBlueprint;
 use ElasticAdapter\Indices\IndexManager;
 use ElasticAdapter\Indices\Mapping;
 use ElasticAdapter\Indices\Settings;
@@ -45,7 +45,7 @@ final class IndexManagerAdapterTest extends TestCase
         $this->indexManagerMock
             ->expects($this->once())
             ->method('create')
-            ->with(new Index($indexNamePrefix . $indexName));
+            ->with(new IndexBlueprint($indexNamePrefix . $indexName));
 
         $this->indexManagerAdapter->create($indexName);
     }
@@ -67,7 +67,7 @@ final class IndexManagerAdapterTest extends TestCase
         $this->indexManagerMock
             ->expects($this->once())
             ->method('create')
-            ->with(new Index(
+            ->with(new IndexBlueprint(
                 $indexNamePrefix . $indexName,
                 (new Mapping())->text('title'),
                 (new Settings())->index(['number_of_replicas' => 2])
@@ -94,7 +94,7 @@ final class IndexManagerAdapterTest extends TestCase
         $this->indexManagerMock
             ->expects($this->once())
             ->method('create')
-            ->with(new Index($indexNamePrefix . $indexName));
+            ->with(new IndexBlueprint($indexNamePrefix . $indexName));
 
         $this->indexManagerAdapter->createIfNotExists($indexName);
     }
@@ -150,7 +150,7 @@ final class IndexManagerAdapterTest extends TestCase
     /**
      * @dataProvider prefixProvider
      */
-    public function test_settings_can_be_updated_in_a_hard_way(string $indexNamePrefix): void
+    public function test_settings_can_be_pushed(string $indexNamePrefix): void
     {
         $this->app['config']->set('elastic.migrations.index_name_prefix', $indexNamePrefix);
 
@@ -178,7 +178,7 @@ final class IndexManagerAdapterTest extends TestCase
             ->method('open')
             ->with($indexNamePrefix . $indexName);
 
-        $this->indexManagerAdapter->putSettingsHard($indexName, $modifier);
+        $this->indexManagerAdapter->pushSettings($indexName, $modifier);
     }
 
     /**

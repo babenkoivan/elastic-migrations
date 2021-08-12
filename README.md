@@ -161,11 +161,11 @@ Index::putSettings('my-index', function (Settings $settings) {
 });
 ``` 
 
-You can update analysis settings only on closed indices. The `putSettingsHard` method closes the index, updates the configuration and
+You can update analysis settings only on closed indices. The `pushSettings` method closes the index, updates the configuration and
 opens the index again:
 
 ```php
-Index::putSettingsHard('my-index', function (Settings $settings) {
+Index::pushSettings('my-index', function (Settings $settings) {
     $settings->analysis([
         'analyzer' => [
             'title' => [

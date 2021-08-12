@@ -3,7 +3,7 @@
 namespace ElasticMigrations\Adapters;
 
 use ElasticAdapter\Indices\Alias;
-use ElasticAdapter\Indices\Index;
+use ElasticAdapter\Indices\IndexBlueprint;
 use ElasticAdapter\Indices\IndexManager;
 use ElasticAdapter\Indices\Mapping;
 use ElasticAdapter\Indices\Settings;
@@ -33,9 +33,9 @@ class IndexManagerAdapter implements IndexManagerInterface
 
             $modifier($mapping, $settings);
 
-            $index = new Index($prefixedIndexName, $mapping, $settings);
+            $index = new IndexBlueprint($prefixedIndexName, $mapping, $settings);
         } else {
-            $index = new Index($prefixedIndexName);
+            $index = new IndexBlueprint($prefixedIndexName);
         }
 
         $this->indexManager->create($index);
@@ -60,6 +60,7 @@ class IndexManagerAdapter implements IndexManagerInterface
 
         $mapping = new Mapping();
         $modifier($mapping);
+
         $this->indexManager->putMapping($prefixedIndexName, $mapping);
 
         return $this;
@@ -71,12 +72,13 @@ class IndexManagerAdapter implements IndexManagerInterface
 
         $settings = new Settings();
         $modifier($settings);
+
         $this->indexManager->putSettings($prefixedIndexName, $settings);
 
         return $this;
     }
 
-    public function putSettingsHard(string $indexName, callable $modifier): IndexManagerInterface
+    public function pushSettings(string $indexName, callable $modifier): IndexManagerInterface
     {
         $prefixedIndexName = prefix_index_name($indexName);
 
