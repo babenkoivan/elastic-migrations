@@ -31,10 +31,7 @@ class ResetCommand extends Command
         $this->migrator = $migrator;
     }
 
-    /**
-     * @return int
-     */
-    public function handle()
+    public function handle(): int
     {
         $this->migrator->setOutput($this->output);
 

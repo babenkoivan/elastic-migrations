@@ -46,14 +46,11 @@ class FreshCommand extends Command
         $this->indexManager = $indexManager;
     }
 
-    /**
-     * @return int
-     */
-    public function handle()
+    public function handle(): int
     {
         $this->migrator->setOutput($this->output);
 
-        if (! $this->confirmToProceed() || ! $this->migrator->isReady()) {
+        if (!$this->confirmToProceed() || !$this->migrator->isReady()) {
             return 1;
         }
 

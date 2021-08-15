@@ -138,7 +138,7 @@ class Migrator implements ReadinessInterface
         $files->each(function (MigrationFile $file) use ($nextBatchNumber) {
             $this->output->writeln('<comment>Migrating:</comment> ' . $file->getName());
 
-            $migration = $this->migrationFactory->makeByFile($file);
+            $migration = $this->migrationFactory->makeFromFile($file);
             $migration->up();
 
             $this->migrationRepository->insert($file->getName(), $nextBatchNumber);
@@ -172,7 +172,7 @@ class Migrator implements ReadinessInterface
         $files->each(function (MigrationFile $file) {
             $this->output->writeln('<comment>Rolling back:</comment> ' . $file->getName());
 
-            $migration = $this->migrationFactory->makeByFile($file);
+            $migration = $this->migrationFactory->makeFromFile($file);
             $migration->down();
 
             $this->migrationRepository->delete($file->getName());

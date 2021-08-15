@@ -5,7 +5,6 @@ namespace ElasticMigrations\Console;
 use Carbon\Carbon;
 use ElasticMigrations\Filesystem\MigrationStorage;
 use Illuminate\Console\Command;
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
 
@@ -37,12 +36,7 @@ class MakeCommand extends Command
         $this->migrationStorage = $migrationStorage;
     }
 
-    /**
-     * @return int
-     *
-     * @throws FileNotFoundException
-     */
-    public function handle()
+    public function handle(): int
     {
         $name = Str::snake(trim($this->argument('name')));
 
