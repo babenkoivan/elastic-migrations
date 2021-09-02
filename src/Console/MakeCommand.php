@@ -20,39 +20,23 @@ class MakeCommand extends Command
      * @var string
      */
     protected $description = 'Create a new migration file';
-    /**
-     * @var Filesystem
-     */
-    private $filesystem;
-    /**
-     * @var MigrationStorage
-     */
-    private $migrationStorage;
-
-    public function __construct(Filesystem $filesystem, MigrationStorage $migrationStorage)
-    {
-        parent::__construct();
-
-        $this->filesystem = $filesystem;
-        $this->migrationStorage = $migrationStorage;
-    }
 
     /**
      * @return int
      *
      * @throws FileNotFoundException
      */
-    public function handle()
+    public function handle(Filesystem $filesystem, MigrationStorage $migrationStorage)
     {
         $name = Str::snake(trim($this->argument('name')));
 
         $fileName = sprintf('%s_%s', (new Carbon())->format('Y_m_d_His'), $name);
         $className = Str::studly($name);
 
-        $stub = $this->filesystem->get(__DIR__ . '/stubs/migration.blank.stub');
+        $stub = $filesystem->get(__DIR__ . '/stubs/migration.blank.stub');
         $content = str_replace('DummyClass', $className, $stub);
 
-        $this->migrationStorage->create($fileName, $content);
+        $migrationStorage->create($fileName, $content);
 
         $this->output->writeln('<info>Created migration:</info> ' . $fileName);
 
