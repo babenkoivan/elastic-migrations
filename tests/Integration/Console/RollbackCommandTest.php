@@ -5,6 +5,7 @@ namespace ElasticMigrations\Tests\Integration\Console;
 use ElasticMigrations\Console\RollbackCommand;
 use ElasticMigrations\Migrator;
 use ElasticMigrations\Tests\Integration\TestCase;
+use Illuminate\Console\OutputStyle;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
@@ -29,7 +30,7 @@ final class RollbackCommandTest extends TestCase
 
         $this->migrator = $this->createMock(Migrator::class);
 
-        $this->command = new RollbackCommand($this->migrator);
+        $this->command = new RollbackCommand();
         $this->command->setLaravel($this->app);
     }
 
@@ -48,10 +49,17 @@ final class RollbackCommandTest extends TestCase
             ->expects($this->never())
             ->method('rollbackLastBatch');
 
-        $result = $this->command->run(
-            new ArrayInput(['--force' => true]),
-            new NullOutput()
+        $output = $this->app->make(
+            OutputStyle::class,
+            [
+                'input' => new ArrayInput(['--force' => true]),
+                'output' => new NullOutput(),
+            ]
         );
+
+        $this->command->setOutput($output);
+
+        $result = $this->command->handle($this->migrator);
 
         $this->assertSame(1, $result);
     }
@@ -68,10 +76,23 @@ final class RollbackCommandTest extends TestCase
             ->method('rollbackOne')
             ->with('test_file_name');
 
-        $result = $this->command->run(
-            new ArrayInput(['--force' => true, 'fileName' => 'test_file_name']),
-            new NullOutput()
+        $input = new ArrayInput(
+            ['--force' => true, 'fileName' => 'test_file_name'],
+            $this->command->getDefinition()
         );
+
+        $output = $this->app->make(
+            OutputStyle::class,
+            [
+                'input' => $input,
+                'output' => new NullOutput(),
+            ]
+        );
+
+        $this->command->setInput($input);
+        $this->command->setOutput($output);
+
+        $result = $this->command->handle($this->migrator);
 
         $this->assertSame(0, $result);
     }
@@ -87,10 +108,20 @@ final class RollbackCommandTest extends TestCase
             ->expects($this->once())
             ->method('rollbackLastBatch');
 
-        $result = $this->command->run(
-            new ArrayInput(['--force' => true]),
-            new NullOutput()
+        $input = new ArrayInput(
+            ['--force' => true],
+            $this->command->getDefinition()
         );
+
+        $output = $this->app->make(OutputStyle::class, [
+            'input' => $input,
+            'output' =>  new NullOutput(),
+        ]);
+
+        $this->command->setInput($input);
+        $this->command->setOutput($output);
+
+        $result = $this->command->handle($this->migrator);
 
         $this->assertSame(0, $result);
     }

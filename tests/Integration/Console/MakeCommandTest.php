@@ -5,6 +5,7 @@ namespace ElasticMigrations\Tests\Integration\Console;
 use ElasticMigrations\Console\MakeCommand;
 use ElasticMigrations\Filesystem\MigrationStorage;
 use ElasticMigrations\Tests\Integration\TestCase;
+use Illuminate\Console\OutputStyle;
 use Illuminate\Filesystem\Filesystem;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
@@ -30,13 +31,24 @@ final class MakeCommandTest extends TestCase
                 str_replace('DummyClass', 'TestMigrationCreation', $migrationStub)
             );
 
-        $command = new MakeCommand($fileSystem, $migrationStorageMock);
+        $command = new MakeCommand();
         $command->setLaravel($this->app);
 
-        $input = new ArrayInput(['name' => 'test_migration_creation']);
+        $input = new ArrayInput(
+            ['name' => 'test_migration_creation'],
+            $command->getDefinition()
+        );
         $output = new BufferedOutput();
 
-        $resultCode = $command->run($input, $output);
+        $command->setInput($input);
+        $command->setOutput(
+            $this->app->make(OutputStyle::class, [
+                'input' => $input,
+                'output' => $output,
+            ])
+        );
+
+        $resultCode = $command->handle($fileSystem, $migrationStorageMock);
         $resultMessage = $output->fetch();
 
         $this->assertSame(0, $resultCode);

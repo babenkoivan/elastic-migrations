@@ -5,6 +5,7 @@ namespace ElasticMigrations\Tests\Integration\Console;
 use ElasticMigrations\Console\RefreshCommand;
 use ElasticMigrations\Migrator;
 use ElasticMigrations\Tests\Integration\TestCase;
+use Illuminate\Console\OutputStyle;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
@@ -29,7 +30,7 @@ final class RefreshCommandTest extends TestCase
 
         $this->migrator = $this->createMock(Migrator::class);
 
-        $this->command = new RefreshCommand($this->migrator);
+        $this->command = new RefreshCommand();
         $this->command->setLaravel($this->app);
     }
 
@@ -48,10 +49,14 @@ final class RefreshCommandTest extends TestCase
             ->expects($this->never())
             ->method('migrateAll');
 
-        $result = $this->command->run(
-            new ArrayInput(['--force' => true]),
-            new NullOutput()
-        );
+        $output = $this->app->make(OutputStyle::class, [
+            'input' => new ArrayInput(['--force' => true]),
+            'output' =>  new NullOutput(),
+        ]);
+
+        $this->command->setOutput($output);
+
+        $result = $this->command->handle($this->migrator);
 
         $this->assertSame(1, $result);
     }
@@ -71,10 +76,14 @@ final class RefreshCommandTest extends TestCase
             ->expects($this->once())
             ->method('migrateAll');
 
-        $result = $this->command->run(
-            new ArrayInput(['--force' => true]),
-            new NullOutput()
-        );
+        $output = $this->app->make(OutputStyle::class, [
+            'input' => new ArrayInput(['--force' => true]),
+            'output' =>   new NullOutput(),
+        ]);
+
+        $this->command->setOutput($output);
+
+        $result = $this->command->handle($this->migrator);
 
         $this->assertSame(0, $result);
     }
