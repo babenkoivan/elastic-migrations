@@ -7,7 +7,6 @@ use ElasticMigrations\IndexManagerInterface;
 use ElasticMigrations\Migrator;
 use ElasticMigrations\Repositories\MigrationRepository;
 use ElasticMigrations\Tests\Integration\TestCase;
-use Illuminate\Console\OutputStyle;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
@@ -39,8 +38,13 @@ final class FreshCommandTest extends TestCase
         parent::setUp();
 
         $this->migrator = $this->createMock(Migrator::class);
+        $this->app->instance(Migrator::class, $this->migrator);
+
         $this->migrationRepository = $this->createMock(MigrationRepository::class);
+        $this->app->instance(MigrationRepository::class, $this->migrationRepository);
+
         $this->indexManager = $this->createMock(IndexManagerInterface::class);
+        $this->app->instance(IndexManagerInterface::class, $this->indexManager);
 
         $this->command = new FreshCommand();
         $this->command->setLaravel($this->app);
@@ -65,20 +69,9 @@ final class FreshCommandTest extends TestCase
             ->expects($this->never())
             ->method('migrateAll');
 
-        $output = $this->app->make(
-            OutputStyle::class,
-            [
-                'input' => new ArrayInput(['--force' => true]),
-                'output' => new NullOutput(),
-            ]
-        );
-
-        $this->command->setOutput($output);
-
-        $result = $this->command->handle(
-            $this->migrator,
-            $this->migrationRepository,
-            $this->indexManager
+        $result = $this->command->run(
+            new ArrayInput(['--force' => true]),
+            new NullOutput()
         );
 
         $this->assertSame(1, $result);
@@ -104,17 +97,9 @@ final class FreshCommandTest extends TestCase
             ->expects($this->once())
             ->method('migrateAll');
 
-        $output = $this->app->make(OutputStyle::class, [
-            'input' => new ArrayInput(['--force' => true]),
-            'output' => new NullOutput(),
-        ]);
-
-        $this->command->setOutput($output);
-
-        $result = $this->command->handle(
-            $this->migrator,
-            $this->migrationRepository,
-            $this->indexManager
+        $result = $this->command->run(
+            new ArrayInput(['--force' => true]),
+            new NullOutput()
         );
 
         $this->assertSame(0, $result);

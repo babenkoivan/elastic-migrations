@@ -5,7 +5,6 @@ namespace ElasticMigrations\Tests\Integration\Console;
 use ElasticMigrations\Console\StatusCommand;
 use ElasticMigrations\Migrator;
 use ElasticMigrations\Tests\Integration\TestCase;
-use Illuminate\Console\OutputStyle;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
@@ -29,6 +28,7 @@ final class StatusCommandTest extends TestCase
         parent::setUp();
 
         $this->migrator = $this->createMock(Migrator::class);
+        $this->app->instance(Migrator::class, $this->migrator);
 
         $this->command = new StatusCommand();
         $this->command->setLaravel($this->app);
@@ -45,17 +45,10 @@ final class StatusCommandTest extends TestCase
             ->expects($this->never())
             ->method('showStatus');
 
-        $output = $this->app->make(
-            OutputStyle::class,
-            [
-                'input' => new ArrayInput([]),
-                'output' => new NullOutput(),
-            ]
+        $result = $this->command->run(
+            new ArrayInput([]),
+            new NullOutput()
         );
-
-        $this->command->setOutput($output);
-
-        $result = $this->command->handle($this->migrator);
 
         $this->assertSame(1, $result);
     }
@@ -71,17 +64,10 @@ final class StatusCommandTest extends TestCase
             ->expects($this->once())
             ->method('showStatus');
 
-        $output = $this->app->make(
-            OutputStyle::class,
-            [
-                'input' => new ArrayInput([]),
-                'output' => new NullOutput(),
-            ]
+        $result = $this->command->run(
+            new ArrayInput([]),
+            new NullOutput()
         );
-
-        $this->command->setOutput($output);
-
-        $result = $this->command->handle($this->migrator);
 
         $this->assertSame(0, $result);
     }

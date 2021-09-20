@@ -5,7 +5,6 @@ namespace ElasticMigrations\Tests\Integration\Console;
 use ElasticMigrations\Console\ResetCommand;
 use ElasticMigrations\Migrator;
 use ElasticMigrations\Tests\Integration\TestCase;
-use Illuminate\Console\OutputStyle;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
@@ -29,6 +28,7 @@ final class ResetCommandTest extends TestCase
         parent::setUp();
 
         $this->migrator = $this->createMock(Migrator::class);
+        $this->app->instance(Migrator::class, $this->migrator);
 
         $this->command = new ResetCommand();
         $this->command->setLaravel($this->app);
@@ -45,17 +45,10 @@ final class ResetCommandTest extends TestCase
             ->expects($this->never())
             ->method('rollbackAll');
 
-        $output = $this->app->make(
-            OutputStyle::class,
-            [
-                'input' => new ArrayInput(['--force' => true]),
-                'output' => new NullOutput(),
-            ]
+        $result = $this->command->run(
+            new ArrayInput(['--force' => true]),
+            new NullOutput()
         );
-
-        $this->command->setOutput($output);
-
-        $result = $this->command->handle($this->migrator);
 
         $this->assertSame(1, $result);
     }
@@ -71,17 +64,10 @@ final class ResetCommandTest extends TestCase
             ->expects($this->once())
             ->method('rollbackAll');
 
-        $output = $this->app->make(
-            OutputStyle::class,
-            [
-                'input' => new ArrayInput(['--force' => true]),
-                'output' => new NullOutput(),
-            ]
+        $result = $this->command->run(
+            new ArrayInput(['--force' => true]),
+            new NullOutput()
         );
-
-        $this->command->setOutput($output);
-
-        $result = $this->command->handle($this->migrator);
 
         $this->assertSame(0, $result);
     }
