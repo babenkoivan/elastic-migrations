@@ -5,7 +5,6 @@ namespace ElasticMigrations\Tests\Integration\Console;
 use ElasticMigrations\Console\MakeCommand;
 use ElasticMigrations\Filesystem\MigrationStorage;
 use ElasticMigrations\Tests\Integration\TestCase;
-use Illuminate\Filesystem\Filesystem;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 
