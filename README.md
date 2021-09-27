@@ -14,7 +14,7 @@
 
 ---
 
-Elasticsearch migrations for Laravel allow you to easily modify and share indices schema across the application's environments.
+Elastic Migrations for Laravel allow you to easily modify and share indices schema across the application's environments.
 
 ## Contents
 
@@ -95,18 +95,18 @@ You can use `ElasticMigrations\Facades\Index` facade to perform basic operations
 
 #### Create Index
 
-Create an index with the default settings: 
+You can create an index with the default settings: 
 
 ```php
 Index::create('my-index');
 ``` 
 
-or use a modifier to configure mapping and settings:
+You can use a modifier to configure mapping and settings:
 
 ```php
 Index::create('my-index', function (Mapping $mapping, Settings $settings) {
     // to add a new field to the mapping use method name as a field type (in Camel Case), 
-    // first argument as a field name and optional second argument as additional field parameters  
+    // first argument as a field name and optional second argument for additional field parameters  
     $mapping->text('title', ['boost' => 2]);
     $mapping->float('price');
 
@@ -118,13 +118,12 @@ Index::create('my-index', function (Mapping $mapping, Settings $settings) {
         ],
     ]);
     
-    // you can also change the index settings 
+    // you can also change the index settings and the analysis configuration
     $settings->index([
          'number_of_replicas' => 2,
          'refresh_interval' => -1
     ]);
     
-    // and analysis configuration
     $settings->analysis([
         'analyzer' => [
             'title' => [
@@ -136,15 +135,36 @@ Index::create('my-index', function (Mapping $mapping, Settings $settings) {
 });
 ```
 
-There is also an option to create an index only if it doesn't exist:
+There is also the `createRaw` method in your disposal:
 
 ```php
-Index::createIfNotExists('my-index');
-``` 
+$mapping = [
+    'properties' => [
+        'title' => [
+            'type' => 'text'
+        ]
+    ]
+];
+
+$settings = [
+    'number_of_replicas' => 2
+];
+
+Index::createRaw('my-index', $mapping, $settings);
+```
+
+Finally, it is possible to create an index only if it doesn't exist:
+
+```php
+// you can use a modifier as shown above
+Index::createIfNotExists('my-index', $modifier);
+// or you can use raw mapping and settings 
+Index::createIfNotExistsRaw('my-index', $mapping, $settings);
+```
 
 #### Update Mapping
 
-Use the modifier to adjust the mapping:
+You can use a modifier to adjust the mapping:
 
 ```php
 Index::putMapping('my-index', function (Mapping $mapping) {
@@ -153,9 +173,25 @@ Index::putMapping('my-index', function (Mapping $mapping) {
 });
 ```
 
+Alternatively, you can use the `putMappingRaw` method as follows:
+
+```php
+Index::putMappingRaw('my-index', [
+    'properties' => [
+        'title' => [
+            'type' => 'text',
+            'boost' => 2
+        ],
+        'price' => [
+            'price' => 'float'
+        ]      
+    ]   
+]);
+```
+
 #### Update Settings
 
-Use the modifier to change the index configuration:
+You can use a modifier to change an index configuration:
 
 ```php
 Index::putSettings('my-index', function (Settings $settings) {
@@ -166,8 +202,19 @@ Index::putSettings('my-index', function (Settings $settings) {
 });
 ``` 
 
-You can update analysis settings only on closed indices. The `pushSettings` method closes the index, updates the configuration and
-opens the index again:
+The same result can be achieved with the `putSettingsRaw` method:
+
+```php
+Index::putSettingsRaw('my-index', [
+    'index' => [
+        'number_of_replicas' => 2,
+        'refresh_interval' => -1
+    ]
+]); 
+```
+
+It is possible to update analysis settings only on closed indices. The `pushSettings` method closes the index, 
+updates the configuration and opens the index again:
 
 ```php
 Index::pushSettings('my-index', function (Settings $settings) {
@@ -180,7 +227,22 @@ Index::pushSettings('my-index', function (Settings $settings) {
         ]
     ]);
 });
-``` 
+```
+
+The same can be done with the `pushSettingsRaw` method:
+
+```php
+Index::pushSettingsRaw('my-index', [
+    'analysis' => [
+        'analyzer' => [
+            'title' => [
+                'type' => 'custom',
+                'tokenizer' => 'whitespace'
+            ]
+        ]
+    ]
+]); 
+```
 
 #### Drop Index
 
