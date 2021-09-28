@@ -128,4 +128,47 @@ final class MigrationStorageTest extends TestCase
         // create a new instance to apply the new config
         $this->assertFalse(resolve(MigrationStorage::class)->isReady());
     }
+
+    public function test_all_files_within_added_directory_can_be_retrieved(): void
+    {
+        $this->migrationStorage->addDirectory(realpath(__DIR__ . '/../../another_migrations'));
+        $files = $this->migrationStorage->findAll();
+
+        $this->assertSame(
+            [
+                '2018_12_01_900000_create_another_test_index',
+                '2019_08_10_159130_update_another_test_index_mapping',
+                '2018_12_01_081000_create_test_index',
+                '2019_08_10_142230_update_test_index_mapping',
+            ],
+            $files->map(static function (MigrationFile $file) {
+                return $file->getName();
+            })->toArray()
+        );
+    }
+
+    public function existingFileNameInAddedDirectoryProvider(): array
+    {
+        return [
+            ['2018_12_01_081000_create_test_index'],
+            ['2019_08_10_142230_update_test_index_mapping'],
+            ['2019_08_10_142230_update_test_index_mapping.php'],
+            [' 2019_08_10_142230_update_test_index_mapping.php '],
+            ['2018_12_01_900000_create_another_test_index'],
+            ['2019_08_10_159130_update_another_test_index_mapping'],
+            ['2019_08_10_159130_update_another_test_index_mapping.php'],
+            [' 2019_08_10_159130_update_another_test_index_mapping.php '],
+        ];
+    }
+
+    /**
+     * @dataProvider existingFileNameInAddedDirectoryProvider
+     */
+    public function test_file_can_be_found_in_added_directory_if_exists(string $fileName): void
+    {
+        $this->migrationStorage->addDirectory(realpath(__DIR__ . '/../../another_migrations'));
+        $file = $this->migrationStorage->findByName($fileName);
+
+        $this->assertSame(basename(trim($fileName), '.php'), $file->getName());
+    }
 }
