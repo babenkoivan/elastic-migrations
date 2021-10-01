@@ -19,31 +19,20 @@ class RefreshCommand extends Command
      * @var string
      */
     protected $description = 'Reset and re-run all migrations';
-    /**
-     * @var Migrator
-     */
-    private $migrator;
-
-    public function __construct(Migrator $migrator)
-    {
-        parent::__construct();
-
-        $this->migrator = $migrator;
-    }
 
     /**
      * @return int
      */
-    public function handle()
+    public function handle(Migrator $migrator)
     {
-        $this->migrator->setOutput($this->output);
+        $migrator->setOutput($this->output);
 
-        if (!$this->confirmToProceed() || !$this->migrator->isReady()) {
+        if (!$this->confirmToProceed() || !$migrator->isReady()) {
             return 1;
         }
 
-        $this->migrator->rollbackAll();
-        $this->migrator->migrateAll();
+        $migrator->rollbackAll();
+        $migrator->migrateAll();
 
         return 0;
     }

@@ -28,8 +28,9 @@ final class RollbackCommandTest extends TestCase
         parent::setUp();
 
         $this->migrator = $this->createMock(Migrator::class);
+        $this->app->instance(Migrator::class, $this->migrator);
 
-        $this->command = new RollbackCommand($this->migrator);
+        $this->command = new RollbackCommand();
         $this->command->setLaravel($this->app);
     }
 

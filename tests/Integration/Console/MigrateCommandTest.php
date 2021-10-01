@@ -28,8 +28,9 @@ final class MigrateCommandTest extends TestCase
         parent::setUp();
 
         $this->migrator = $this->createMock(Migrator::class);
+        $this->app->instance(Migrator::class, $this->migrator);
 
-        $this->command = new MigrateCommand($this->migrator);
+        $this->command = new MigrateCommand();
         $this->command->setLaravel($this->app);
     }
 
