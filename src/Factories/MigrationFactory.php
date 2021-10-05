@@ -6,9 +6,9 @@ use ElasticMigrations\Filesystem\MigrationFile;
 use ElasticMigrations\MigrationInterface;
 use Illuminate\Support\Str;
 
-final class MigrationFactory
+class MigrationFactory
 {
-    public function makeByFile(MigrationFile $file): MigrationInterface
+    public function makeFromFile(MigrationFile $file): MigrationInterface
     {
         require_once $file->getPath();
 

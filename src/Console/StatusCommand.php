@@ -16,10 +16,7 @@ class StatusCommand extends Command
      */
     protected $description = 'Show the status of each migration';
 
-    /**
-     * @return int
-     */
-    public function handle(Migrator $migrator)
+    public function handle(Migrator $migrator): int
     {
         $migrator->setOutput($this->output);
 

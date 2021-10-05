@@ -21,10 +21,7 @@ class RollbackCommand extends Command
      */
     protected $description = 'Rollback migrations';
 
-    /**
-     * @return int
-     */
-    public function handle(Migrator $migrator)
+    public function handle(Migrator $migrator): int
     {
         $migrator->setOutput($this->output);
 

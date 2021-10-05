@@ -20,10 +20,7 @@ class RefreshCommand extends Command
      */
     protected $description = 'Reset and re-run all migrations';
 
-    /**
-     * @return int
-     */
-    public function handle(Migrator $migrator)
+    public function handle(Migrator $migrator): int
     {
         $migrator->setOutput($this->output);
 

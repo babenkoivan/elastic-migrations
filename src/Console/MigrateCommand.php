@@ -21,10 +21,7 @@ class MigrateCommand extends Command
      */
     protected $description = 'Run the migrations';
 
-    /**
-     * @return int
-     */
-    public function handle(Migrator $migrator)
+    public function handle(Migrator $migrator): int
     {
         $migrator->setOutput($this->output);
 

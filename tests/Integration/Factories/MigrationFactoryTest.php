@@ -35,13 +35,13 @@ final class MigrationFactoryTest extends TestCase
     /**
      * @dataProvider fileNameProvider
      */
-    public function test_migration_can_be_created_by_file(string $fileName): void
+    public function test_migration_can_be_created_from_file(string $fileName): void
     {
         $file = resolve(MigrationStorage::class)->findByName($fileName);
 
         $this->assertInstanceOf(
             MigrationInterface::class,
-            $this->migrationFactory->makeByFile($file)
+            $this->migrationFactory->makeFromFile($file)
         );
     }
 }

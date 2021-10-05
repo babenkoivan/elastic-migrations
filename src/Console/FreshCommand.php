@@ -22,14 +22,11 @@ class FreshCommand extends Command
      */
     protected $description = 'Drop all indices and re-run all migrations';
 
-    /**
-     * @return int
-     */
     public function handle(
         Migrator $migrator,
         MigrationRepository $migrationRepository,
         IndexManagerInterface $indexManager
-    ) {
+    ): int {
         $migrator->setOutput($this->output);
 
         if (! $this->confirmToProceed() || ! $migrator->isReady()) {

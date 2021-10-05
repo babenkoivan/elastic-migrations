@@ -14,7 +14,7 @@
 
 ---
 
-Elasticsearch migrations for Laravel allow you to easily modify and share indices schema across the application's environments.
+Elastic Migrations for Laravel allow you to easily modify and share indices schema across the application's environments.
 
 ## Contents
 
@@ -33,7 +33,7 @@ Elasticsearch migrations for Laravel allow you to easily modify and share indice
 
 The current version of Elastic Migrations has been tested with the following configuration:
 
-* PHP 7.2-8.0
+* PHP 7.3-8.0
 * Elasticsearch 7.x
 * Laravel 6.x-8.x
 
@@ -59,14 +59,19 @@ php artisan vendor:publish --provider="ElasticClient\ServiceProvider"
 You can change Elasticsearch host and other client settings in the `config/elastic.client.php` file. Please refer to 
 [babenkoivan/elastic-client](https://github.com/babenkoivan/elastic-client) for more details.
 
-If you want to change the migration **table name**, the default **migrations directory** or set **prefixes** for indices 
-and aliases, publish Elastic Migrations settings as well:
+You can also publish Elastic Migrations settings:
 
 ```bash
 php artisan vendor:publish --provider="ElasticMigrations\ServiceProvider"
 ```
 
-The published configuration can be found in the `config/elastic.migrations.php` file. 
+This will create the `config/elastic.migrations.php` file, which allows you to configure the following options:
+
+* `table` - the migration table name
+* `connection` - the database connection
+* `storage_directory` - the migrations directory
+* `index_name_prefix` - the indices prefix
+* `alias_name_prefix` - the aliases prefix
 
 Finally, don't forget to run Laravel database migrations to create Elastic Migrations table:
 
@@ -90,18 +95,18 @@ You can use `ElasticMigrations\Facades\Index` facade to perform basic operations
 
 #### Create Index
 
-Create an index with the default settings: 
+You can create an index with the default settings: 
 
 ```php
 Index::create('my-index');
 ``` 
 
-or use a modifier to configure mapping and settings:
+You can use a modifier to configure mapping and settings:
 
 ```php
 Index::create('my-index', function (Mapping $mapping, Settings $settings) {
     // to add a new field to the mapping use method name as a field type (in Camel Case), 
-    // first argument as a field name and optional second argument as additional field parameters  
+    // first argument as a field name and optional second argument for additional field parameters  
     $mapping->text('title', ['boost' => 2]);
     $mapping->float('price');
 
@@ -113,13 +118,12 @@ Index::create('my-index', function (Mapping $mapping, Settings $settings) {
         ],
     ]);
     
-    // you can also change the index settings 
+    // you can also change the index settings and the analysis configuration
     $settings->index([
          'number_of_replicas' => 2,
          'refresh_interval' => -1
     ]);
     
-    // and analysis configuration
     $settings->analysis([
         'analyzer' => [
             'title' => [
@@ -131,15 +135,36 @@ Index::create('my-index', function (Mapping $mapping, Settings $settings) {
 });
 ```
 
-There is also an option to create an index only if it doesn't exist:
+There is also the `createRaw` method in your disposal:
 
 ```php
-Index::createIfNotExists('my-index');
-``` 
+$mapping = [
+    'properties' => [
+        'title' => [
+            'type' => 'text'
+        ]
+    ]
+];
+
+$settings = [
+    'number_of_replicas' => 2
+];
+
+Index::createRaw('my-index', $mapping, $settings);
+```
+
+Finally, it is possible to create an index only if it doesn't exist:
+
+```php
+// you can use a modifier as shown above
+Index::createIfNotExists('my-index', $modifier);
+// or you can use raw mapping and settings 
+Index::createIfNotExistsRaw('my-index', $mapping, $settings);
+```
 
 #### Update Mapping
 
-Use the modifier to adjust the mapping:
+You can use a modifier to adjust the mapping:
 
 ```php
 Index::putMapping('my-index', function (Mapping $mapping) {
@@ -148,9 +173,25 @@ Index::putMapping('my-index', function (Mapping $mapping) {
 });
 ```
 
+Alternatively, you can use the `putMappingRaw` method as follows:
+
+```php
+Index::putMappingRaw('my-index', [
+    'properties' => [
+        'title' => [
+            'type' => 'text',
+            'boost' => 2
+        ],
+        'price' => [
+            'price' => 'float'
+        ]      
+    ]   
+]);
+```
+
 #### Update Settings
 
-Use the modifier to change the index configuration:
+You can use a modifier to change an index configuration:
 
 ```php
 Index::putSettings('my-index', function (Settings $settings) {
@@ -161,11 +202,22 @@ Index::putSettings('my-index', function (Settings $settings) {
 });
 ``` 
 
-You can update analysis settings only on closed indices. The `putSettingsHard` method closes the index, updates the configuration and
-opens the index again:
+The same result can be achieved with the `putSettingsRaw` method:
 
 ```php
-Index::putSettingsHard('my-index', function (Settings $settings) {
+Index::putSettingsRaw('my-index', [
+    'index' => [
+        'number_of_replicas' => 2,
+        'refresh_interval' => -1
+    ]
+]); 
+```
+
+It is possible to update analysis settings only on closed indices. The `pushSettings` method closes the index, 
+updates the configuration and opens the index again:
+
+```php
+Index::pushSettings('my-index', function (Settings $settings) {
     $settings->analysis([
         'analyzer' => [
             'title' => [
@@ -175,7 +227,22 @@ Index::putSettingsHard('my-index', function (Settings $settings) {
         ]
     ]);
 });
-``` 
+```
+
+The same can be done with the `pushSettingsRaw` method:
+
+```php
+Index::pushSettingsRaw('my-index', [
+    'analysis' => [
+        'analyzer' => [
+            'title' => [
+                'type' => 'custom',
+                'tokenizer' => 'whitespace'
+            ]
+        ]
+    ]
+]); 
+```
 
 #### Drop Index
 
