@@ -20,7 +20,7 @@ class ResetCommand extends Command
      */
     protected $description = 'Rollback all migrations';
 
-    public function handle(Migrator $migrator)
+    public function handle(Migrator $migrator): int
     {
         $migrator->setOutput($this->output);
 
