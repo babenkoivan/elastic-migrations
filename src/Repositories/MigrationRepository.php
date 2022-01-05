@@ -48,9 +48,17 @@ class MigrationRepository implements ReadinessInterface
             ->delete();
     }
 
-    public function truncate(): void
+    public function deleteAll(): void
     {
         $this->table()->delete();
+    }
+
+    /**
+     * @deprecated
+     */
+    public function truncate(): void
+    {
+        $this->deleteAll();
     }
 
     public function getLastBatchNumber(): ?int

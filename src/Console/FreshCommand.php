@@ -35,7 +35,7 @@ class FreshCommand extends Command
 
         $indexManager->drop('*');
 
-        $migrationRepository->truncate();
+        $migrationRepository->deleteAll();
 
         $migrator->migrateAll();
 
