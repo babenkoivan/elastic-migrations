@@ -105,4 +105,13 @@ final class MigrationRepositoryTest extends TestCase
 
         $this->assertFalse($this->migrationRepository->isReady());
     }
+
+    public function test_repository_can_truncate_all_records(): void
+    {
+        $this->assertDatabaseCount($this->table, 2);
+
+        $this->migrationRepository->truncate();
+
+        $this->assertDatabaseCount($this->table, 0);
+    }
 }
