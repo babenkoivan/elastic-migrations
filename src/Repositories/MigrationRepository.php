@@ -58,7 +58,7 @@ class MigrationRepository implements ReadinessInterface
      */
     public function truncate(): void
     {
-        $this->deleteAll();
+        $this->table()->truncate();
     }
 
     public function getLastBatchNumber(): ?int
