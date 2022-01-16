@@ -105,4 +105,13 @@ final class MigrationRepositoryTest extends TestCase
 
         $this->assertFalse($this->migrationRepository->isReady());
     }
+
+    public function test_repository_can_delete_all_records(): void
+    {
+        $this->assertCount(2, $this->migrationRepository->getAll());
+
+        $this->migrationRepository->deleteAll();
+
+        $this->assertCount(0, $this->migrationRepository->getAll());
+    }
 }

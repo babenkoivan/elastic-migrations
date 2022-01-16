@@ -63,7 +63,7 @@ final class FreshCommandTest extends TestCase
 
         $this->migrationRepository
             ->expects($this->never())
-            ->method('truncate');
+            ->method('deleteAll');
 
         $this->migrator
             ->expects($this->never())
@@ -91,7 +91,7 @@ final class FreshCommandTest extends TestCase
 
         $this->migrationRepository
             ->expects($this->once())
-            ->method('truncate');
+            ->method('deleteAll');
 
         $this->migrator
             ->expects($this->once())

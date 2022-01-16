@@ -48,6 +48,14 @@ class MigrationRepository implements ReadinessInterface
             ->delete();
     }
 
+    public function deleteAll(): void
+    {
+        $this->table()->delete();
+    }
+
+    /**
+     * @deprecated
+     */
     public function truncate(): void
     {
         $this->table()->truncate();
