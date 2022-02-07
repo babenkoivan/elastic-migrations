@@ -8,14 +8,8 @@
 [![Static analysis](https://github.com/babenkoivan/elastic-migrations/workflows/Static%20analysis/badge.svg)](https://github.com/babenkoivan/elastic-migrations/actions?query=workflow%3A%22Static+analysis%22)
 [![Donate PayPal](https://img.shields.io/badge/donate-paypal-blue)](https://paypal.me/babenkoi)
 
----
-
 <p align="center">
-    🎅🏻 Ho ho ho! Christmas is coming! Please consider supporting and starring the project! ⭐️
-</p>
-
-<p align="center">
-    <a href="https://ko-fi.com/ivanbabenko" target="_blank"><img src="support.png" alt="Support the project!" height="80"></a>
+    <a href="https://ko-fi.com/ivanbabenko" target="_blank"><img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="Support the project!"></a>
 </p>
 
 ---
