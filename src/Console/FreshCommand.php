@@ -33,7 +33,9 @@ class FreshCommand extends Command
             return 1;
         }
 
-        $indexManager->drop('*');
+        foreach ($indexManager->all() as $index) {
+            $indexManager->delete($index['index']);
+        }
 
         $migrationRepository->deleteAll();
 
