@@ -33,9 +33,9 @@ Elastic Migrations for Laravel allow you to easily modify and share indices sche
 
 The current version of Elastic Migrations has been tested with the following configuration:
 
-* PHP 7.3-8.0
-* Elasticsearch 7.x
-* Laravel 6.x-8.x
+* PHP 7.4-8.0
+* Elasticsearch 7.x-9.x
+* Laravel 6.x-9.x
 
 ## Installation
 
@@ -53,7 +53,7 @@ Elastic Migrations uses [babenkoivan/elastic-client](https://github.com/babenkoi
 If you want to change the default client settings (and I'm pretty sure you do), then you need to create the configuration file first:
 
 ```bash
-php artisan vendor:publish --provider="ElasticClient\ServiceProvider"
+php artisan vendor:publish --provider="Elastic\Client\ServiceProvider"
 ```
 
 You can change Elasticsearch host and other client settings in the `config/elastic.client.php` file. Please refer to 
@@ -276,7 +276,7 @@ Index::deleteAlias('my-index', 'my-alias');
 
 #### More
 
-Finally, you are free to inject `Elasticsearch\Client` in the migration constructor and execute any supported by client actions.
+Finally, you are free to inject `Elastic\Elasticsearch\Client` in the migration constructor and execute any supported by client actions.
 
 ## Running Migrations
 

@@ -2,11 +2,11 @@
 
 namespace ElasticMigrations\Tests\Integration\Adapters;
 
-use ElasticAdapter\Indices\Alias;
-use ElasticAdapter\Indices\IndexBlueprint;
-use ElasticAdapter\Indices\IndexManager;
-use ElasticAdapter\Indices\Mapping;
-use ElasticAdapter\Indices\Settings;
+use Elastic\Adapter\Indices\Alias;
+use Elastic\Adapter\Indices\IndexBlueprint;
+use Elastic\Adapter\Indices\IndexManager;
+use Elastic\Adapter\Indices\Mapping;
+use Elastic\Adapter\Indices\Settings;
 use ElasticMigrations\Adapters\IndexManagerAdapter;
 use ElasticMigrations\Tests\Integration\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;

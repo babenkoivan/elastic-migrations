@@ -7,18 +7,18 @@ jobs:
     runs-on: ubuntu-18.04
     strategy:
       matrix:
-        php: [7.3, 7.4, 8.0]
+        php: [7.4, 8.0, 8.1]
         include:
-          - php: 7.3
-            testbench: 4.0
-            phpunit: 9.5
-
           - php: 7.4
             testbench: 5.0
             phpunit: 9.5
 
           - php: 8.0
             testbench: 6.0
+            phpunit: 9.5
+
+          - php: 8.1
+            testbench: 7.0
             phpunit: 9.5
     steps:
       - name: Checkout code

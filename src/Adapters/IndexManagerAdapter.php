@@ -2,11 +2,11 @@
 
 namespace ElasticMigrations\Adapters;
 
-use ElasticAdapter\Indices\Alias;
-use ElasticAdapter\Indices\IndexBlueprint;
-use ElasticAdapter\Indices\IndexManager;
-use ElasticAdapter\Indices\Mapping;
-use ElasticAdapter\Indices\Settings;
+use Elastic\Adapter\Indices\Alias;
+use Elastic\Adapter\Indices\IndexBlueprint;
+use Elastic\Adapter\Indices\IndexManager;
+use Elastic\Adapter\Indices\Mapping;
+use Elastic\Adapter\Indices\Settings;
 use ElasticMigrations\IndexManagerInterface;
 use function ElasticMigrations\prefix_alias_name;
 use function ElasticMigrations\prefix_index_name;
@@ -166,7 +166,7 @@ class IndexManagerAdapter implements IndexManagerInterface
         $prefixedIndexName = prefix_index_name($indexName);
         $prefixedAliasName = prefix_alias_name($aliasName);
 
-        $this->indexManager->putAlias($prefixedIndexName, new Alias($prefixedAliasName, $filter));
+        $this->indexManager->putAlias($prefixedIndexName, new Alias($prefixedAliasName, false, $filter));
 
         return $this;
     }
