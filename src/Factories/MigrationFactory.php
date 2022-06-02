@@ -13,7 +13,9 @@ class MigrationFactory
         require_once $file->getPath();
 
         $className = Str::studly(implode('_', array_slice(explode('_', $file->getName()), 4)));
+        /** @var MigrationInterface $migration */
+        $migration = resolve($className);
 
-        return resolve($className);
+        return $migration;
     }
 }

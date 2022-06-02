@@ -1,0 +1,66 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Parameter \\#1 \\$string of function rtrim expects string, mixed given\\.$#"
+			count: 1
+			path: src/Filesystem/MigrationStorage.php
+
+		-
+			message: "#^Property ElasticMigrations\\\\Repositories\\\\MigrationRepository\\:\\:\\$connection \\(string\\|null\\) does not accept mixed\\.$#"
+			count: 1
+			path: src/Repositories/MigrationRepository.php
+
+		-
+			message: "#^Property ElasticMigrations\\\\Repositories\\\\MigrationRepository\\:\\:\\$table \\(string\\) does not accept mixed\\.$#"
+			count: 1
+			path: src/Repositories/MigrationRepository.php
+
+		-
+			message: "#^Property ElasticMigrations\\\\Tests\\\\Integration\\\\Factories\\\\MigrationFactoryTest\\:\\:\\$migrationFactory \\(ElasticMigrations\\\\Factories\\\\MigrationFactory\\) does not accept mixed\\.$#"
+			count: 1
+			path: tests/Integration/Factories/MigrationFactoryTest.php
+
+		-
+			message: "#^Property ElasticMigrations\\\\Tests\\\\Integration\\\\Factories\\\\MigrationFactoryTest\\:\\:\\$migrationStorage \\(ElasticMigrations\\\\Filesystem\\\\MigrationStorage\\) does not accept mixed\\.$#"
+			count: 1
+			path: tests/Integration/Factories/MigrationFactoryTest.php
+
+		-
+			message: "#^Cannot call method create\\(\\) on mixed\\.$#"
+			count: 1
+			path: tests/Integration/Filesystem/MigrationStorageTest.php
+
+		-
+			message: "#^Cannot call method isReady\\(\\) on mixed\\.$#"
+			count: 1
+			path: tests/Integration/Filesystem/MigrationStorageTest.php
+
+		-
+			message: "#^Property ElasticMigrations\\\\Tests\\\\Integration\\\\Filesystem\\\\MigrationStorageTest\\:\\:\\$migrationStorage \\(ElasticMigrations\\\\Filesystem\\\\MigrationStorage\\) does not accept mixed\\.$#"
+			count: 1
+			path: tests/Integration/Filesystem/MigrationStorageTest.php
+
+		-
+			message: "#^Cannot call method setOutput\\(\\) on mixed\\.$#"
+			count: 3
+			path: tests/Integration/MigratorTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$table of static method Illuminate\\\\Support\\\\Facades\\\\DB\\:\\:table\\(\\) expects string, mixed given\\.$#"
+			count: 1
+			path: tests/Integration/MigratorTest.php
+
+		-
+			message: "#^Property ElasticMigrations\\\\Tests\\\\Integration\\\\MigratorTest\\:\\:\\$table \\(string\\) does not accept mixed\\.$#"
+			count: 1
+			path: tests/Integration/MigratorTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$table of static method Illuminate\\\\Support\\\\Facades\\\\DB\\:\\:table\\(\\) expects string, mixed given\\.$#"
+			count: 1
+			path: tests/Integration/Repositories/MigrationRepositoryTest.php
+
+		-
+			message: "#^Property ElasticMigrations\\\\Tests\\\\Integration\\\\Repositories\\\\MigrationRepositoryTest\\:\\:\\$table \\(string\\) does not accept mixed\\.$#"
+			count: 1
+			path: tests/Integration/Repositories/MigrationRepositoryTest.php

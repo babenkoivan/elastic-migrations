@@ -29,8 +29,11 @@ class MigrateCommand extends Command
             return 1;
         }
 
-        if ($fileName = $this->argument('fileName')) {
-            $migrator->migrateOne($fileName);
+        /** @var ?string $fileName */
+        $fileName = $this->argument('fileName');
+
+        if (isset($fileName)) {
+            $migrator->migrateOne(trim($fileName));
         } else {
             $migrator->migrateAll();
         }

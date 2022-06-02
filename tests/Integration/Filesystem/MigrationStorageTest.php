@@ -48,7 +48,7 @@ final class MigrationStorageTest extends TestCase
         $firstLevelDirectory = $baseDirectory . '/tmp';
         $secondLevelDirectory = $firstLevelDirectory . '/migrations';
 
-        $this->app['config']->set('elastic.migrations.storage_directory', $secondLevelDirectory);
+        $this->config->set('elastic.migrations.storage_directory', $secondLevelDirectory);
 
         // create a new instance to apply the new config
         $file = resolve(MigrationStorage::class)->create('test', 'content');
@@ -123,7 +123,7 @@ final class MigrationStorageTest extends TestCase
 
     public function test_storage_is_not_ready_when_directory_does_not_exist(): void
     {
-        $this->app['config']->set('elastic.migrations.storage_directory', '/non_existing_directory');
+        $this->config->set('elastic.migrations.storage_directory', '/non_existing_directory');
 
         // create a new instance to apply the new config
         $this->assertFalse(resolve(MigrationStorage::class)->isReady());

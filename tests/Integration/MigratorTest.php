@@ -34,7 +34,7 @@ final class MigratorTest extends TestCase
     {
         parent::setUp();
 
-        $this->table = config('elastic.migrations.table');
+        $this->table = $this->config->get('elastic.migrations.table');
         $this->output = $this->createMock(OutputStyle::class);
         $this->migrator = resolve(Migrator::class)->setOutput($this->output);
 
@@ -83,10 +83,10 @@ final class MigratorTest extends TestCase
     public function test_all_migrations_can_not_be_executed_if_directory_is_empty(): void
     {
         // create a temporary empty directory and reconfigure the package to use it
-        $tmpDirectory = config('elastic.migrations.storage_directory') . '/tmp';
+        $tmpDirectory = $this->config->get('elastic.migrations.storage_directory') . '/tmp';
 
         @mkdir($tmpDirectory);
-        $this->app['config']->set('elastic.migrations.storage_directory', $tmpDirectory);
+        $this->config->set('elastic.migrations.storage_directory', $tmpDirectory);
 
         // check that there is nothing to migrate
         $this->output
@@ -314,7 +314,7 @@ final class MigratorTest extends TestCase
 
     public function test_migrator_is_not_ready_when_storage_is_not_ready(): void
     {
-        $this->app['config']->set('elastic.migrations.storage_directory', '/non_existing_directory');
+        $this->config->set('elastic.migrations.storage_directory', '/non_existing_directory');
 
         $this->output
             ->expects($this->once())

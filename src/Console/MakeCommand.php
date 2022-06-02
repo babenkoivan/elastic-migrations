@@ -22,10 +22,10 @@ class MakeCommand extends Command
 
     public function handle(Filesystem $filesystem, MigrationStorage $migrationStorage): int
     {
-        $name = Str::snake(trim($this->argument('name')));
-
-        $fileName = sprintf('%s_%s', (new Carbon())->format('Y_m_d_His'), $name);
-        $className = Str::studly($name);
+        /** @var string $name */
+        $name = $this->argument('name');
+        $fileName = sprintf('%s_%s', (new Carbon())->format('Y_m_d_His'), Str::snake(trim($name)));
+        $className = Str::studly(trim($name));
 
         $stub = $filesystem->get(__DIR__ . '/stubs/migration.blank.stub');
         $content = str_replace('DummyClass', $className, $stub);

@@ -6,11 +6,14 @@ use Elastic\Client\ServiceProvider as ClientServiceProvider;
 use Elastic\Elasticsearch\Client;
 use Elastic\Elasticsearch\ClientBuilder;
 use ElasticMigrations\ServiceProvider as MigrationsServiceProvider;
+use Illuminate\Config\Repository;
 use Orchestra\Testbench\TestCase as TestbenchTestCase;
 use Psr\Http\Client\ClientInterface;
 
 class TestCase extends TestbenchTestCase
 {
+    protected Repository $config;
+
     protected function getPackageProviders($app)
     {
         return [
@@ -23,8 +26,11 @@ class TestCase extends TestbenchTestCase
     {
         parent::getEnvironmentSetUp($app);
 
-        $app['config']->set('elastic.migrations.table', 'test_elastic_migrations');
-        $app['config']->set('elastic.migrations.storage_directory', realpath(__DIR__ . '/../migrations'));
+        /** @var Repository $config */
+        $config = $app['config'];
+        $config->set('elastic.migrations.table', 'test_elastic_migrations');
+        $config->set('elastic.migrations.storage_directory', realpath(__DIR__ . '/../migrations'));
+        $this->config = $config;
 
         $app->singleton(Client::class, function () {
             $httpClientMock = $this->createMock(ClientInterface::class);

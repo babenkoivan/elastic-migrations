@@ -16,7 +16,7 @@ class MigrationRepository implements ReadinessInterface
      */
     private $table;
     /**
-     * @var string
+     * @var ?string
      */
     private $connection;
 
@@ -87,13 +87,13 @@ class MigrationRepository implements ReadinessInterface
             ->pluck('migration');
     }
 
-    private function table(): Builder
-    {
-        return DB::connection($this->connection)->table($this->table);
-    }
-
     public function isReady(): bool
     {
         return Schema::connection($this->connection)->hasTable($this->table);
+    }
+
+    private function table(): Builder
+    {
+        return DB::connection($this->connection)->table($this->table);
     }
 }

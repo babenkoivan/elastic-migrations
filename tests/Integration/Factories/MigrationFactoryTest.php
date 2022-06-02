@@ -3,6 +3,7 @@
 namespace ElasticMigrations\Tests\Integration\Factories;
 
 use ElasticMigrations\Factories\MigrationFactory;
+use ElasticMigrations\Filesystem\MigrationFile;
 use ElasticMigrations\Filesystem\MigrationStorage;
 use ElasticMigrations\MigrationInterface;
 use ElasticMigrations\Tests\Integration\TestCase;
@@ -16,12 +17,17 @@ final class MigrationFactoryTest extends TestCase
      * @var MigrationFactory
      */
     private $migrationFactory;
+    /**
+     * @var MigrationStorage
+     */
+    private $migrationStorage;
 
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->migrationFactory = resolve(MigrationFactory::class);
+        $this->migrationStorage = resolve(MigrationStorage::class);
     }
 
     public function fileNameProvider(): array
@@ -37,7 +43,8 @@ final class MigrationFactoryTest extends TestCase
      */
     public function test_migration_can_be_created_from_file(string $fileName): void
     {
-        $file = resolve(MigrationStorage::class)->findByName($fileName);
+        /** @var MigrationFile $file */
+        $file = $this->migrationStorage->findByName($fileName);
 
         $this->assertInstanceOf(
             MigrationInterface::class,

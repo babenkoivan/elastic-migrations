@@ -29,8 +29,11 @@ class RollbackCommand extends Command
             return 1;
         }
 
-        if ($fileName = $this->argument('fileName')) {
-            $migrator->rollbackOne($fileName);
+        /** @var ?string $fileName */
+        $fileName = $this->argument('fileName');
+
+        if (isset($fileName)) {
+            $migrator->rollbackOne(trim($fileName));
         } else {
             $migrator->rollbackLastBatch();
         }
