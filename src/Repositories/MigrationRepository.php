@@ -16,8 +16,8 @@ class MigrationRepository implements ReadinessInterface
 
     public function __construct()
     {
-        $this->table = config('elastic.migrations.table');
-        $this->connection = config('elastic.migrations.connection');
+        $this->table = config('elastic.migrations.database.table');
+        $this->connection = config('elastic.migrations.database.connection');
     }
 
     public function insert(string $fileName, int $batch): bool

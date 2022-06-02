@@ -32,7 +32,7 @@ final class IndexManagerAdapterTest extends TestCase
      */
     public function test_index_can_be_created_without_modifier(string $indexNamePrefix): void
     {
-        $this->config->set('elastic.migrations.index_name_prefix', $indexNamePrefix);
+        $this->config->set('elastic.migrations.prefixes.index', $indexNamePrefix);
 
         $indexName = 'test';
 
@@ -49,7 +49,7 @@ final class IndexManagerAdapterTest extends TestCase
      */
     public function test_index_can_be_created_with_modifier(string $indexNamePrefix): void
     {
-        $this->config->set('elastic.migrations.index_name_prefix', $indexNamePrefix);
+        $this->config->set('elastic.migrations.prefixes.index', $indexNamePrefix);
 
         $indexName = 'test';
 
@@ -75,7 +75,7 @@ final class IndexManagerAdapterTest extends TestCase
      */
     public function test_index_can_be_created_with_raw_mapping(string $indexNamePrefix): void
     {
-        $this->config->set('elastic.migrations.index_name_prefix', $indexNamePrefix);
+        $this->config->set('elastic.migrations.prefixes.index', $indexNamePrefix);
 
         $indexName = 'test';
 
@@ -100,7 +100,7 @@ final class IndexManagerAdapterTest extends TestCase
      */
     public function test_index_with_modifier_can_be_created_only_if_it_does_not_exist(string $indexNamePrefix): void
     {
-        $this->config->set('elastic.migrations.index_name_prefix', $indexNamePrefix);
+        $this->config->set('elastic.migrations.prefixes.index', $indexNamePrefix);
 
         $indexName = 'test';
 
@@ -123,7 +123,7 @@ final class IndexManagerAdapterTest extends TestCase
      */
     public function test_index_with_raw_mapping_can_be_created_only_if_it_does_not_exist(string $indexNamePrefix): void
     {
-        $this->config->set('elastic.migrations.index_name_prefix', $indexNamePrefix);
+        $this->config->set('elastic.migrations.prefixes.index', $indexNamePrefix);
 
         $indexName = 'test';
 
@@ -154,7 +154,7 @@ final class IndexManagerAdapterTest extends TestCase
      */
     public function test_mapping_can_be_updated_using_modifier(string $indexNamePrefix): void
     {
-        $this->config->set('elastic.migrations.index_name_prefix', $indexNamePrefix);
+        $this->config->set('elastic.migrations.prefixes.index', $indexNamePrefix);
 
         $indexName = 'test';
 
@@ -178,7 +178,7 @@ final class IndexManagerAdapterTest extends TestCase
      */
     public function test_mapping_can_be_updated_using_raw_input(string $indexNamePrefix): void
     {
-        $this->config->set('elastic.migrations.index_name_prefix', $indexNamePrefix);
+        $this->config->set('elastic.migrations.prefixes.index', $indexNamePrefix);
 
         $indexName = 'test';
 
@@ -201,7 +201,7 @@ final class IndexManagerAdapterTest extends TestCase
      */
     public function test_settings_can_be_updated_using_modifier(string $indexNamePrefix): void
     {
-        $this->config->set('elastic.migrations.index_name_prefix', $indexNamePrefix);
+        $this->config->set('elastic.migrations.prefixes.index', $indexNamePrefix);
 
         $indexName = 'test';
 
@@ -225,7 +225,7 @@ final class IndexManagerAdapterTest extends TestCase
      */
     public function test_settings_can_be_updated_using_raw_input(string $indexNamePrefix): void
     {
-        $this->config->set('elastic.migrations.index_name_prefix', $indexNamePrefix);
+        $this->config->set('elastic.migrations.prefixes.index', $indexNamePrefix);
 
         $indexName = 'test';
         $settings = ['number_of_replicas' => 2];
@@ -243,7 +243,7 @@ final class IndexManagerAdapterTest extends TestCase
      */
     public function test_settings_can_be_pushed_using_modifier(string $indexNamePrefix): void
     {
-        $this->config->set('elastic.migrations.index_name_prefix', $indexNamePrefix);
+        $this->config->set('elastic.migrations.prefixes.index', $indexNamePrefix);
 
         $indexName = 'test';
 
@@ -277,7 +277,7 @@ final class IndexManagerAdapterTest extends TestCase
      */
     public function test_settings_can_be_pushed_using_raw_input(string $indexNamePrefix): void
     {
-        $this->config->set('elastic.migrations.index_name_prefix', $indexNamePrefix);
+        $this->config->set('elastic.migrations.prefixes.index', $indexNamePrefix);
 
         $indexName = 'test';
         $settings = ['number_of_replicas' => 2];
@@ -305,7 +305,7 @@ final class IndexManagerAdapterTest extends TestCase
      */
     public function test_index_can_be_dropped(string $indexNamePrefix): void
     {
-        $this->config->set('elastic.migrations.index_name_prefix', $indexNamePrefix);
+        $this->config->set('elastic.migrations.prefixes.index', $indexNamePrefix);
 
         $indexName = 'test';
 
@@ -322,7 +322,7 @@ final class IndexManagerAdapterTest extends TestCase
      */
     public function test_index_can_be_dropped_only_if_exists(string $indexNamePrefix): void
     {
-        $this->config->set('elastic.migrations.index_name_prefix', $indexNamePrefix);
+        $this->config->set('elastic.migrations.prefixes.index', $indexNamePrefix);
 
         $indexName = 'test';
 
@@ -345,7 +345,7 @@ final class IndexManagerAdapterTest extends TestCase
      */
     public function test_alias_can_be_created(string $aliasNamePrefix): void
     {
-        $this->config->set('elastic.migrations.alias_name_prefix', $aliasNamePrefix);
+        $this->config->set('elastic.migrations.prefixes.alias', $aliasNamePrefix);
 
         $indexName = 'foo';
         $aliasName = 'bar';
@@ -363,7 +363,7 @@ final class IndexManagerAdapterTest extends TestCase
      */
     public function test_alias_can_be_deleted(string $aliasNamePrefix): void
     {
-        $this->config->set('elastic.migrations.alias_name_prefix', $aliasNamePrefix);
+        $this->config->set('elastic.migrations.prefixes.alias', $aliasNamePrefix);
 
         $indexName = 'foo';
         $aliasName = 'bar';

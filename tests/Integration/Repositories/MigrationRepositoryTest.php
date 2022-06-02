@@ -22,7 +22,7 @@ final class MigrationRepositoryTest extends TestCase
     {
         parent::setUp();
 
-        $this->table = $this->config->get('elastic.migrations.table');
+        $this->table = $this->config->get('elastic.migrations.database.table');
 
         // create fixtures
         DB::table($this->table)->insert([

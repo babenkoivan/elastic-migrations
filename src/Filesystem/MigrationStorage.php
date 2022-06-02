@@ -14,7 +14,7 @@ class MigrationStorage implements ReadinessInterface
     public function __construct(Filesystem $filesystem)
     {
         $this->filesystem = $filesystem;
-        $this->directory = rtrim(config('elastic.migrations.storage_directory', ''), '/');
+        $this->directory = rtrim(config('elastic.migrations.storage', ''), '/');
     }
 
     public function create(string $fileName, string $content): MigrationFile
