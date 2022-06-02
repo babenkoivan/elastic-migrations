@@ -13,14 +13,8 @@ use ElasticMigrations\Tests\Integration\TestCase;
  */
 final class MigrationFactoryTest extends TestCase
 {
-    /**
-     * @var MigrationFactory
-     */
-    private $migrationFactory;
-    /**
-     * @var MigrationStorage
-     */
-    private $migrationStorage;
+    private MigrationFactory $migrationFactory;
+    private MigrationStorage $migrationStorage;
 
     protected function setUp(): void
     {

@@ -15,14 +15,8 @@ final class MigrationRepositoryTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * @var string
-     */
-    private $table;
-    /**
-     * @var MigrationRepository
-     */
-    private $migrationRepository;
+    private string $table;
+    private MigrationRepository $migrationRepository;
 
     protected function setUp(): void
     {

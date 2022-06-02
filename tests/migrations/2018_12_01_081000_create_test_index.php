@@ -6,10 +6,7 @@ use ElasticMigrations\MigrationInterface;
 
 final class CreateTestIndex implements MigrationInterface
 {
-    /**
-     * @var Client
-     */
-    private $client;
+    private Client $client;
 
     public function __construct(Client $client)
     {

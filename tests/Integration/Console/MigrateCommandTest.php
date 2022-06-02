@@ -14,14 +14,8 @@ use Symfony\Component\Console\Output\NullOutput;
  */
 final class MigrateCommandTest extends TestCase
 {
-    /**
-     * @var MockObject
-     */
-    private $migrator;
-    /**
-     * @var MigrateCommand
-     */
-    private $command;
+    private MockObject $migrator;
+    private MigrateCommand $command;
 
     protected function setUp(): void
     {

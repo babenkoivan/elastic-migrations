@@ -14,14 +14,8 @@ use Symfony\Component\Console\Output\NullOutput;
  */
 final class ResetCommandTest extends TestCase
 {
-    /**
-     * @var MockObject
-     */
-    private $migrator;
-    /**
-     * @var ResetCommand
-     */
-    private $command;
+    private MockObject $migrator;
+    private ResetCommand $command;
 
     protected function setUp(): void
     {

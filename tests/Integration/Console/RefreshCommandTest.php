@@ -14,14 +14,8 @@ use Symfony\Component\Console\Output\NullOutput;
  */
 final class RefreshCommandTest extends TestCase
 {
-    /**
-     * @var MockObject
-     */
-    private $migrator;
-    /**
-     * @var RefreshCommand
-     */
-    private $command;
+    private MockObject $migrator;
+    private RefreshCommand $command;
 
     protected function setUp(): void
     {

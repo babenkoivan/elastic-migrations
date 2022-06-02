@@ -11,22 +11,10 @@ use Illuminate\Support\Collection;
 
 class Migrator implements ReadinessInterface
 {
-    /**
-     * @var OutputStyle
-     */
-    private $output;
-    /**
-     * @var MigrationRepository
-     */
-    private $migrationRepository;
-    /**
-     * @var MigrationStorage
-     */
-    private $migrationStorage;
-    /**
-     * @var MigrationFactory
-     */
-    private $migrationFactory;
+    private OutputStyle $output;
+    private MigrationRepository $migrationRepository;
+    private MigrationStorage $migrationStorage;
+    private MigrationFactory $migrationFactory;
 
     public function __construct(
         MigrationRepository $migrationRepository,
@@ -62,9 +50,9 @@ class Migrator implements ReadinessInterface
         $files = $this->migrationStorage->findAll();
         $migratedFileNames = $this->migrationRepository->getAll();
 
-        $nonMigratedFiles = $files->filter(static function (MigrationFile $file) use ($migratedFileNames) {
-            return !$migratedFileNames->contains($file->getName());
-        });
+        $nonMigratedFiles = $files->filter(
+            static fn (MigrationFile $file) => !$migratedFileNames->contains($file->getName())
+        );
 
         $this->migrate($nonMigratedFiles);
 
@@ -113,13 +101,15 @@ class Migrator implements ReadinessInterface
 
         $headers = ['Ran?', 'Last batch?', 'Migration'];
 
-        $rows = $files->map(static function (MigrationFile $file) use ($migratedFileNames, $migratedLastBatchFileNames) {
-            return [
+        $rows = $files->map(
+            static fn (MigrationFile $file) => [
                 $migratedFileNames->contains($file->getName()) ? '<info>Yes</info>' : '<comment>No</comment>',
-                $migratedLastBatchFileNames->contains($file->getName()) ? '<info>Yes</info>' : '<comment>No</comment>',
+                $migratedLastBatchFileNames->contains(
+                    $file->getName()
+                ) ? '<info>Yes</info>' : '<comment>No</comment>',
                 $file->getName(),
-            ];
-        })->toArray();
+            ]
+        )->toArray();
 
         $this->output->table($headers, $rows);
 
@@ -151,19 +141,22 @@ class Migrator implements ReadinessInterface
 
     private function rollback(Collection $fileNames): self
     {
-        $files = $fileNames->map(function (string $fileName) {
-            return $this->migrationStorage->findByName($fileName);
-        })->filter();
+        $files = $fileNames->map(
+            fn (string $fileName) => $this->migrationStorage->findByName($fileName)
+        )->filter();
 
         if ($fileNames->isEmpty()) {
             $this->output->writeln('<info>Nothing to roll back</info>');
             return $this;
-        } elseif ($fileNames->count() != $files->count()) {
+        }
+
+        if ($fileNames->count() !== $files->count()) {
             $this->output->writeln(
                 '<error>Migration is not found:</error> ' .
-                implode(',', $fileNames->diff($files->map(static function (MigrationFile $file) {
-                    return $file->getName();
-                }))->toArray())
+                implode(
+                    ',',
+                    $fileNames->diff($files->map(static fn (MigrationFile $file) => $file->getName()))->toArray()
+                )
             );
 
             return $this;

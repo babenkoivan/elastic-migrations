@@ -16,14 +16,8 @@ use PHPUnit\Framework\MockObject\MockObject;
  */
 final class IndexManagerAdapterTest extends TestCase
 {
-    /**
-     * @var MockObject
-     */
-    private $indexManagerMock;
-    /**
-     * @var IndexManagerAdapter
-     */
-    private $indexManagerAdapter;
+    private MockObject $indexManagerMock;
+    private IndexManagerAdapter $indexManagerAdapter;
 
     protected function setUp(): void
     {

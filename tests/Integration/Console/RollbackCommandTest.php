@@ -14,14 +14,8 @@ use Symfony\Component\Console\Output\NullOutput;
  */
 final class RollbackCommandTest extends TestCase
 {
-    /**
-     * @var MockObject
-     */
-    private $migrator;
-    /**
-     * @var RollbackCommand
-     */
-    private $command;
+    private MockObject $migrator;
+    private RollbackCommand $command;
 
     protected function setUp(): void
     {

@@ -14,24 +14,14 @@ use Illuminate\Support\ServiceProvider as AbstractServiceProvider;
 
 final class ServiceProvider extends AbstractServiceProvider
 {
-    /**
-     * @var string
-     */
-    private $configPath;
-    /**
-     * @var string
-     */
-    private $migrationsPath;
-    /**
-     * @var array
-     */
-    public $bindings = [
+    private string $configPath;
+    private string $migrationsPath;
+
+    public array $bindings = [
         IndexManagerInterface::class => IndexManagerAdapter::class,
     ];
-    /**
-     * @var array
-     */
-    private $commands = [
+
+    private array $commands = [
         MakeCommand::class,
         MigrateCommand::class,
         RefreshCommand::class,

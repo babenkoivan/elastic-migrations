@@ -13,10 +13,7 @@ use function ElasticMigrations\prefix_index_name;
 
 class IndexManagerAdapter implements IndexManagerInterface
 {
-    /**
-     * @var IndexManager
-     */
-    private $indexManager;
+    private IndexManager $indexManager;
 
     public function __construct(IndexManager $indexManager)
     {

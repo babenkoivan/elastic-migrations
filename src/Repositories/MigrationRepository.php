@@ -11,14 +11,8 @@ use stdClass;
 
 class MigrationRepository implements ReadinessInterface
 {
-    /**
-     * @var string
-     */
-    private $table;
-    /**
-     * @var ?string
-     */
-    private $connection;
+    private string $table;
+    private ?string $connection;
 
     public function __construct()
     {

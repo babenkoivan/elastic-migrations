@@ -14,14 +14,8 @@ use Symfony\Component\Console\Output\NullOutput;
  */
 final class StatusCommandTest extends TestCase
 {
-    /**
-     * @var MockObject
-     */
-    private $migrator;
-    /**
-     * @var StatusCommand
-     */
-    private $command;
+    private MockObject $migrator;
+    private StatusCommand $command;
 
     protected function setUp(): void
     {

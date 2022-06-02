@@ -79,4 +79,6 @@ return (new Config())
         'trailing_comma_in_multiline' => true,
         'visibility_required' => true,
         'yoda_style' => false,
+        'use_arrow_functions' => true,
+        'phpdoc_to_property_type' => false
     ]);

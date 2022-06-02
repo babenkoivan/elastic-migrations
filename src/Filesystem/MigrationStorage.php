@@ -8,14 +8,8 @@ use Illuminate\Support\Collection;
 
 class MigrationStorage implements ReadinessInterface
 {
-    /**
-     * @var Filesystem
-     */
-    private $filesystem;
-    /**
-     * @var string
-     */
-    private $directory;
+    private Filesystem $filesystem;
+    private string $directory;
 
     public function __construct(Filesystem $filesystem)
     {
@@ -46,9 +40,7 @@ class MigrationStorage implements ReadinessInterface
     {
         $files = $this->filesystem->glob($this->directory . '/*_*.php');
 
-        return collect($files)->sort()->map(static function (string $filePath) {
-            return new MigrationFile($filePath);
-        });
+        return collect($files)->sort()->map(static fn (string $filePath) => new MigrationFile($filePath));
     }
 
     private function resolvePath(string $fileName): string

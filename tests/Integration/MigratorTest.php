@@ -17,18 +17,9 @@ final class MigratorTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * @var string
-     */
-    private $table;
-    /**
-     * @var MockObject
-     */
-    private $output;
-    /**
-     * @var Migrator
-     */
-    private $migrator;
+    private string $table;
+    private MockObject $output;
+    private Migrator $migrator;
 
     protected function setUp(): void
     {

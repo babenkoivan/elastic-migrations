@@ -12,10 +12,7 @@ use ElasticMigrations\Tests\Integration\TestCase;
  */
 final class MigrationStorageTest extends TestCase
 {
-    /**
-     * @var MigrationStorage
-     */
-    private $migrationStorage;
+    private MigrationStorage $migrationStorage;
 
     protected function setUp(): void
     {
@@ -29,7 +26,7 @@ final class MigrationStorageTest extends TestCase
         $fileName = sprintf(
             '%s_create_tmp_%s_index',
             (new Carbon())->format('Y_m_d_His'),
-            uniqid()
+            uniqid('test', true)
         );
 
         $file = $this->migrationStorage->create($fileName, 'content');
@@ -110,9 +107,7 @@ final class MigrationStorageTest extends TestCase
                 '2018_12_01_081000_create_test_index',
                 '2019_08_10_142230_update_test_index_mapping',
             ],
-            $files->map(static function (MigrationFile $file) {
-                return $file->getName();
-            })->toArray()
+            $files->map(static fn (MigrationFile $file) => $file->getName())->toArray()
         );
     }
 

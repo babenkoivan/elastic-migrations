@@ -15,16 +15,16 @@ final class MigrationFileTest extends TestCase
     public function test_path_getter(): void
     {
         $this->assertSame(
-            static::FULL_PATH,
-            (new MigrationFile(static::FULL_PATH))->getPath()
+            self::FULL_PATH,
+            (new MigrationFile(self::FULL_PATH))->getPath()
         );
     }
 
     public function test_name_getter(): void
     {
         $this->assertSame(
-            basename(static::FULL_PATH, '.php'),
-            (new MigrationFile(static::FULL_PATH))->getName()
+            basename(self::FULL_PATH, '.php'),
+            (new MigrationFile(self::FULL_PATH))->getName()
         );
     }
 }

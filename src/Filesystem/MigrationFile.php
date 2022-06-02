@@ -4,10 +4,7 @@ namespace ElasticMigrations\Filesystem;
 
 class MigrationFile
 {
-    /**
-     * @var string
-     */
-    private $filePath;
+    private string $filePath;
 
     public function __construct(string $filePath)
     {

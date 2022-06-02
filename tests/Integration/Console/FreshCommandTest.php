@@ -16,22 +16,10 @@ use Symfony\Component\Console\Output\NullOutput;
  */
 final class FreshCommandTest extends TestCase
 {
-    /**
-     * @var MockObject
-     */
-    private $migrator;
-    /**
-     * @var MockObject
-     */
-    private $migrationRepository;
-    /**
-     * @var MockObject
-     */
-    private $indexManager;
-    /**
-     * @var FreshCommand
-     */
-    private $command;
+    private MockObject $migrator;
+    private MockObject $migrationRepository;
+    private MockObject $indexManager;
+    private FreshCommand $command;
 
     protected function setUp(): void
     {
@@ -77,7 +65,7 @@ final class FreshCommandTest extends TestCase
         $this->assertSame(1, $result);
     }
 
-    public function test_drops_indicies_and_migration(): void
+    public function test_drops_indices_and_migration(): void
     {
         $this->migrator
             ->expects($this->once())
