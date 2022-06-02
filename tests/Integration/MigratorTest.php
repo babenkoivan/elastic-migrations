@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace ElasticMigrations\Tests\Integration;
+namespace Elastic\Migrations\Tests\Integration;
 
-use ElasticMigrations\Facades\Index;
-use ElasticMigrations\Migrator;
+use Elastic\Migrations\Facades\Index;
+use Elastic\Migrations\Migrator;
 use Illuminate\Console\OutputStyle;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Schema;
 use PHPUnit\Framework\MockObject\MockObject;
 
 /**
- * @covers \ElasticMigrations\Migrator
+ * @covers \Elastic\Migrations\Migrator
  */
 final class MigratorTest extends TestCase
 {

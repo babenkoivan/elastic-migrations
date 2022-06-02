@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace ElasticMigrations;
+namespace Elastic\Migrations;
 
-use ElasticMigrations\Factories\MigrationFactory;
-use ElasticMigrations\Filesystem\MigrationFile;
-use ElasticMigrations\Filesystem\MigrationStorage;
-use ElasticMigrations\Repositories\MigrationRepository;
+use Elastic\Migrations\Factories\MigrationFactory;
+use Elastic\Migrations\Filesystem\MigrationFile;
+use Elastic\Migrations\Filesystem\MigrationStorage;
+use Elastic\Migrations\Repositories\MigrationRepository;
 use Illuminate\Console\OutputStyle;
 use Illuminate\Support\Collection;
 

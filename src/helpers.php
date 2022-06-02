@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace ElasticMigrations;
+namespace Elastic\Migrations;
 
 function prefix_index_name(string $indexName): string
 {

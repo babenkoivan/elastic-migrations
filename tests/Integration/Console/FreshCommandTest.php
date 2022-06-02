@@ -1,18 +1,18 @@
 <?php declare(strict_types=1);
 
-namespace ElasticMigrations\Tests\Integration\Console;
+namespace Elastic\Migrations\Tests\Integration\Console;
 
-use ElasticMigrations\Console\FreshCommand;
-use ElasticMigrations\IndexManagerInterface;
-use ElasticMigrations\Migrator;
-use ElasticMigrations\Repositories\MigrationRepository;
-use ElasticMigrations\Tests\Integration\TestCase;
+use Elastic\Migrations\Console\FreshCommand;
+use Elastic\Migrations\IndexManagerInterface;
+use Elastic\Migrations\Migrator;
+use Elastic\Migrations\Repositories\MigrationRepository;
+use Elastic\Migrations\Tests\Integration\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
 
 /**
- * @covers \ElasticMigrations\Console\FreshCommand
+ * @covers \Elastic\Migrations\Console\FreshCommand
  */
 final class FreshCommandTest extends TestCase
 {

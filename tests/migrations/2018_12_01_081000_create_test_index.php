@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
 use Elastic\Elasticsearch\Client;
-use ElasticMigrations\Facades\Index;
-use ElasticMigrations\MigrationInterface;
+use Elastic\Migrations\Facades\Index;
+use Elastic\Migrations\MigrationInterface;
 
 final class CreateTestIndex implements MigrationInterface
 {

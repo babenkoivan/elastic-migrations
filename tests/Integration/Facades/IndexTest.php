@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace ElasticMigrations\Tests\Integration\Facades;
+namespace Elastic\Migrations\Tests\Integration\Facades;
 
-use ElasticMigrations\Facades\Index;
-use ElasticMigrations\IndexManagerInterface;
-use ElasticMigrations\Tests\Integration\TestCase;
+use Elastic\Migrations\Facades\Index;
+use Elastic\Migrations\IndexManagerInterface;
+use Elastic\Migrations\Tests\Integration\TestCase;
 
 /**
- * @covers \ElasticMigrations\Facades\Index
+ * @covers \Elastic\Migrations\Facades\Index
  */
 final class IndexTest extends TestCase
 {

@@ -1,18 +1,18 @@
 <?php declare(strict_types=1);
 
-namespace ElasticMigrations\Tests\Integration\Adapters;
+namespace Elastic\Migrations\Tests\Integration\Adapters;
 
 use Elastic\Adapter\Indices\Alias;
 use Elastic\Adapter\Indices\IndexBlueprint;
 use Elastic\Adapter\Indices\IndexManager;
 use Elastic\Adapter\Indices\Mapping;
 use Elastic\Adapter\Indices\Settings;
-use ElasticMigrations\Adapters\IndexManagerAdapter;
-use ElasticMigrations\Tests\Integration\TestCase;
+use Elastic\Migrations\Adapters\IndexManagerAdapter;
+use Elastic\Migrations\Tests\Integration\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 
 /**
- * @covers \ElasticMigrations\Adapters\IndexManagerAdapter
+ * @covers \Elastic\Migrations\Adapters\IndexManagerAdapter
  */
 final class IndexManagerAdapterTest extends TestCase
 {

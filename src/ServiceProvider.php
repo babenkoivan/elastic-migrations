@@ -1,15 +1,15 @@
 <?php declare(strict_types=1);
 
-namespace ElasticMigrations;
+namespace Elastic\Migrations;
 
-use ElasticMigrations\Adapters\IndexManagerAdapter;
-use ElasticMigrations\Console\FreshCommand;
-use ElasticMigrations\Console\MakeCommand;
-use ElasticMigrations\Console\MigrateCommand;
-use ElasticMigrations\Console\RefreshCommand;
-use ElasticMigrations\Console\ResetCommand;
-use ElasticMigrations\Console\RollbackCommand;
-use ElasticMigrations\Console\StatusCommand;
+use Elastic\Migrations\Adapters\IndexManagerAdapter;
+use Elastic\Migrations\Console\FreshCommand;
+use Elastic\Migrations\Console\MakeCommand;
+use Elastic\Migrations\Console\MigrateCommand;
+use Elastic\Migrations\Console\RefreshCommand;
+use Elastic\Migrations\Console\ResetCommand;
+use Elastic\Migrations\Console\RollbackCommand;
+use Elastic\Migrations\Console\StatusCommand;
 use Illuminate\Support\ServiceProvider as AbstractServiceProvider;
 
 final class ServiceProvider extends AbstractServiceProvider

@@ -1,15 +1,15 @@
 <?php declare(strict_types=1);
 
-namespace ElasticMigrations\Adapters;
+namespace Elastic\Migrations\Adapters;
 
 use Elastic\Adapter\Indices\Alias;
 use Elastic\Adapter\Indices\IndexBlueprint;
 use Elastic\Adapter\Indices\IndexManager;
 use Elastic\Adapter\Indices\Mapping;
 use Elastic\Adapter\Indices\Settings;
-use ElasticMigrations\IndexManagerInterface;
-use function ElasticMigrations\prefix_alias_name;
-use function ElasticMigrations\prefix_index_name;
+use Elastic\Migrations\IndexManagerInterface;
+use function Elastic\Migrations\prefix_alias_name;
+use function Elastic\Migrations\prefix_index_name;
 
 class IndexManagerAdapter implements IndexManagerInterface
 {

@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace ElasticMigrations\Factories;
+namespace Elastic\Migrations\Factories;
 
-use ElasticMigrations\Filesystem\MigrationFile;
-use ElasticMigrations\MigrationInterface;
+use Elastic\Migrations\Filesystem\MigrationFile;
+use Elastic\Migrations\MigrationInterface;
 use Illuminate\Support\Str;
 
 class MigrationFactory

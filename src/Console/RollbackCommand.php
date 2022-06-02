@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace ElasticMigrations\Console;
+namespace Elastic\Migrations\Console;
 
-use ElasticMigrations\Migrator;
+use Elastic\Migrations\Migrator;
 use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
 

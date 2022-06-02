@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace ElasticMigrations\Tests\Unit\Filesystem;
+namespace Elastic\Migrations\Tests\Unit\Filesystem;
 
-use ElasticMigrations\Filesystem\MigrationFile;
+use Elastic\Migrations\Filesystem\MigrationFile;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \ElasticMigrations\Filesystem\MigrationFile
+ * @covers \Elastic\Migrations\Filesystem\MigrationFile
  */
 final class MigrationFileTest extends TestCase
 {

@@ -1,15 +1,15 @@
 <?php declare(strict_types=1);
 
-namespace ElasticMigrations\Tests\Integration\Console;
+namespace Elastic\Migrations\Tests\Integration\Console;
 
-use ElasticMigrations\Console\MakeCommand;
-use ElasticMigrations\Filesystem\MigrationStorage;
-use ElasticMigrations\Tests\Integration\TestCase;
+use Elastic\Migrations\Console\MakeCommand;
+use Elastic\Migrations\Filesystem\MigrationStorage;
+use Elastic\Migrations\Tests\Integration\TestCase;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 
 /**
- * @covers \ElasticMigrations\Console\MakeCommand
+ * @covers \Elastic\Migrations\Console\MakeCommand
  */
 final class MakeCommandTest extends TestCase
 {

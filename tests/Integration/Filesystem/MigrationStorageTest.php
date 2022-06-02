@@ -1,14 +1,14 @@
 <?php declare(strict_types=1);
 
-namespace ElasticMigrations\Tests\Integration\Filesystem;
+namespace Elastic\Migrations\Tests\Integration\Filesystem;
 
 use Carbon\Carbon;
-use ElasticMigrations\Filesystem\MigrationFile;
-use ElasticMigrations\Filesystem\MigrationStorage;
-use ElasticMigrations\Tests\Integration\TestCase;
+use Elastic\Migrations\Filesystem\MigrationFile;
+use Elastic\Migrations\Filesystem\MigrationStorage;
+use Elastic\Migrations\Tests\Integration\TestCase;
 
 /**
- * @covers \ElasticMigrations\Filesystem\MigrationStorage
+ * @covers \Elastic\Migrations\Filesystem\MigrationStorage
  */
 final class MigrationStorageTest extends TestCase
 {

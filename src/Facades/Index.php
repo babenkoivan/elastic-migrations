@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace ElasticMigrations\Facades;
+namespace Elastic\Migrations\Facades;
 
-use ElasticMigrations\IndexManagerInterface;
+use Elastic\Migrations\IndexManagerInterface;
 use Illuminate\Support\Facades\Facade;
 
 /**

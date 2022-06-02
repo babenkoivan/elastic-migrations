@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace ElasticMigrations\Console;
+namespace Elastic\Migrations\Console;
 
 use Carbon\Carbon;
-use ElasticMigrations\Filesystem\MigrationStorage;
+use Elastic\Migrations\Filesystem\MigrationStorage;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;

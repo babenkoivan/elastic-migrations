@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace ElasticMigrations\Tests\Integration;
+namespace Elastic\Migrations\Tests\Integration;
 
 use Elastic\Client\ServiceProvider as ClientServiceProvider;
 use Elastic\Elasticsearch\Client;
 use Elastic\Elasticsearch\ClientBuilder;
-use ElasticMigrations\ServiceProvider as MigrationsServiceProvider;
+use Elastic\Migrations\ServiceProvider as MigrationsServiceProvider;
 use Illuminate\Config\Repository;
 use Orchestra\Testbench\TestCase as TestbenchTestCase;
 use Psr\Http\Client\ClientInterface;

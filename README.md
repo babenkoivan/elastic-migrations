@@ -62,7 +62,7 @@ You can change Elasticsearch host and other client settings in the `config/elast
 You can also publish Elastic Migrations settings:
 
 ```bash
-php artisan vendor:publish --provider="ElasticMigrations\ServiceProvider"
+php artisan vendor:publish --provider="Elastic\Migrations\ServiceProvider"
 ```
 
 This will create the `config/elastic.migrations.php` file, which allows you to configure the following options:
@@ -91,7 +91,7 @@ This command creates a migration class in the `elastic/migrations` directory.
 
 Every migration includes two methods: `up` and `down`. `up` is used to alternate the index schema and `down` is used to revert that action.
 
-You can use `ElasticMigrations\Facades\Index` facade to perform basic operations over Elasticsearch indices:
+You can use `Elastic\Migrations\Facades\Index` facade to perform basic operations over Elasticsearch indices:
 
 #### Create Index
 
@@ -356,5 +356,5 @@ create `migrations` directory manually
 In case one of the commands doesn't work as expected, try to publish configuration:
 
 ```bash
-php artisan vendor:publish --provider="ElasticMigrations\ServiceProvider"
+php artisan vendor:publish --provider="Elastic\Migrations\ServiceProvider"
 ```

@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace ElasticMigrations\Filesystem;
+namespace Elastic\Migrations\Filesystem;
 
-use ElasticMigrations\ReadinessInterface;
+use Elastic\Migrations\ReadinessInterface;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
 

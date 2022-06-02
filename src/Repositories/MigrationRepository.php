@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace ElasticMigrations\Repositories;
+namespace Elastic\Migrations\Repositories;
 
-use ElasticMigrations\ReadinessInterface;
+use Elastic\Migrations\ReadinessInterface;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;

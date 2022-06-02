@@ -1,15 +1,15 @@
 <?php declare(strict_types=1);
 
-namespace ElasticMigrations\Tests\Integration\Repositories;
+namespace Elastic\Migrations\Tests\Integration\Repositories;
 
-use ElasticMigrations\Repositories\MigrationRepository;
-use ElasticMigrations\Tests\Integration\TestCase;
+use Elastic\Migrations\Repositories\MigrationRepository;
+use Elastic\Migrations\Tests\Integration\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * @covers \ElasticMigrations\Repositories\MigrationRepository
+ * @covers \Elastic\Migrations\Repositories\MigrationRepository
  */
 final class MigrationRepositoryTest extends TestCase
 {

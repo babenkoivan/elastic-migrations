@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
 use Elastic\Adapter\Indices\Mapping;
-use ElasticMigrations\Facades\Index;
-use ElasticMigrations\MigrationInterface;
+use Elastic\Migrations\Facades\Index;
+use Elastic\Migrations\MigrationInterface;
 
 final class UpdateTestIndexMapping implements MigrationInterface
 {

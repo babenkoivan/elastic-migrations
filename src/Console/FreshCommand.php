@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace ElasticMigrations\Console;
+namespace Elastic\Migrations\Console;
 
-use ElasticMigrations\IndexManagerInterface;
-use ElasticMigrations\Migrator;
-use ElasticMigrations\Repositories\MigrationRepository;
+use Elastic\Migrations\IndexManagerInterface;
+use Elastic\Migrations\Migrator;
+use Elastic\Migrations\Repositories\MigrationRepository;
 use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
 

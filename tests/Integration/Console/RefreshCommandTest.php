@@ -1,16 +1,16 @@
 <?php declare(strict_types=1);
 
-namespace ElasticMigrations\Tests\Integration\Console;
+namespace Elastic\Migrations\Tests\Integration\Console;
 
-use ElasticMigrations\Console\RefreshCommand;
-use ElasticMigrations\Migrator;
-use ElasticMigrations\Tests\Integration\TestCase;
+use Elastic\Migrations\Console\RefreshCommand;
+use Elastic\Migrations\Migrator;
+use Elastic\Migrations\Tests\Integration\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
 
 /**
- * @covers \ElasticMigrations\Console\RefreshCommand
+ * @covers \Elastic\Migrations\Console\RefreshCommand
  */
 final class RefreshCommandTest extends TestCase
 {
