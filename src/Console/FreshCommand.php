@@ -29,12 +29,12 @@ class FreshCommand extends Command
     ): int {
         $migrator->setOutput($this->output);
 
-        if (! $this->confirmToProceed() || ! $migrator->isReady()) {
+        if (!$this->confirmToProceed() || !$migrator->isReady()) {
             return 1;
         }
 
         $indexManager->drop('*');
-        $migrationRepository->deleteAll();
+        $migrationRepository->purge();
         $migrator->migrateAll();
 
         return 0;

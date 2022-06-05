@@ -1,7 +1,12 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Parameter \\#1 \\$string of function rtrim expects string, mixed given\\.$#"
+			message: "#^Parameter \\#1 \\$path of method Elastic\\\\Migrations\\\\Filesystem\\\\MigrationStorage\\:\\:makeFilePath\\(\\) expects string, mixed given\\.$#"
+			count: 1
+			path: src/Filesystem/MigrationStorage.php
+
+		-
+			message: "#^Property Elastic\\\\Migrations\\\\Filesystem\\\\MigrationStorage\\:\\:\\$defaultPath \\(string\\) does not accept mixed\\.$#"
 			count: 1
 			path: src/Filesystem/MigrationStorage.php
 

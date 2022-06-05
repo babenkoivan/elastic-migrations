@@ -59,10 +59,10 @@ final class MigrationRepositoryTest extends TestCase
         );
     }
 
-    public function test_all_records_can_be_received(): void
+    public function test_all_records_can_be_retrieved(): void
     {
         $this->assertSame(
-            $this->migrationRepository->getAll()->toArray(),
+            $this->migrationRepository->all()->toArray(),
             [
                 '2019_08_10_142230_update_test_index_mapping',
                 '2018_12_01_081000_create_test_index',
@@ -70,18 +70,18 @@ final class MigrationRepositoryTest extends TestCase
         );
     }
 
-    public function test_last_batch_number_can_be_received(): void
+    public function test_last_batch_number_can_be_retrieved(): void
     {
-        $this->assertSame(2, $this->migrationRepository->getLastBatchNumber());
+        $this->assertSame(2, $this->migrationRepository->lastBatchNumber());
 
         DB::table($this->table)->delete();
-        $this->assertNull($this->migrationRepository->getLastBatchNumber());
+        $this->assertNull($this->migrationRepository->lastBatchNumber());
     }
 
-    public function test_last_record_batch_can_be_received(): void
+    public function test_last_record_batch_can_be_retrieved(): void
     {
         $this->assertSame(
-            $this->migrationRepository->getLastBatch()->toArray(),
+            $this->migrationRepository->lastBatch()->toArray(),
             [
                 '2019_08_10_142230_update_test_index_mapping',
             ]
@@ -102,10 +102,10 @@ final class MigrationRepositoryTest extends TestCase
 
     public function test_repository_can_delete_all_records(): void
     {
-        $this->assertCount(2, $this->migrationRepository->getAll());
+        $this->assertCount(2, $this->migrationRepository->all());
 
-        $this->migrationRepository->deleteAll();
+        $this->migrationRepository->purge();
 
-        $this->assertCount(0, $this->migrationRepository->getAll());
+        $this->assertCount(0, $this->migrationRepository->all());
     }
 }

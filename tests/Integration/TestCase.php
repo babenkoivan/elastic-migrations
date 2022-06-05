@@ -29,7 +29,7 @@ class TestCase extends TestbenchTestCase
         /** @var Repository $config */
         $config = $app['config'];
         $config->set('elastic.migrations.database.table', 'test_elastic_migrations');
-        $config->set('elastic.migrations.storage', realpath(__DIR__ . '/../migrations'));
+        $config->set('elastic.migrations.storage.default_path', realpath(__DIR__ . '/../migrations'));
         $this->config = $config;
 
         $app->singleton(Client::class, function () {

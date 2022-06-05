@@ -20,11 +20,11 @@ class MigrationRepository implements ReadinessInterface
         $this->connection = config('elastic.migrations.database.connection');
     }
 
-    public function insert(string $fileName, int $batch): bool
+    public function insert(string $fileName, int $batchNumber): bool
     {
         return $this->table()->insert([
             'migration' => $fileName,
-            'batch' => $batch,
+            'batch' => $batchNumber,
         ]);
     }
 
@@ -42,20 +42,12 @@ class MigrationRepository implements ReadinessInterface
             ->delete();
     }
 
-    public function deleteAll(): void
+    public function purge(): void
     {
         $this->table()->delete();
     }
 
-    /**
-     * @deprecated
-     */
-    public function truncate(): void
-    {
-        $this->table()->truncate();
-    }
-
-    public function getLastBatchNumber(): ?int
+    public function lastBatchNumber(): ?int
     {
         /** @var stdClass|null $record */
         $record = $this->table()
@@ -66,15 +58,15 @@ class MigrationRepository implements ReadinessInterface
         return isset($record) ? (int)$record->batch : null;
     }
 
-    public function getLastBatch(): Collection
+    public function lastBatch(): Collection
     {
         return $this->table()
-            ->where('batch', $this->getLastBatchNumber())
+            ->where('batch', $this->lastBatchNumber())
             ->orderBy('migration', 'desc')
             ->pluck('migration');
     }
 
-    public function getAll(): Collection
+    public function all(): Collection
     {
         return $this->table()
             ->orderBy('migration', 'desc')

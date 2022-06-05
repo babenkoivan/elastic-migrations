@@ -21,40 +21,13 @@ final class MigrationStorageTest extends TestCase
         $this->migrationStorage = resolve(MigrationStorage::class);
     }
 
-    public function test_file_can_be_created(): void
+    public function newFileNameProvider(): array
     {
-        $fileName = sprintf(
-            '%s_create_tmp_%s_index',
-            (new Carbon())->format('Y_m_d_His'),
-            uniqid('test', true)
-        );
-
-        $file = $this->migrationStorage->create($fileName, 'content');
-
-        $this->assertSame($fileName, $file->getName());
-        $this->assertFileExists($file->getPath());
-        $this->assertStringEqualsFile($file->getPath(), 'content');
-
-        @unlink($file->getPath());
-    }
-
-    public function test_directory_is_created_along_with_file(): void
-    {
-        $baseDirectory = realpath(__DIR__ . '/../..');
-
-        $firstLevelDirectory = $baseDirectory . '/tmp';
-        $secondLevelDirectory = $firstLevelDirectory . '/migrations';
-
-        $this->config->set('elastic.migrations.storage', $secondLevelDirectory);
-
-        // create a new instance to apply the new config
-        $file = resolve(MigrationStorage::class)->create('test', 'content');
-
-        $this->assertDirectoryExists($secondLevelDirectory);
-
-        @unlink($file->getPath());
-        @rmdir($secondLevelDirectory);
-        @rmdir($firstLevelDirectory);
+        return [
+            ['2022_06_01_223400_create_new_index'],
+            ['2022_06_01_223400_create_new_index.php'],
+            [__DIR__ . '/../../migrations/2022_06_01_223400_create_new_index'],
+        ];
     }
 
     public function existingFileNameProvider(): array
@@ -63,19 +36,8 @@ final class MigrationStorageTest extends TestCase
             ['2018_12_01_081000_create_test_index'],
             ['2019_08_10_142230_update_test_index_mapping'],
             ['2019_08_10_142230_update_test_index_mapping.php'],
-            [' 2019_08_10_142230_update_test_index_mapping.php '],
+            [__DIR__ . '/../../migrations/2019_08_10_142230_update_test_index_mapping.php'],
         ];
-    }
-
-    /**
-     * @dataProvider existingFileNameProvider
-     */
-    public function test_file_can_be_found_if_exists(string $fileName): void
-    {
-        /** @var MigrationFile $file */
-        $file = $this->migrationStorage->findByName($fileName);
-
-        $this->assertSame(basename(trim($fileName), '.php'), $file->getName());
     }
 
     public function nonExistingFileNameProvider(): array
@@ -89,25 +51,68 @@ final class MigrationStorageTest extends TestCase
     }
 
     /**
+     * @dataProvider newFileNameProvider
+     */
+    public function test_file_can_be_created(string $fileName): void
+    {
+        $file = $this->migrationStorage->create($fileName, 'content');
+
+        $this->assertFileExists($file->path());
+        $this->assertStringEqualsFile($file->path(), 'content');
+
+        @unlink($file->path());
+    }
+
+    public function test_directory_is_created_along_with_file(): void
+    {
+        $baseDirectory = realpath(__DIR__ . '/../..');
+
+        $firstLevelDirectory = $baseDirectory . '/tmp';
+        $secondLevelDirectory = $firstLevelDirectory . '/migrations';
+
+        $this->config->set('elastic.migrations.storage.default_path', $secondLevelDirectory);
+
+        // create a new instance to apply the new config
+        $file = resolve(MigrationStorage::class)->create('test', 'content');
+
+        $this->assertDirectoryExists($secondLevelDirectory);
+
+        @unlink($file->path());
+        @rmdir($secondLevelDirectory);
+        @rmdir($firstLevelDirectory);
+    }
+
+    /**
+     * @dataProvider existingFileNameProvider
+     */
+    public function test_file_can_be_retrieved_if_exists(string $fileName): void
+    {
+        /** @var MigrationFile $file */
+        $file = $this->migrationStorage->whereName($fileName);
+
+        $this->assertSame(basename(trim($fileName), MigrationFile::FILE_EXTENSION), $file->name());
+    }
+
+    /**
      * @dataProvider nonExistingFileNameProvider
      */
-    public function test_file_can_not_be_found_if_does_not_exist(string $fileName): void
+    public function test_file_can_not_be_retrieved_if_it_does_not_exist(string $fileName): void
     {
-        $file = $this->migrationStorage->findByName($fileName);
+        $file = $this->migrationStorage->whereName($fileName);
 
         $this->assertNull($file);
     }
 
     public function test_all_files_within_migrations_directory_can_be_retrieved(): void
     {
-        $files = $this->migrationStorage->findAll();
+        $files = $this->migrationStorage->all();
 
         $this->assertSame(
             [
                 '2018_12_01_081000_create_test_index',
                 '2019_08_10_142230_update_test_index_mapping',
             ],
-            $files->map(static fn (MigrationFile $file) => $file->getName())->toArray()
+            $files->map(static fn (MigrationFile $file) => $file->name())->toArray()
         );
     }
 
@@ -118,7 +123,7 @@ final class MigrationStorageTest extends TestCase
 
     public function test_storage_is_not_ready_when_directory_does_not_exist(): void
     {
-        $this->config->set('elastic.migrations.storage', '/non_existing_directory');
+        $this->config->set('elastic.migrations.storage.default_path', '/non_existing_directory');
 
         // create a new instance to apply the new config
         $this->assertFalse(resolve(MigrationStorage::class)->isReady());

@@ -4,19 +4,21 @@ namespace Elastic\Migrations\Filesystem;
 
 class MigrationFile
 {
-    private string $filePath;
+    public const FILE_EXTENSION = '.php';
+
+    protected string $filePath;
 
     public function __construct(string $filePath)
     {
         $this->filePath = $filePath;
     }
 
-    public function getName(): string
+    public function name(): string
     {
-        return basename($this->filePath, '.php');
+        return basename($this->filePath, static::FILE_EXTENSION);
     }
 
-    public function getPath(): string
+    public function path(): string
     {
         return $this->filePath;
     }
