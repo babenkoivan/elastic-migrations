@@ -41,6 +41,11 @@ parameters:
 			path: tests/Integration/Filesystem/MigrationStorageTest.php
 
 		-
+			message: "#^Cannot call method registerPaths\\(\\) on mixed\\.$#"
+			count: 1
+			path: tests/Integration/Filesystem/MigrationStorageTest.php
+
+		-
 			message: "#^Property Elastic\\\\Migrations\\\\Tests\\\\Integration\\\\Filesystem\\\\MigrationStorageTest\\:\\:\\$migrationStorage \\(Elastic\\\\Migrations\\\\Filesystem\\\\MigrationStorage\\) does not accept mixed\\.$#"
 			count: 1
 			path: tests/Integration/Filesystem/MigrationStorageTest.php

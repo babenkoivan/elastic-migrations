@@ -10,16 +10,13 @@ use Elastic\Migrations\Console\RefreshCommand;
 use Elastic\Migrations\Console\ResetCommand;
 use Elastic\Migrations\Console\RollbackCommand;
 use Elastic\Migrations\Console\StatusCommand;
+use Elastic\Migrations\Filesystem\MigrationStorage;
 use Illuminate\Support\ServiceProvider as AbstractServiceProvider;
 
 final class ServiceProvider extends AbstractServiceProvider
 {
     private string $configPath;
     private string $migrationsPath;
-
-    public array $bindings = [
-        IndexManagerInterface::class => IndexManagerAdapter::class,
-    ];
 
     private array $commands = [
         MakeCommand::class,
@@ -51,6 +48,9 @@ final class ServiceProvider extends AbstractServiceProvider
             $this->configPath,
             basename($this->configPath, '.php')
         );
+
+        $this->app->singletonIf(MigrationStorage::class);
+        $this->app->bindIf(IndexManagerInterface::class, IndexManagerAdapter::class);
     }
 
     /**
