@@ -49,17 +49,17 @@ If you want to use Elastic Migrations with [Lumen framework](https://lumen.larav
 
 ## Configuration
 
-Elastic Migrations uses [babenkoivan/elastic-client](https://github.com/babenkoivan/elastic-client) as a dependency. 
-If you want to change the default client settings (and I'm pretty sure you do), then you need to create the configuration file first:
+Elastic Migrations uses [babenkoivan/elastic-client](https://github.com/babenkoivan/elastic-client) as a dependency.
+To change the client settings you need to publish the configuration file first:
 
 ```bash
 php artisan vendor:publish --provider="Elastic\Client\ServiceProvider"
 ```
 
-You can change Elasticsearch host and other client settings in the `config/elastic.client.php` file. Please refer to 
-[babenkoivan/elastic-client](https://github.com/babenkoivan/elastic-client) for more details.
+In the newly created `config/elastic.client.php` file you can define the default connection name and describe multiple
+connections using configuration hashes. Please, refer to the [elastic-client documentation](https://github.com/babenkoivan/elastic-client) for more details.
 
-You can also publish Elastic Migrations settings:
+It is recommended to publish Elastic Migrations settings as well:
 
 ```bash
 php artisan vendor:publish --provider="Elastic\Migrations\ServiceProvider"
@@ -67,11 +67,28 @@ php artisan vendor:publish --provider="Elastic\Migrations\ServiceProvider"
 
 This will create the `config/elastic.migrations.php` file, which allows you to configure the following options:
 
-* `table` - the migration table name
-* `connection` - the database connection
-* `storage_directory` - the migrations directory
-* `index_name_prefix` - the indices prefix
-* `alias_name_prefix` - the aliases prefix
+* `storage.default_path` - the default location of your migration files
+* `database.table` - the table name that holds executed migration names
+* `database.connection` - the database connection you wish to use
+* `prefixes.index` - the prefix of your indices
+* `prefixes.alias` - the prefix of your aliases
+
+If you store some migration files outside the default path and want them to be visible by the package, you may use 
+`registerPaths` method to inform Elastic Migrations how to load them:
+
+```php
+class AppServiceProvider
+{
+    public function boot()
+    {
+        resolve(MigrationStorage::class)->registerPaths([
+            '/my_app/elastic/migrations1',
+            '/my_app/elastic/migrations2',
+        ]);
+    }
+}
+```
+
 
 Finally, don't forget to run Laravel database migrations to create Elastic Migrations table:
 
@@ -84,12 +101,15 @@ php artisan migrate
 You can effortlessly create a new migration file using an Artisan console command:
 
 ```bash
+// create migration file with "create_my_index.php" name in the default directory
 php artisan elastic:make:migration create_my_index
+
+// create migration file with "create_my_index.php" name in "/my_path" directory 
+// note, that you need to specify the full path to the file in this case
+php artisan elastic:make:migration /my_path/create_my_index.php
 ```
 
-This command creates a migration class in the `elastic/migrations` directory. 
-
-Every migration includes two methods: `up` and `down`. `up` is used to alternate the index schema and `down` is used to revert that action.
+Every migration has two methods: `up` and `down`. `up` is used to alternate the index schema and `down` is used to revert that action.
 
 You can use `Elastic\Migrations\Facades\Index` facade to perform basic operations over Elasticsearch indices:
 
@@ -289,7 +309,12 @@ php artisan elastic:migrate
 or run a specific one:
 
 ```bash
+// execute migration located in one of the registered paths
 php artisan elastic:migrate 2018_12_01_081000_create_my_index
+
+// execute migration located in "/my_path" directory
+// note, that you need to specify the full path to the file in this case
+php artisan elastic:migrate /my_path/2018_12_01_081000_create_my_index.php
 ```
 
 Use the `--force` option if you want to execute migrations on production environment:

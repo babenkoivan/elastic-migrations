@@ -16,11 +16,11 @@ class FreshCommand extends Command
      * @var string
      */
     protected $signature = 'elastic:migrate:fresh 
-        {--force : Force the operation to run when in production}';
+        {--force : Force the operation to run when in production.}';
     /**
      * @var string
      */
-    protected $description = 'Drop all indices and re-run all migrations';
+    protected $description = 'Drop all indices and re-run all migrations.';
 
     public function handle(
         Migrator $migrator,

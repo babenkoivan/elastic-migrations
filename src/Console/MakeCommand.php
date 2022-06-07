@@ -14,11 +14,11 @@ class MakeCommand extends Command
      * @var string
      */
     protected $signature = 'elastic:make:migration 
-        {name : The name of the migration}';
+        {name : The name of the migration or a full path to the new migration file.}';
     /**
      * @var string
      */
-    protected $description = 'Create a new migration file';
+    protected $description = 'Create a new migration file.';
 
     public function handle(Filesystem $filesystem, MigrationStorage $migrationStorage): int
     {

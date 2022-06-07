@@ -26,7 +26,7 @@ final class MigrationStorageTest extends TestCase
         return [
             ['2022_06_01_223400_create_new_index'],
             ['2022_06_01_223400_create_new_index.php'],
-            [__DIR__ . '/../../migrations/archive/2022_06_01_223400_create_new_index'],
+            [__DIR__ . '/../../migrations/archive/2022_06_01_223400_create_new_index.php'],
         ];
     }
 
@@ -89,7 +89,7 @@ final class MigrationStorageTest extends TestCase
         /** @var MigrationFile $file */
         $file = $this->migrationStorage->whereName($fileName);
 
-        $this->assertSame(basename(trim($fileName), MigrationFile::FILE_EXTENSION), $file->name());
+        $this->assertSame(basename($fileName, MigrationFile::FILE_EXTENSION), $file->name());
     }
 
     /**

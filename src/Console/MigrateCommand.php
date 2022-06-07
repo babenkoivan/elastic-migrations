@@ -14,12 +14,12 @@ class MigrateCommand extends Command
      * @var string
      */
     protected $signature = 'elastic:migrate 
-        {fileName? : The name of the migration file} 
-        {--force : Force the operation to run when in production}';
+        {name? : The name of the migration or a full path to the existing migration file.}
+        {--force : Force the operation to run when in production.}';
     /**
      * @var string
      */
-    protected $description = 'Run the migrations';
+    protected $description = 'Run the migrations.';
 
     public function handle(Migrator $migrator): int
     {
@@ -29,11 +29,11 @@ class MigrateCommand extends Command
             return 1;
         }
 
-        /** @var ?string $fileName */
-        $fileName = $this->argument('fileName');
+        /** @var ?string $name */
+        $name = $this->argument('name');
 
-        if (isset($fileName)) {
-            $migrator->migrateOne(trim($fileName));
+        if (isset($name)) {
+            $migrator->migrateOne(trim($name));
         } else {
             $migrator->migrateAll();
         }

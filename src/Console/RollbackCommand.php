@@ -14,12 +14,12 @@ class RollbackCommand extends Command
      * @var string
      */
     protected $signature = 'elastic:migrate:rollback 
-        {fileName? : The name of the migration file}
-        {--force : Force the operation to run when in production}';
+        {name? : The name of the migration or a full path to the existing migration file.}
+        {--force : Force the operation to run when in production.}';
     /**
      * @var string
      */
-    protected $description = 'Rollback migrations';
+    protected $description = 'Rollback migrations.';
 
     public function handle(Migrator $migrator): int
     {
@@ -29,11 +29,11 @@ class RollbackCommand extends Command
             return 1;
         }
 
-        /** @var ?string $fileName */
-        $fileName = $this->argument('fileName');
+        /** @var ?string $name */
+        $name = $this->argument('name');
 
-        if (isset($fileName)) {
-            $migrator->rollbackOne(trim($fileName));
+        if (isset($name)) {
+            $migrator->rollbackOne(trim($name));
         } else {
             $migrator->rollbackLastBatch();
         }

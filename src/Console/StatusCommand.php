@@ -14,7 +14,7 @@ class StatusCommand extends Command
     /**
      * @var string
      */
-    protected $description = 'Show the status of each migration';
+    protected $description = 'Show the status of each migration.';
 
     public function handle(Migrator $migrator): int
     {
