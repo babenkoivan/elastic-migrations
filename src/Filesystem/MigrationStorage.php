@@ -85,7 +85,6 @@ class MigrationStorage implements ReadinessInterface
 
     private function makeFilePath(string $path, string $fileName): string
     {
-        $fileName = basename($fileName, MigrationFile::FILE_EXTENSION);
         return $path . DIRECTORY_SEPARATOR . $fileName . MigrationFile::FILE_EXTENSION;
     }
 }

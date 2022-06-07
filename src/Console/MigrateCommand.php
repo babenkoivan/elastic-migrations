@@ -14,7 +14,7 @@ class MigrateCommand extends Command
      * @var string
      */
     protected $signature = 'elastic:migrate 
-        {name? : The name of the migration or a full path to the existing migration file.}
+        {name? : Name of the migration or a full path to the existing migration file.}
         {--force : Force the operation to run when in production.}';
     /**
      * @var string

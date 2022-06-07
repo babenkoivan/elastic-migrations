@@ -25,7 +25,6 @@ final class MigrationStorageTest extends TestCase
     {
         return [
             ['2022_06_01_223400_create_new_index'],
-            ['2022_06_01_223400_create_new_index.php'],
             [__DIR__ . '/../../migrations/archive/2022_06_01_223400_create_new_index.php'],
         ];
     }
@@ -35,7 +34,6 @@ final class MigrationStorageTest extends TestCase
         return [
             ['2018_12_01_081000_create_test_index'],
             ['2019_08_10_142230_update_test_index_mapping'],
-            ['2019_08_10_142230_update_test_index_mapping.php'],
             [__DIR__ . '/../../migrations/archive/2017_11_11_100000_create_test_alias.php'],
         ];
     }
@@ -43,7 +41,6 @@ final class MigrationStorageTest extends TestCase
     public function nonExistingFileNameProvider(): array
     {
         return [
-            ['3030_01_01_000000_non_existing_file.php'],
             ['3030_01_01_000000_non_existing_file'],
             ['test'],
             [''],

@@ -101,10 +101,10 @@ php artisan migrate
 You can effortlessly create a new migration file using an Artisan console command:
 
 ```bash
-// create migration file with "create_my_index.php" name in the default directory
+// create a migration file with "create_my_index.php" name in the default directory
 php artisan elastic:make:migration create_my_index
 
-// create migration file with "create_my_index.php" name in "/my_path" directory 
+// create a migration file with "create_my_index.php" name in "/my_path" directory 
 // note, that you need to specify the full path to the file in this case
 php artisan elastic:make:migration /my_path/create_my_index.php
 ```
@@ -309,10 +309,10 @@ php artisan elastic:migrate
 or run a specific one:
 
 ```bash
-// execute migration located in one of the registered paths
+// execute a migration located in one of the registered paths
 php artisan elastic:migrate 2018_12_01_081000_create_my_index
 
-// execute migration located in "/my_path" directory
+// execute a migration located in "/my_path" directory
 // note, that you need to specify the full path to the file in this case
 php artisan elastic:migrate /my_path/2018_12_01_081000_create_my_index.php
 ```
@@ -334,7 +334,12 @@ php artisan elastic:migrate:rollback
 or rollback a specific one:
 
 ```bash
+// rollback a migration located in one of the registered paths
 php artisan elastic:migrate:rollback 2018_12_01_081000_create_my_index
+
+// rollback a migration located in "/my_path" directory
+// note, that you need to specify the full path to the file in this case
+php artisan elastic:migrate:rollback /my_path/2018_12_01_081000_create_my_index
 ```
 
 Use the `elastic:migrate:reset` command if you want to revert all previously migrated files:

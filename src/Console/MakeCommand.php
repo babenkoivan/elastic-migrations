@@ -14,7 +14,7 @@ class MakeCommand extends Command
      * @var string
      */
     protected $signature = 'elastic:make:migration 
-        {name : The name of the migration or a full path to the new migration file.}';
+        {name : Name of the migration or a full path to the new migration file.}';
     /**
      * @var string
      */
