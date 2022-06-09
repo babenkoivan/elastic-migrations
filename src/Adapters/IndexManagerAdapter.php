@@ -2,8 +2,7 @@
 
 namespace Elastic\Migrations\Adapters;
 
-use Elastic\Adapter\Indices\Alias;
-use Elastic\Adapter\Indices\IndexBlueprint;
+use Elastic\Adapter\Indices\Index;
 use Elastic\Adapter\Indices\IndexManager;
 use Elastic\Adapter\Indices\Mapping;
 use Elastic\Adapter\Indices\Settings;
@@ -30,9 +29,9 @@ class IndexManagerAdapter implements IndexManagerInterface
 
             $modifier($mapping, $settings);
 
-            $index = new IndexBlueprint($prefixedIndexName, $mapping, $settings);
+            $index = new Index($prefixedIndexName, $mapping, $settings);
         } else {
-            $index = new IndexBlueprint($prefixedIndexName);
+            $index = new Index($prefixedIndexName);
         }
 
         $this->indexManager->create($index);
@@ -158,12 +157,12 @@ class IndexManagerAdapter implements IndexManagerInterface
         return $this;
     }
 
-    public function putAlias(string $indexName, string $aliasName, array $filter = null): IndexManagerInterface
+    public function putAlias(string $indexName, string $aliasName, array $settings = null): IndexManagerInterface
     {
         $prefixedIndexName = prefix_index_name($indexName);
         $prefixedAliasName = prefix_alias_name($aliasName);
 
-        $this->indexManager->putAlias($prefixedIndexName, new Alias($prefixedAliasName, false, $filter));
+        $this->indexManager->putAliasRaw($prefixedIndexName, $prefixedAliasName, $settings);
 
         return $this;
     }

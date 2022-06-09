@@ -64,7 +64,7 @@ final class RollbackCommandTest extends TestCase
             ->with('test_file_name');
 
         $result = $this->command->run(
-            new ArrayInput(['--force' => true, 'fileName' => 'test_file_name']),
+            new ArrayInput(['--force' => true, 'name' => 'test_file_name']),
             new NullOutput()
         );
 

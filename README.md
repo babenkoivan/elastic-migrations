@@ -283,7 +283,14 @@ Index::dropIfExists('my-index');
 You can create an alias with optional filter query:
 
 ```php
-Index::putAlias('my-index', 'my-alias', ['term' => ['user_id' => 1]]);
+Index::putAlias('my-index', 'my-alias', [
+    'is_write_index' => true,
+    'filter' => [
+        'term' => [
+            'user_id' => 1,
+        ],
+    ],
+]);
 ```
 
 #### Delete Alias

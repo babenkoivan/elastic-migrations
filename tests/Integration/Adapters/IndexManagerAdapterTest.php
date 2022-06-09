@@ -2,8 +2,7 @@
 
 namespace Elastic\Migrations\Tests\Integration\Adapters;
 
-use Elastic\Adapter\Indices\Alias;
-use Elastic\Adapter\Indices\IndexBlueprint;
+use Elastic\Adapter\Indices\Index;
 use Elastic\Adapter\Indices\IndexManager;
 use Elastic\Adapter\Indices\Mapping;
 use Elastic\Adapter\Indices\Settings;
@@ -39,7 +38,7 @@ final class IndexManagerAdapterTest extends TestCase
         $this->indexManagerMock
             ->expects($this->once())
             ->method('create')
-            ->with(new IndexBlueprint($indexNamePrefix . $indexName));
+            ->with(new Index($indexNamePrefix . $indexName));
 
         $this->indexManagerAdapter->create($indexName);
     }
@@ -61,7 +60,7 @@ final class IndexManagerAdapterTest extends TestCase
         $this->indexManagerMock
             ->expects($this->once())
             ->method('create')
-            ->with(new IndexBlueprint(
+            ->with(new Index(
                 $indexNamePrefix . $indexName,
                 (new Mapping())->text('title'),
                 (new Settings())->index(['number_of_replicas' => 2])
@@ -113,7 +112,7 @@ final class IndexManagerAdapterTest extends TestCase
         $this->indexManagerMock
             ->expects($this->once())
             ->method('create')
-            ->with(new IndexBlueprint($indexNamePrefix . $indexName));
+            ->with(new Index($indexNamePrefix . $indexName));
 
         $this->indexManagerAdapter->createIfNotExists($indexName);
     }
@@ -352,8 +351,8 @@ final class IndexManagerAdapterTest extends TestCase
 
         $this->indexManagerMock
             ->expects($this->once())
-            ->method('putAlias')
-            ->with($indexName, new Alias($aliasNamePrefix . $aliasName));
+            ->method('putAliasRaw')
+            ->with($indexName, $aliasNamePrefix . $aliasName);
 
         $this->indexManagerAdapter->putAlias($indexName, $aliasName);
     }
