@@ -8,4 +8,4 @@ parameters:
   paths:
     - src
   ignoreErrors:
-    - '#Parameter \#1 \$callback of method Illuminate\\Support\\Collection<.+?>::.+?\(\) expects .+? given#'
+    - '#Parameter .+? of method Illuminate\\Support\\Collection<.+?>::.+?\(\) expects .+? given#'
