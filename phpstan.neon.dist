@@ -7,6 +7,5 @@ parameters:
   checkGenericClassInNonGenericObjectType: false
   paths:
     - src
-    - tests
   ignoreErrors:
     - '#Parameter \#1 \$callback of method Illuminate\\Support\\Collection<.+?>::.+?\(\) expects .+? given#'

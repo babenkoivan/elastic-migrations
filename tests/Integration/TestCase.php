@@ -26,11 +26,9 @@ class TestCase extends TestbenchTestCase
     {
         parent::getEnvironmentSetUp($app);
 
-        /** @var Repository $config */
-        $config = $app['config'];
-        $config->set('elastic.migrations.database.table', 'test_elastic_migrations');
-        $config->set('elastic.migrations.storage.default_path', realpath(__DIR__ . '/../migrations'));
-        $this->config = $config;
+        $this->config = $app['config'];
+        $this->config->set('elastic.migrations.database.table', 'test_elastic_migrations');
+        $this->config->set('elastic.migrations.storage.default_path', realpath(__DIR__ . '/../migrations'));
 
         $app->singleton(Client::class, function () {
             $httpClientMock = $this->createMock(ClientInterface::class);
