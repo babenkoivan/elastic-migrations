@@ -77,7 +77,7 @@ If you store some migration files outside the default path and want them to be v
 `registerPaths` method to inform Elastic Migrations how to load them:
 
 ```php
-class AppServiceProvider
+class MyAppServiceProvider extends Illuminate\Support\ServiceProvider
 {
     public function boot()
     {
