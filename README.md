@@ -301,6 +301,15 @@ You can delete an alias by its name:
 Index::deleteAlias('my-index', 'my-alias');
 ```
 
+#### Multiple Connections
+
+You can configure multiple connections to Elasticsearch in the [client's configuration file](https://github.com/babenkoivan/elastic-client/tree/master#configuration),
+and then use a different connection for every operation:
+
+```php
+Index::connection('my-connection')->drop('my-index');
+```
+
 #### More
 
 Finally, you are free to inject `Elastic\Elasticsearch\Client` in the migration constructor and execute any supported by client actions.

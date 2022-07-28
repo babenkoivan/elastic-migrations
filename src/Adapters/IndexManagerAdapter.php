@@ -176,4 +176,11 @@ class IndexManagerAdapter implements IndexManagerInterface
 
         return $this;
     }
+
+    public function connection(string $connection): IndexManagerInterface
+    {
+        $self = clone $this;
+        $self->indexManager = $self->indexManager->connection($connection);
+        return $self;
+    }
 }

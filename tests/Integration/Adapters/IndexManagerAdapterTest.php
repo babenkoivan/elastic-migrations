@@ -375,6 +375,18 @@ final class IndexManagerAdapterTest extends TestCase
         $this->indexManagerAdapter->deleteAlias($indexName, $aliasName);
     }
 
+    public function test_connection_can_be_changed(): void
+    {
+        $connection = 'test';
+
+        $this->indexManagerMock
+            ->expects($this->once())
+            ->method('connection')
+            ->with($connection);
+
+        $this->indexManagerAdapter->connection($connection);
+    }
+
     public function prefixProvider(): array
     {
         return [

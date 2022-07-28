@@ -27,4 +27,6 @@ interface IndexManagerInterface
     public function drop(string $indexName): self;
 
     public function dropIfExists(string $indexName): self;
+
+    public function connection(string $connection): self;
 }
