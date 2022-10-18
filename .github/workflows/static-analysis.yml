@@ -1,6 +1,12 @@
 name: Static analysis
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - "**"
+      - '!master' # excludes master
+    tags-ignore:
+      - "*.*"
 
 jobs:
   static-analysis:
