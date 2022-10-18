@@ -18,16 +18,6 @@
             "name": "Friends of CAT"
         }
     ],
-    "repositories": {
-        "friendsofcat/opensearch-adapter": {
-            "type": "vcs",
-            "url": "git@github.com:friendsofcat/opensearch-adapter.git"
-        },
-        "friendsofcat/opensearch-client": {
-            "type": "vcs",
-            "url": "git@github.com:friendsofcat/opensearch-client.git"
-        }
-    },
     "autoload": {
         "psr-4": {
             "OpenSearch\\Migrations\\": "src"
