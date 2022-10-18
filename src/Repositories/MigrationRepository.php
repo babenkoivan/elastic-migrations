@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace Elastic\Migrations\Repositories;
+namespace OpenSearch\Migrations\Repositories;
 
-use Elastic\Migrations\ReadinessInterface;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use OpenSearch\Migrations\ReadinessInterface;
 use stdClass;
 
 class MigrationRepository implements ReadinessInterface
@@ -16,8 +16,8 @@ class MigrationRepository implements ReadinessInterface
 
     public function __construct()
     {
-        $this->table = config('elastic.migrations.database.table');
-        $this->connection = config('elastic.migrations.database.connection');
+        $this->table = config('opensearch.migrations.database.table');
+        $this->connection = config('opensearch.migrations.database.connection');
     }
 
     public function insert(string $fileName, int $batchNumber): bool

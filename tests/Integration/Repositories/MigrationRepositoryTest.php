@@ -1,15 +1,15 @@
 <?php declare(strict_types=1);
 
-namespace Elastic\Migrations\Tests\Integration\Repositories;
+namespace OpenSearch\Migrations\Tests\Integration\Repositories;
 
-use Elastic\Migrations\Repositories\MigrationRepository;
-use Elastic\Migrations\Tests\Integration\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use OpenSearch\Migrations\Repositories\MigrationRepository;
+use OpenSearch\Migrations\Tests\Integration\TestCase;
 
 /**
- * @covers \Elastic\Migrations\Repositories\MigrationRepository
+ * @covers \OpenSearch\Migrations\Repositories\MigrationRepository
  */
 final class MigrationRepositoryTest extends TestCase
 {
@@ -22,7 +22,7 @@ final class MigrationRepositoryTest extends TestCase
     {
         parent::setUp();
 
-        $this->table = $this->config->get('elastic.migrations.database.table');
+        $this->table = $this->config->get('opensearch.migrations.database.table');
 
         // create fixtures
         DB::table($this->table)->insert([

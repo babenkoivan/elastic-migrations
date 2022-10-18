@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace Elastic\Migrations\Console;
+namespace OpenSearch\Migrations\Console;
 
-use Elastic\Migrations\IndexManagerInterface;
-use Elastic\Migrations\Migrator;
-use Elastic\Migrations\Repositories\MigrationRepository;
 use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
+use OpenSearch\Migrations\IndexManagerInterface;
+use OpenSearch\Migrations\Migrator;
+use OpenSearch\Migrations\Repositories\MigrationRepository;
 
 class FreshCommand extends Command
 {
@@ -15,7 +15,7 @@ class FreshCommand extends Command
     /**
      * @var string
      */
-    protected $signature = 'elastic:migrate:fresh 
+    protected $signature = 'opensearch:migrate:fresh 
         {--force : Force the operation to run when in production.}';
     /**
      * @var string

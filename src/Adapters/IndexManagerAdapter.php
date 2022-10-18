@@ -1,14 +1,14 @@
 <?php declare(strict_types=1);
 
-namespace Elastic\Migrations\Adapters;
+namespace OpenSearch\Migrations\Adapters;
 
-use Elastic\Adapter\Indices\Index;
-use Elastic\Adapter\Indices\IndexManager;
-use Elastic\Adapter\Indices\Mapping;
-use Elastic\Adapter\Indices\Settings;
-use Elastic\Migrations\IndexManagerInterface;
-use function Elastic\Migrations\prefix_alias_name;
-use function Elastic\Migrations\prefix_index_name;
+use OpenSearch\Adapter\Indices\Index;
+use OpenSearch\Adapter\Indices\IndexManager;
+use OpenSearch\Adapter\Indices\Mapping;
+use OpenSearch\Adapter\Indices\Settings;
+use OpenSearch\Migrations\IndexManagerInterface;
+use function OpenSearch\Migrations\prefix_alias_name;
+use function OpenSearch\Migrations\prefix_index_name;
 
 class IndexManagerAdapter implements IndexManagerInterface
 {

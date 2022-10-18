@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Elastic\Migrations\Filesystem;
+namespace OpenSearch\Migrations\Filesystem;
 
 class MigrationFile
 {

@@ -31,4 +31,4 @@ jobs:
         run: composer install --no-interaction
 
       - name: Check code style
-        run: make style-check
+        run: composer check-style

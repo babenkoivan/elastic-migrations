@@ -1,15 +1,15 @@
 <?php declare(strict_types=1);
 
-namespace Elastic\Migrations\Tests\Integration\Factories;
+namespace OpenSearch\Migrations\Tests\Integration\Factories;
 
-use Elastic\Migrations\Factories\MigrationFactory;
-use Elastic\Migrations\Filesystem\MigrationFile;
-use Elastic\Migrations\Filesystem\MigrationStorage;
-use Elastic\Migrations\MigrationInterface;
-use Elastic\Migrations\Tests\Integration\TestCase;
+use OpenSearch\Migrations\Factories\MigrationFactory;
+use OpenSearch\Migrations\Filesystem\MigrationFile;
+use OpenSearch\Migrations\Filesystem\MigrationStorage;
+use OpenSearch\Migrations\MigrationInterface;
+use OpenSearch\Migrations\Tests\Integration\TestCase;
 
 /**
- * @covers \Elastic\Migrations\Factories\MigrationFactory
+ * @covers \OpenSearch\Migrations\Factories\MigrationFactory
  */
 final class MigrationFactoryTest extends TestCase
 {
