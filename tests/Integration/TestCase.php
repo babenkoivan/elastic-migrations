@@ -2,13 +2,13 @@
 
 namespace OpenSearch\Migrations\Tests\Integration;
 
+use GuzzleHttp\Ring\Client\CurlHandler;
 use Illuminate\Config\Repository;
 use OpenSearch\Client;
 use OpenSearch\ClientBuilder;
 use OpenSearch\Laravel\Client\ServiceProvider as ClientServiceProvider;
 use OpenSearch\Migrations\ServiceProvider as MigrationsServiceProvider;
 use Orchestra\Testbench\TestCase as TestbenchTestCase;
-use Psr\Http\Client\ClientInterface;
 
 class TestCase extends TestbenchTestCase
 {
@@ -31,10 +31,10 @@ class TestCase extends TestbenchTestCase
         $this->config->set('opensearch.migrations.storage.default_path', realpath(__DIR__ . '/../migrations'));
 
         $app->singleton(Client::class, function () {
-            $httpClientMock = $this->createMock(ClientInterface::class);
+            $httpClientMock = $this->createMock(CurlHandler::class);
 
             return ClientBuilder::create()
-                ->setHttpClient($httpClientMock)
+                ->setHandler($httpClientMock)
                 ->build();
         });
     }
