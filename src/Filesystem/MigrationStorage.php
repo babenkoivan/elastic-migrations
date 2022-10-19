@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace Elastic\Migrations\Filesystem;
+namespace OpenSearch\Migrations\Filesystem;
 
 use const DIRECTORY_SEPARATOR;
-use Elastic\Migrations\ReadinessInterface;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
+use OpenSearch\Migrations\ReadinessInterface;
 
 class MigrationStorage implements ReadinessInterface
 {
@@ -18,7 +18,7 @@ class MigrationStorage implements ReadinessInterface
     public function __construct(Filesystem $filesystem)
     {
         $this->filesystem = $filesystem;
-        $this->defaultPath = config('elastic.migrations.storage.default_path', '');
+        $this->defaultPath = config('opensearch.migrations.storage.default_path', '');
         $this->paths = collect([$this->defaultPath]);
     }
 

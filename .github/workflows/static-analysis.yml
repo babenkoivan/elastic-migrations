@@ -1,10 +1,16 @@
 name: Static analysis
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - "**"
+      - '!master' # excludes master
+    tags-ignore:
+      - "*.*"
 
 jobs:
   static-analysis:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -31,4 +37,4 @@ jobs:
         run: composer install --no-interaction
 
       - name: Analyse code
-        run: make static-analysis
+        run: composer analyse

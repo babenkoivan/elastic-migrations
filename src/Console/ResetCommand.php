@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace Elastic\Migrations\Console;
+namespace OpenSearch\Migrations\Console;
 
-use Elastic\Migrations\Migrator;
 use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
+use OpenSearch\Migrations\Migrator;
 
 class ResetCommand extends Command
 {
@@ -13,7 +13,7 @@ class ResetCommand extends Command
     /**
      * @var string
      */
-    protected $signature = 'elastic:migrate:reset 
+    protected $signature = 'opensearch:migrate:reset 
         {--force : Force the operation to run when in production.}';
     /**
      * @var string

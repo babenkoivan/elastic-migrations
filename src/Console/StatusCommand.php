@@ -1,16 +1,16 @@
 <?php declare(strict_types=1);
 
-namespace Elastic\Migrations\Console;
+namespace OpenSearch\Migrations\Console;
 
-use Elastic\Migrations\Migrator;
 use Illuminate\Console\Command;
+use OpenSearch\Migrations\Migrator;
 
 class StatusCommand extends Command
 {
     /**
      * @var string
      */
-    protected $signature = 'elastic:migrate:status';
+    protected $signature = 'opensearch:migrate:status';
     /**
      * @var string
      */

@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace Elastic\Migrations\Tests\Integration\Filesystem;
+namespace OpenSearch\Migrations\Tests\Integration\Filesystem;
 
-use Elastic\Migrations\Filesystem\MigrationFile;
-use Elastic\Migrations\Filesystem\MigrationStorage;
-use Elastic\Migrations\Tests\Integration\TestCase;
+use OpenSearch\Migrations\Filesystem\MigrationFile;
+use OpenSearch\Migrations\Filesystem\MigrationStorage;
+use OpenSearch\Migrations\Tests\Integration\TestCase;
 
 /**
- * @covers \Elastic\Migrations\Filesystem\MigrationStorage
+ * @covers \OpenSearch\Migrations\Filesystem\MigrationStorage
  */
 final class MigrationStorageTest extends TestCase
 {
@@ -64,7 +64,7 @@ final class MigrationStorageTest extends TestCase
     public function test_directory_is_created_along_with_file(): void
     {
         $defaultPath = __DIR__ . '/../../migrations/tmp';
-        $this->config->set('elastic.migrations.storage.default_path', $defaultPath);
+        $this->config->set('opensearch.migrations.storage.default_path', $defaultPath);
 
         // create a new instance to apply the new config
         $this->app->forgetInstance(MigrationStorage::class);
@@ -120,7 +120,7 @@ final class MigrationStorageTest extends TestCase
 
     public function test_storage_is_not_ready_when_default_path_does_not_exist(): void
     {
-        $this->config->set('elastic.migrations.storage.default_path', '/non_existing_directory');
+        $this->config->set('opensearch.migrations.storage.default_path', '/non_existing_directory');
 
         // create a new instance to apply the new config
         $this->app->forgetInstance(MigrationStorage::class);

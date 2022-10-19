@@ -1,19 +1,19 @@
 <?php declare(strict_types=1);
 
-namespace Elastic\Migrations\Console;
+namespace OpenSearch\Migrations\Console;
 
 use Carbon\Carbon;
-use Elastic\Migrations\Filesystem\MigrationStorage;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
+use OpenSearch\Migrations\Filesystem\MigrationStorage;
 
 class MakeCommand extends Command
 {
     /**
      * @var string
      */
-    protected $signature = 'elastic:make:migration 
+    protected $signature = 'opensearch:make:migration 
         {name : Name of the migration or a full path to the new migration file.}';
     /**
      * @var string

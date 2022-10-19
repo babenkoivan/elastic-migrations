@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace Elastic\Migrations;
+namespace OpenSearch\Migrations;
 
-use Elastic\Migrations\Factories\MigrationFactory;
-use Elastic\Migrations\Filesystem\MigrationFile;
-use Elastic\Migrations\Filesystem\MigrationStorage;
-use Elastic\Migrations\Repositories\MigrationRepository;
 use Illuminate\Console\OutputStyle;
 use Illuminate\Support\Collection;
+use OpenSearch\Migrations\Factories\MigrationFactory;
+use OpenSearch\Migrations\Filesystem\MigrationFile;
+use OpenSearch\Migrations\Filesystem\MigrationStorage;
+use OpenSearch\Migrations\Repositories\MigrationRepository;
 
 class Migrator implements ReadinessInterface
 {

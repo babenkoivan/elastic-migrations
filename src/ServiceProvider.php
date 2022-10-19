@@ -1,17 +1,17 @@
 <?php declare(strict_types=1);
 
-namespace Elastic\Migrations;
+namespace OpenSearch\Migrations;
 
-use Elastic\Migrations\Adapters\IndexManagerAdapter;
-use Elastic\Migrations\Console\FreshCommand;
-use Elastic\Migrations\Console\MakeCommand;
-use Elastic\Migrations\Console\MigrateCommand;
-use Elastic\Migrations\Console\RefreshCommand;
-use Elastic\Migrations\Console\ResetCommand;
-use Elastic\Migrations\Console\RollbackCommand;
-use Elastic\Migrations\Console\StatusCommand;
-use Elastic\Migrations\Filesystem\MigrationStorage;
 use Illuminate\Support\ServiceProvider as AbstractServiceProvider;
+use OpenSearch\Migrations\Adapters\IndexManagerAdapter;
+use OpenSearch\Migrations\Console\FreshCommand;
+use OpenSearch\Migrations\Console\MakeCommand;
+use OpenSearch\Migrations\Console\MigrateCommand;
+use OpenSearch\Migrations\Console\RefreshCommand;
+use OpenSearch\Migrations\Console\ResetCommand;
+use OpenSearch\Migrations\Console\RollbackCommand;
+use OpenSearch\Migrations\Console\StatusCommand;
+use OpenSearch\Migrations\Filesystem\MigrationStorage;
 
 final class ServiceProvider extends AbstractServiceProvider
 {
@@ -35,7 +35,7 @@ final class ServiceProvider extends AbstractServiceProvider
     {
         parent::__construct($app);
 
-        $this->configPath = dirname(__DIR__) . '/config/elastic.migrations.php';
+        $this->configPath = dirname(__DIR__) . '/config/opensearch.migrations.php';
         $this->migrationsPath = dirname(__DIR__) . '/database/migrations';
     }
 

@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace Elastic\Migrations\Factories;
+namespace OpenSearch\Migrations\Factories;
 
-use Elastic\Migrations\Filesystem\MigrationFile;
-use Elastic\Migrations\MigrationInterface;
 use Illuminate\Support\Str;
+use OpenSearch\Migrations\Filesystem\MigrationFile;
+use OpenSearch\Migrations\MigrationInterface;
 
 class MigrationFactory
 {

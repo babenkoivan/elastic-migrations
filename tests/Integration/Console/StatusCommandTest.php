@@ -1,16 +1,16 @@
 <?php declare(strict_types=1);
 
-namespace Elastic\Migrations\Tests\Integration\Console;
+namespace OpenSearch\Migrations\Tests\Integration\Console;
 
-use Elastic\Migrations\Console\StatusCommand;
-use Elastic\Migrations\Migrator;
-use Elastic\Migrations\Tests\Integration\TestCase;
+use OpenSearch\Migrations\Console\StatusCommand;
+use OpenSearch\Migrations\Migrator;
+use OpenSearch\Migrations\Tests\Integration\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
 
 /**
- * @covers \Elastic\Migrations\Console\StatusCommand
+ * @covers \OpenSearch\Migrations\Console\StatusCommand
  */
 final class StatusCommandTest extends TestCase
 {

@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace Elastic\Migrations\Facades;
+namespace OpenSearch\Migrations\Facades;
 
-use Elastic\Migrations\IndexManagerInterface;
 use Illuminate\Support\Facades\Facade;
+use OpenSearch\Migrations\IndexManagerInterface;
 
 /**
  * @method static self create(string $indexName, ?callable $modifier = null)

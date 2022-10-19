@@ -1,11 +1,10 @@
 {
-    "name": "babenkoivan/elastic-migrations",
-    "description": "Elasticsearch migrations for Laravel",
+    "name": "friendsofcat/opensearch-migrations",
+    "description": "OpenSearch migrations for Laravel",
     "keywords": [
         "laravel",
         "migrations",
-        "elastic",
-        "elasticsearch",
+        "opensearch",
         "php"
     ],
     "type": "library",
@@ -14,21 +13,14 @@
         {
             "name": "Ivan Babenko",
             "email": "babenko.i.a@gmail.com"
-        }
-    ],
-    "funding": [
-        {
-            "type": "ko-fi",
-            "url": "https://ko-fi.com/ivanbabenko"
         },
         {
-            "type": "paypal",
-            "url": "https://paypal.me/babenkoi"
+            "name": "Friends of CAT"
         }
     ],
     "autoload": {
         "psr-4": {
-            "Elastic\\Migrations\\": "src"
+            "OpenSearch\\Migrations\\": "src"
         },
         "files": [
             "src/helpers.php"
@@ -36,12 +28,13 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Elastic\\Migrations\\Tests\\": "tests"
+            "OpenSearch\\Migrations\\Tests\\": "tests"
         }
     },
     "require": {
         "php": "^7.4 || ^8.0",
-        "babenkoivan/elastic-adapter": "^3.0"
+        "friendsofcat/opensearch-adapter": "^0.1.0",
+        "guzzlehttp/guzzle": "^7.5"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",
@@ -50,14 +43,18 @@
         "phpstan/phpstan": "^1.6",
         "dg/bypass-finals": "^1.3"
     },
-    "config": {
-        "bin-dir": "bin"
-    },
     "extra": {
         "laravel": {
             "providers": [
-                "Elastic\\Migrations\\ServiceProvider"
+                "OpenSearch\\Migrations\\ServiceProvider"
             ]
         }
+    },
+    "scripts": {
+        "check-style": "./vendor/bin/php-cs-fixer fix --allow-risky=yes --dry-run --diff --show-progress=dots --verbose",
+        "fix-style": "./vendor/bin/php-cs-fixer fix --allow-risky=yes",
+        "analyse": "./vendor/bin/phpstan analyse",
+        "test": "./vendor/bin/phpunit --testdox",
+        "test-coverage": "./vendor/bin/phpunit --testdox --coverage-text"
     }
 }

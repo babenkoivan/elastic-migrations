@@ -1,18 +1,18 @@
 <?php declare(strict_types=1);
 
-namespace Elastic\Migrations\Tests\Integration\Console;
+namespace OpenSearch\Migrations\Tests\Integration\Console;
 
-use Elastic\Migrations\Console\FreshCommand;
-use Elastic\Migrations\IndexManagerInterface;
-use Elastic\Migrations\Migrator;
-use Elastic\Migrations\Repositories\MigrationRepository;
-use Elastic\Migrations\Tests\Integration\TestCase;
+use OpenSearch\Migrations\Console\FreshCommand;
+use OpenSearch\Migrations\IndexManagerInterface;
+use OpenSearch\Migrations\Migrator;
+use OpenSearch\Migrations\Repositories\MigrationRepository;
+use OpenSearch\Migrations\Tests\Integration\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
 
 /**
- * @covers \Elastic\Migrations\Console\FreshCommand
+ * @covers \OpenSearch\Migrations\Console\FreshCommand
  */
 final class FreshCommandTest extends TestCase
 {

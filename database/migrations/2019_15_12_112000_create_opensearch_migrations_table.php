@@ -4,13 +4,13 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateElasticMigrationsTable extends Migration
+class CreateOpenSearchMigrationsTable extends Migration
 {
     private string $table;
 
     public function __construct()
     {
-        $this->table = config('elastic.migrations.database.table');
+        $this->table = config('opensearch.migrations.database.table');
     }
 
     public function up(): void

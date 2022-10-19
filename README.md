@@ -1,20 +1,6 @@
-# Elastic Migrations
+# OpenSearch Migrations
 
-[![Latest Stable Version](https://poser.pugx.org/babenkoivan/elastic-migrations/v/stable)](https://packagist.org/packages/babenkoivan/elastic-migrations)
-[![Total Downloads](https://poser.pugx.org/babenkoivan/elastic-migrations/downloads)](https://packagist.org/packages/babenkoivan/elastic-migrations)
-[![License](https://poser.pugx.org/babenkoivan/elastic-migrations/license)](https://packagist.org/packages/babenkoivan/elastic-migrations)
-[![Tests](https://github.com/babenkoivan/elastic-migrations/workflows/Tests/badge.svg)](https://github.com/babenkoivan/elastic-migrations/actions?query=workflow%3ATests)
-[![Code style](https://github.com/babenkoivan/elastic-migrations/workflows/Code%20style/badge.svg)](https://github.com/babenkoivan/elastic-migrations/actions?query=workflow%3A%22Code+style%22)
-[![Static analysis](https://github.com/babenkoivan/elastic-migrations/workflows/Static%20analysis/badge.svg)](https://github.com/babenkoivan/elastic-migrations/actions?query=workflow%3A%22Static+analysis%22)
-[![Donate PayPal](https://img.shields.io/badge/donate-paypal-blue)](https://paypal.me/babenkoi)
-
-<p align="center">
-    <a href="https://ko-fi.com/ivanbabenko" target="_blank"><img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="Support the project!"></a>
-</p>
-
----
-
-Elastic Migrations for Laravel allow you to easily modify and share indices schema across the application's environments.
+OpenSearch Migrations for Laravel allow you to easily modify and share indices schema across the application's environments.
 
 ## Contents
 
@@ -31,10 +17,10 @@ Elastic Migrations for Laravel allow you to easily modify and share indices sche
 
 ## Compatibility
 
-The current version of Elastic Migrations has been tested with the following configuration:
+The current version of OpenSearch Migrations has been tested with the following configuration:
 
 * PHP 7.4-8.0
-* Elasticsearch 8.x
+* OpenSearch 1.x
 * Laravel 6.x-9.x
 
 ## Installation
@@ -42,30 +28,30 @@ The current version of Elastic Migrations has been tested with the following con
 The library can be installed via Composer:
 
 ```bash
-composer require babenkoivan/elastic-migrations
+composer require friendsofcat/opensearch-migrations
 ```
 
-If you want to use Elastic Migrations with [Lumen framework](https://lumen.laravel.com/) check [this guide](https://github.com/babenkoivan/elastic-migrations/wiki/Lumen-Installation).
+If you want to use OpenSearch Migrations with [Lumen framework](https://lumen.laravel.com/) check [this guide](https://github.com/babenkoivan/opensearch-migrations/wiki/Lumen-Installation).
 
 ## Configuration
 
-Elastic Migrations uses [babenkoivan/elastic-client](https://github.com/babenkoivan/elastic-client) as a dependency.
+OpenSearch Migrations uses [friendsofcat/opensearch-client](https://github.com/friendsofcat/opensearch-client) as a dependency.
 To change the client settings you need to publish the configuration file first:
 
 ```bash
-php artisan vendor:publish --provider="Elastic\Client\ServiceProvider"
+php artisan vendor:publish --provider="OpenSearch\Laravel\Client\ServiceProvider"
 ```
 
-In the newly created `config/elastic.client.php` file you can define the default connection name and describe multiple
-connections using configuration hashes. Please, refer to the [elastic-client documentation](https://github.com/babenkoivan/elastic-client) for more details.
+In the newly created `config/opensearch.client.php` file you can define the default connection name and describe multiple
+connections using configuration hashes. Please, refer to the [opensearch-client documentation](https://github.com/friendsofcat/opensearch-client) for more details.
 
-It is recommended to publish Elastic Migrations settings as well:
+It is recommended to publish OpenSearch Migrations settings as well:
 
 ```bash
-php artisan vendor:publish --provider="Elastic\Migrations\ServiceProvider"
+php artisan vendor:publish --provider="OpenSearch\Migrations\ServiceProvider"
 ```
 
-This will create the `config/elastic.migrations.php` file, which allows you to configure the following options:
+This will create the `config/opensearch.migrations.php` file, which allows you to configure the following options:
 
 * `storage.default_path` - the default location of your migration files
 * `database.table` - the table name that holds executed migration names
@@ -74,7 +60,7 @@ This will create the `config/elastic.migrations.php` file, which allows you to c
 * `prefixes.alias` - the prefix of your aliases
 
 If you store some migration files outside the default path and want them to be visible by the package, you may use 
-`registerPaths` method to inform Elastic Migrations how to load them:
+`registerPaths` method to inform OpenSearch Migrations how to load them:
 
 ```php
 class MyAppServiceProvider extends Illuminate\Support\ServiceProvider
@@ -82,15 +68,15 @@ class MyAppServiceProvider extends Illuminate\Support\ServiceProvider
     public function boot()
     {
         resolve(MigrationStorage::class)->registerPaths([
-            '/my_app/elastic/migrations1',
-            '/my_app/elastic/migrations2',
+            '/my_app/opensearch/migrations1',
+            '/my_app/opensearch/migrations2',
         ]);
     }
 }
 ```
 
 
-Finally, don't forget to run Laravel database migrations to create Elastic Migrations table:
+Finally, don't forget to run Laravel database migrations to create OpenSearch Migrations table:
 
 ```bash
 php artisan migrate
@@ -102,16 +88,16 @@ You can effortlessly create a new migration file using an Artisan console comman
 
 ```bash
 // create a migration file with "create_my_index.php" name in the default directory
-php artisan elastic:make:migration create_my_index
+php artisan opensearch:make:migration create_my_index
 
 // create a migration file with "create_my_index.php" name in "/my_path" directory 
 // note, that you need to specify the full path to the file in this case
-php artisan elastic:make:migration /my_path/create_my_index.php
+php artisan opensearch:make:migration /my_path/create_my_index.php
 ```
 
 Every migration has two methods: `up` and `down`. `up` is used to alternate the index schema and `down` is used to revert that action.
 
-You can use `Elastic\Migrations\Facades\Index` facade to perform basic operations over Elasticsearch indices:
+You can use `OpenSearch\Migrations\Facades\Index` facade to perform basic operations over OpenSearch indices:
 
 #### Create Index
 
@@ -303,7 +289,7 @@ Index::deleteAlias('my-index', 'my-alias');
 
 #### Multiple Connections
 
-You can configure multiple connections to Elasticsearch in the [client's configuration file](https://github.com/babenkoivan/elastic-client/tree/master#configuration),
+You can configure multiple connections to OpenSearch in the [client's configuration file](https://github.com/friendsofcat/opensearch-client/tree/master#configuration),
 and then use a different connection for every operation:
 
 ```php
@@ -312,31 +298,31 @@ Index::connection('my-connection')->drop('my-index');
 
 #### More
 
-Finally, you are free to inject `Elastic\Elasticsearch\Client` in the migration constructor and execute any supported by client actions.
+Finally, you are free to inject `OpenSearch\Client` in the migration constructor and execute any supported by client actions.
 
 ## Running Migrations
 
 You can either run all migrations:
 
 ```bash
-php artisan elastic:migrate
+php artisan opensearch:migrate
 ```
 
 or run a specific one:
 
 ```bash
 // execute a migration located in one of the registered paths
-php artisan elastic:migrate 2018_12_01_081000_create_my_index
+php artisan opensearch:migrate 2018_12_01_081000_create_my_index
 
 // execute a migration located in "/my_path" directory
 // note, that you need to specify the full path to the file in this case
-php artisan elastic:migrate /my_path/2018_12_01_081000_create_my_index.php
+php artisan opensearch:migrate /my_path/2018_12_01_081000_create_my_index.php
 ```
 
 Use the `--force` option if you want to execute migrations on production environment:
 
 ```bash
-php artisan elastic:migrate --force
+php artisan opensearch:migrate --force
 ```
 
 ## Reverting Migrations
@@ -344,24 +330,24 @@ php artisan elastic:migrate --force
 You can either revert the last executed migrations:
 
 ```bash
-php artisan elastic:migrate:rollback 
+php artisan opensearch:migrate:rollback 
 ```
 
 or rollback a specific one:
 
 ```bash
 // rollback a migration located in one of the registered paths
-php artisan elastic:migrate:rollback 2018_12_01_081000_create_my_index
+php artisan opensearch:migrate:rollback 2018_12_01_081000_create_my_index
 
 // rollback a migration located in "/my_path" directory
 // note, that you need to specify the full path to the file in this case
-php artisan elastic:migrate:rollback /my_path/2018_12_01_081000_create_my_index
+php artisan opensearch:migrate:rollback /my_path/2018_12_01_081000_create_my_index
 ```
 
-Use the `elastic:migrate:reset` command if you want to revert all previously migrated files:
+Use the `opensearch:migrate:reset` command if you want to revert all previously migrated files:
 
 ```bash
-php artisan elastic:migrate:reset 
+php artisan opensearch:migrate:reset 
 ```
 
 ## Starting Over
@@ -369,38 +355,38 @@ php artisan elastic:migrate:reset
 Sometimes you just want to start over, rollback all the changes and apply them again:
 
 ```bash
-php artisan elastic:migrate:refresh
+php artisan opensearch:migrate:refresh
 ```
 
 Alternatively you can also drop all existing indices and rerun the migrations:
 
 ```bash
-php artisan elastic:migrate:fresh
+php artisan opensearch:migrate:fresh
 ```
 
 ## Migration Status
 
-You can always check which files have been already migrated and what can be reverted by the `elastic:migrate:rollback` command (the last batch):
+You can always check which files have been already migrated and what can be reverted by the `opensearch:migrate:rollback` command (the last batch):
 
 ```bash
-php artisan elastic:migrate:status
+php artisan opensearch:migrate:status
 ```
 
 ## Zero Downtime Migration
 
 Changing an index mapping with zero downtime is not a trivial process and might vary from one project to another.
-Elastic Migrations library doesn't include such feature out of the box, but you can implement it in your project by [following this guide](https://github.com/babenkoivan/elastic-migrations/wiki/Changing-Mapping-with-Zero-Downtime).
+OpenSearch Migrations library doesn't include such feature out of the box, but you can implement it in your project by [following this guide](https://github.com/babenkoivan/elastic-migrations/wiki/Changing-Mapping-with-Zero-Downtime).
 
 ## Troubleshooting
 
 If you see one of the messages below, follow the instructions:
 
 * `Migration table is not yet created` - run the `php artisan migrate` command
-* `Migration directory is not yet created` - create a migration file using the `elastic:make:migration` command or 
+* `Migration directory is not yet created` - create a migration file using the `opensearch:make:migration` command or 
 create `migrations` directory manually
   
 In case one of the commands doesn't work as expected, try to publish configuration:
 
 ```bash
-php artisan vendor:publish --provider="Elastic\Migrations\ServiceProvider"
+php artisan vendor:publish --provider="OpenSearch\Migrations\ServiceProvider"
 ```
