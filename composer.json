@@ -33,7 +33,7 @@
     },
     "require": {
         "php": "^7.4 || ^8.0",
-        "friendsofcat/opensearch-adapter": "^0.1.0",
+        "friendsofcat/opensearch-adapter": "^0.2.0",
         "guzzlehttp/guzzle": "^7.5"
     },
     "require-dev": {
