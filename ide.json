@@ -1,0 +1,24 @@
+
+{
+    "$schema": "https://laravel-ide.com/schema/laravel-ide-v2.json",
+    "codeGenerations": [
+        {
+            "id": "babenkoivan.create-elastic-migration",
+            "name": "Create Elastic Migration",
+            "inputFilter": "elastic",
+            "files": [
+                {
+                    "directory": "/elastic/migrations",
+                    "name": "${CURRENT_TIME|format:yyyy_MM_dd_HHmmss}_${INPUT_CLASS|className|snakeCase}.php",
+                    "template": {
+                        "type": "stub",
+                        "path": "src/Console/stubs/migration.blank.stub",
+                        "parameters": {
+                            "DummyClass": "${INPUT_FQN|className}"
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
