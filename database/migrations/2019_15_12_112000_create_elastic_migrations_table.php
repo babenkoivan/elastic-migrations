@@ -16,7 +16,7 @@ class CreateElasticMigrationsTable extends Migration
     public function up(): void
     {
         Schema::create($this->table, static function (Blueprint $table) {
-            $table->string('migration');
+            $table->string('migration')->primary();
             $table->integer('batch');
         });
     }
