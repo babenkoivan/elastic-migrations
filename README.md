@@ -378,6 +378,8 @@ Alternatively you can also drop all existing indices and rerun the migrations:
 php artisan elastic:migrate:fresh
 ```
 
+**Note** that this command uses wildcards to delete indices. This requires setting [action.destructive_requires_name](https://www.elastic.co/guide/en/elasticsearch/reference/current/index-management-settings.html#action-destructive-requires-name) to `false`.
+
 ## Migration Status
 
 You can always check which files have been already migrated and what can be reverted by the `elastic:migrate:rollback` command (the last batch):
