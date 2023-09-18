@@ -92,7 +92,7 @@ class Migrator implements ReadinessInterface
         return $this;
     }
 
-    public function showStatus(): self
+    public function showStatus($onlyPending = false): self
     {
         $files = $this->migrationStorage->all();
 
@@ -109,9 +109,19 @@ class Migrator implements ReadinessInterface
                 ) ? '<info>Yes</info>' : '<comment>No</comment>',
                 $file->name(),
             ]
-        )->toArray();
+        );
 
-        $this->output->table($headers, $rows);
+        if ($onlyPending) {
+            $rows = $rows->filter(fn ($row) => $row[0] === '<comment>No</comment>');
+        }
+
+        if (count($rows) > 0) {
+            $this->output->table($headers, $rows->toArray());
+        } elseif ($onlyPending) {
+            $this->output->info('No pending migrations');
+        } else {
+            $this->output->info('No migrations found');
+        }
 
         return $this;
     }
