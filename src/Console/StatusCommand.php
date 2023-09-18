@@ -10,7 +10,7 @@ class StatusCommand extends Command
     /**
      * @var string
      */
-    protected $signature = 'elastic:migrate:status';
+    protected $signature = 'elastic:migrate:status {--pending}';
     /**
      * @var string
      */
@@ -24,7 +24,7 @@ class StatusCommand extends Command
             return 1;
         }
 
-        $migrator->showStatus();
+        $migrator->showStatus($this->option('pending', false));
 
         return 0;
     }
