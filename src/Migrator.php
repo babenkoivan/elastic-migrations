@@ -7,6 +7,7 @@ use Elastic\Migrations\Filesystem\MigrationFile;
 use Elastic\Migrations\Filesystem\MigrationStorage;
 use Elastic\Migrations\Repositories\MigrationRepository;
 use Illuminate\Console\OutputStyle;
+use Illuminate\Console\View\Components\Factory;
 use Illuminate\Support\Collection;
 
 class Migrator implements ReadinessInterface
@@ -15,6 +16,7 @@ class Migrator implements ReadinessInterface
     private MigrationRepository $migrationRepository;
     private MigrationStorage $migrationStorage;
     private MigrationFactory $migrationFactory;
+    private Factory $components;
 
     public function __construct(
         MigrationRepository $migrationRepository,
@@ -29,6 +31,7 @@ class Migrator implements ReadinessInterface
     public function setOutput(OutputStyle $output): self
     {
         $this->output = $output;
+        $this->components = new Factory($this->output);
         return $this;
     }
 
@@ -92,35 +95,39 @@ class Migrator implements ReadinessInterface
         return $this;
     }
 
-    public function showStatus($onlyPending = false): self
+    public function showStatus(bool $onlyPending = false): self
     {
         $files = $this->migrationStorage->all();
-
-        $migratedFileNames = $this->migrationRepository->all();
-        $migratedLastBatchFileNames = $this->migrationRepository->lastBatch();
-
-        $headers = ['Ran?', 'Last batch?', 'Migration'];
+        $migratedFiles = $this->migrationRepository->all();
+        $lastBatch = $this->migrationRepository->lastBatch();
 
         $rows = $files->map(
             static fn (MigrationFile $file) => [
-                $migratedFileNames->contains($file->name()) ? '<info>Yes</info>' : '<comment>No</comment>',
-                $migratedLastBatchFileNames->contains(
-                    $file->name()
-                ) ? '<info>Yes</info>' : '<comment>No</comment>',
                 $file->name(),
+                $migratedFiles->contains($file->name())
+                    ? '<fg=green;options=bold>Ran</>' . ($lastBatch->contains($file->name()) ? ' [last batch]'  : '')
+                    : '<fg=yellow;options=bold>Pending</>'
             ]
-        );
+        )->when($onlyPending, static fn (Collection $rows) => $rows->filter(
+            static fn (array $row) => strpos($row[1], 'Pending') !== false
+        ));
 
-        if ($onlyPending) {
-            $rows = $rows->filter(fn ($row) => $row[0] === '<comment>No</comment>');
-        }
+        if ($rows->isNotEmpty()) {
+            $TwoColumnDetailComponent = new TwoColumnDetail($this->output);
 
-        if (count($rows) > 0) {
-            $this->output->table($headers, $rows->toArray());
+            $this->output->newLine();
+
+            $this->components->twoColumnDetail('<fg=gray>Migration name</>', '<fg=gray>Status</>');
+
+            $rows->each(
+                fn ($migration) => $this->components->twoColumnDetail($migration[0], $migration[1])
+            );
+
+            $this->output->newLine();
         } elseif ($onlyPending) {
-            $this->output->info('No pending migrations');
+            $this->components->info('No pending migrations');
         } else {
-            $this->output->info('No migrations found');
+            $this->components->info('No migrations found');
         }
 
         return $this;
