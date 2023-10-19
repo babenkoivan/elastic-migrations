@@ -115,9 +115,8 @@ class Migrator implements ReadinessInterface
             return $this;
         }
 
-        $this->output->writeln(sprintf(
-            '<fg=yellow;options=bold>%s</>',
-            $onlyPending ? 'No pending migrations' : 'No migrations found')
+        $this->output->writeln(
+            sprintf('<fg=yellow;options=bold>%s</>', $onlyPending ? 'No pending migrations' : 'No migrations found')
         );
 
         return $this;
