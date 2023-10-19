@@ -270,7 +270,7 @@ final class MigratorTest extends TestCase
         ]);
     }
 
-    private function statusDataProvider(): array
+    public function statusDataProvider(): array
     {
         return [
             'all migrations' => [
