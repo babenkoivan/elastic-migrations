@@ -276,7 +276,7 @@ final class MigratorTest extends TestCase
             'all migrations' => [
                 'onlyPending' => false,
                 'expectedOutput' => [
-                    ['2018_12_01_081000_create_test_index', '<fg=green;options=bold>Ran</> <fg=gray>last batch</>'],
+                    ['2018_12_01_081000_create_test_index', '<fg=green;options=bold>Ran</> <fg=gray>(last batch)</>'],
                     ['2019_08_10_142230_update_test_index_mapping', '<fg=yellow;options=bold>Pending</>'],
                 ],
             ],

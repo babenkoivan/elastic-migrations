@@ -102,7 +102,7 @@ class Migrator implements ReadinessInterface
             static fn (MigrationFile $file) => [
                 $file->name(),
                 $migratedFiles->contains($file->name())
-                    ? '<fg=green;options=bold>Ran</>' . ($lastBatch->contains($file->name()) ? ' <fg=gray>last batch</>' : '')
+                    ? '<fg=green;options=bold>Ran</>' . ($lastBatch->contains($file->name()) ? ' <fg=gray>(last batch)</>' : '')
                     : '<fg=yellow;options=bold>Pending</>',
             ]
         )->when($onlyPending, static fn (Collection $rows) => $rows->filter(
