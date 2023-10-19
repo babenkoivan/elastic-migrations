@@ -388,6 +388,12 @@ You can always check which files have been already migrated and what can be reve
 php artisan elastic:migrate:status
 ```
 
+It is also possible to display only pending migrations:
+
+```bash
+php artisan elastic:migrate:status --pending
+```
+
 ## Zero Downtime Migration
 
 Changing an index mapping with zero downtime is not a trivial process and might vary from one project to another.

@@ -92,27 +92,30 @@ class Migrator implements ReadinessInterface
         return $this;
     }
 
-    public function showStatus(): self
+    public function showStatus(bool $onlyPending = false): self
     {
         $files = $this->migrationStorage->all();
-
-        $migratedFileNames = $this->migrationRepository->all();
-        $migratedLastBatchFileNames = $this->migrationRepository->lastBatch();
-
-        $headers = ['Ran?', 'Last batch?', 'Migration'];
+        $migratedFiles = $this->migrationRepository->all();
+        $lastBatch = $this->migrationRepository->lastBatch();
 
         $rows = $files->map(
             static fn (MigrationFile $file) => [
-                $migratedFileNames->contains($file->name()) ? '<info>Yes</info>' : '<comment>No</comment>',
-                $migratedLastBatchFileNames->contains(
-                    $file->name()
-                ) ? '<info>Yes</info>' : '<comment>No</comment>',
                 $file->name(),
+                $migratedFiles->contains($file->name())
+                    ? '<fg=green;options=bold>Ran</>' . ($lastBatch->contains($file->name()) ? ' <fg=gray>last batch</>' : '')
+                    : '<fg=yellow;options=bold>Pending</>',
             ]
-        )->toArray();
+        )->when($onlyPending, static fn (Collection $rows) => $rows->filter(
+            static fn (array $row) => strpos($row[1], 'Pending') !== false
+        )->values())->toArray();
 
-        $this->output->table($headers, $rows);
+        if ($rows !== []) {
+            $headers = ['<fg=gray>Migration name</>', '<fg=gray>Status</>'];
+            $this->output->table($headers, $rows);
+            return $this;
+        }
 
+        $this->output->info($onlyPending ? 'No pending migrations' : 'No migrations found');
         return $this;
     }
 

@@ -224,7 +224,9 @@ final class MigratorTest extends TestCase
         $this->output
             ->expects($this->once())
             ->method('writeln')
-            ->with('<error>Migration is not found:</error> 2019_03_10_101500_create_test_index,2019_01_01_053550_drop_test_index');
+            ->with(
+                '<error>Migration is not found:</error> 2019_03_10_101500_create_test_index,2019_01_01_053550_drop_test_index'
+            );
 
         $this->assertSame(
             $this->migrator,
@@ -268,22 +270,38 @@ final class MigratorTest extends TestCase
         ]);
     }
 
-    public function test_status_is_displayed_correctly(): void
+    private function statusDataProvider(): array
+    {
+        return [
+            'all migrations' => [
+                'onlyPending' => false,
+                'expectedOutput' => [
+                    ['2018_12_01_081000_create_test_index', '<fg=green;options=bold>Ran</> <fg=gray>last batch</>'],
+                    ['2019_08_10_142230_update_test_index_mapping', '<fg=yellow;options=bold>Pending</>'],
+                ],
+            ],
+            'pending migrations' => [
+                'onlyPending' => true,
+                'expectedOutput' => [
+                    ['2019_08_10_142230_update_test_index_mapping', '<fg=yellow;options=bold>Pending</>'],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider statusDataProvider
+     */
+    public function test_status_is_displayed_correctly(bool $onlyPending, array $expectedOutput): void
     {
         $this->output
             ->expects($this->once())
             ->method('table')
-            ->with(
-                ['Ran?', 'Last batch?', 'Migration'],
-                [
-                    ['<info>Yes</info>', '<info>Yes</info>', '2018_12_01_081000_create_test_index'],
-                    ['<comment>No</comment>', '<comment>No</comment>', '2019_08_10_142230_update_test_index_mapping'],
-                ]
-            );
+            ->with(['<fg=gray>Migration name</>', '<fg=gray>Status</>'], $expectedOutput);
 
         $this->assertSame(
             $this->migrator,
-            $this->migrator->showStatus()
+            $this->migrator->showStatus($onlyPending)
         );
     }
 
