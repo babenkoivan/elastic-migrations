@@ -10,7 +10,11 @@ class MigrationFactory
 {
     public function makeFromFile(MigrationFile $file): MigrationInterface
     {
-        require_once $file->path();
+        $class = require_once $file->path();
+
+        if (is_object($class)) {
+            return $class;
+        }
 
         $className = Str::studly(implode('_', array_slice(explode('_', $file->name()), 4)));
         /** @var MigrationInterface $migration */

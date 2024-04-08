@@ -108,6 +108,7 @@ final class MigrationStorageTest extends TestCase
                 '2017_11_11_100000_create_test_alias',
                 '2018_12_01_081000_create_test_index',
                 '2019_08_10_142230_update_test_index_mapping',
+                '2024_04_08_113433_test_new_format',
             ],
             $files->map(static fn (MigrationFile $file) => $file->name())->toArray()
         );

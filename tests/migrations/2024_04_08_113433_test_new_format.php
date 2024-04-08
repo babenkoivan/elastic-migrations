@@ -6,7 +6,7 @@ use Elastic\Adapter\Indices\Settings;
 use Elastic\Migrations\Facades\Index;
 use Elastic\Migrations\MigrationInterface;
 
-return new class implements MigrationInterface
+final class TestNewFormat implements MigrationInterface
 {
     /**
      * Run the migration.
