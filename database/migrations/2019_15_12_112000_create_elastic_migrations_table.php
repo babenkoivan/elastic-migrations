@@ -15,10 +15,12 @@ class CreateElasticMigrationsTable extends Migration
 
     public function up(): void
     {
-        Schema::create($this->table, static function (Blueprint $table) {
-            $table->string('migration')->primary();
-            $table->integer('batch');
-        });
+        if (!Schema::hasTable($this->table)) {
+            Schema::create($this->table, static function (Blueprint $table) {
+                $table->string('migration')->primary();
+                $table->integer('batch');
+            });
+        }
     }
 
     public function down(): void
