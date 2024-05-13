@@ -100,11 +100,13 @@ final class MigratorTest extends TestCase
         Index::shouldReceive('putMapping')->once();
 
         $this->output
-            ->expects($this->exactly(2))
+            ->expects($this->exactly(4))
             ->method('writeln')
             ->withConsecutive(
                 ['<comment>Migrating:</comment> 2019_08_10_142230_update_test_index_mapping'],
-                ['<info>Migrated:</info> 2019_08_10_142230_update_test_index_mapping']
+                ['<info>Migrated:</info> 2019_08_10_142230_update_test_index_mapping'],
+                ['<comment>Migrating:</comment> 2024_04_08_113433_test_new_format'],
+                ['<info>Migrated:</info> 2024_04_08_113433_test_new_format'],
             );
 
         $this->assertSame(
@@ -278,12 +280,14 @@ final class MigratorTest extends TestCase
                 'expectedOutput' => [
                     ['2018_12_01_081000_create_test_index', '<fg=green;options=bold>Ran</> <fg=gray>(last batch)</>'],
                     ['2019_08_10_142230_update_test_index_mapping', '<fg=yellow;options=bold>Pending</>'],
+                    ['2024_04_08_113433_test_new_format', '<fg=yellow;options=bold>Pending</>'],
                 ],
             ],
             'pending migrations' => [
                 'onlyPending' => true,
                 'expectedOutput' => [
                     ['2019_08_10_142230_update_test_index_mapping', '<fg=yellow;options=bold>Pending</>'],
+                    ['2024_04_08_113433_test_new_format', '<fg=yellow;options=bold>Pending</>'],
                 ],
             ],
         ];
