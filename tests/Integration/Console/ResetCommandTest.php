@@ -5,13 +5,12 @@ namespace Elastic\Migrations\Tests\Integration\Console;
 use Elastic\Migrations\Console\ResetCommand;
 use Elastic\Migrations\Migrator;
 use Elastic\Migrations\Tests\Integration\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
 
-/**
- * @covers \Elastic\Migrations\Console\ResetCommand
- */
+#[CoversClass(ResetCommand::class)]
 final class ResetCommandTest extends TestCase
 {
     private MockObject $migrator;

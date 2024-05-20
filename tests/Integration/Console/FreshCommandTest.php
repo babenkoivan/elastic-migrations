@@ -7,13 +7,12 @@ use Elastic\Migrations\IndexManagerInterface;
 use Elastic\Migrations\Migrator;
 use Elastic\Migrations\Repositories\MigrationRepository;
 use Elastic\Migrations\Tests\Integration\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
 
-/**
- * @covers \Elastic\Migrations\Console\FreshCommand
- */
+#[CoversClass(FreshCommand::class)]
 final class FreshCommandTest extends TestCase
 {
     private MockObject $migrator;

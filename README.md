@@ -33,9 +33,11 @@ Elastic Migrations for Laravel allow you to easily modify and share indices sche
 
 The current version of Elastic Migrations has been tested with the following configuration:
 
-* PHP 7.4-8.x
+* PHP 8.2
 * Elasticsearch 8.x
-* Laravel 6.x-10.x
+* Laravel 11.x
+
+If your project uses older Laravel (or PHP) version check [the previous major version](https://github.com/babenkoivan/elastic-migrations/tree/v3.4.1#compatibility) of the package.
 
 ## Installation
 
