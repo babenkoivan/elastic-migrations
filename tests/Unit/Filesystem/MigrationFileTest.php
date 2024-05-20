@@ -3,11 +3,10 @@
 namespace Elastic\Migrations\Tests\Unit\Filesystem;
 
 use Elastic\Migrations\Filesystem\MigrationFile;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Elastic\Migrations\Filesystem\MigrationFile
- */
+#[CoversClass(MigrationFile::class)]
 final class MigrationFileTest extends TestCase
 {
     private const FULL_PATH = '/tmp/test.php';

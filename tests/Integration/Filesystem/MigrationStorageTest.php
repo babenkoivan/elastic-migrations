@@ -5,10 +5,10 @@ namespace Elastic\Migrations\Tests\Integration\Filesystem;
 use Elastic\Migrations\Filesystem\MigrationFile;
 use Elastic\Migrations\Filesystem\MigrationStorage;
 use Elastic\Migrations\Tests\Integration\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\TestWith;
 
-/**
- * @covers \Elastic\Migrations\Filesystem\MigrationStorage
- */
+#[CoversClass(MigrationStorage::class)]
 final class MigrationStorageTest extends TestCase
 {
     private MigrationStorage $migrationStorage;
@@ -21,36 +21,8 @@ final class MigrationStorageTest extends TestCase
         $this->migrationStorage->registerPaths([__DIR__ . '/../../migrations/archive']);
     }
 
-    public function newFileNameProvider(): array
-    {
-        return [
-            ['2022_06_01_223400_create_new_index'],
-            [__DIR__ . '/../../migrations/archive/2022_06_01_223400_create_new_index.php'],
-        ];
-    }
-
-    public function existingFileNameProvider(): array
-    {
-        return [
-            ['2018_12_01_081000_create_test_index'],
-            ['2019_08_10_142230_update_test_index_mapping'],
-            [__DIR__ . '/../../migrations/archive/2017_11_11_100000_create_test_alias.php'],
-        ];
-    }
-
-    public function nonExistingFileNameProvider(): array
-    {
-        return [
-            ['3030_01_01_000000_non_existing_file'],
-            ['test'],
-            [''],
-            [__DIR__ . '/../../migrations/archive/3030_01_01_000000_non_existing_file.php'],
-        ];
-    }
-
-    /**
-     * @dataProvider newFileNameProvider
-     */
+    #[TestWith(['2022_06_01_223400_create_new_index'])]
+    #[TestWith([__DIR__ . '/../../migrations/archive/2022_06_01_223400_create_new_index.php'])]
     public function test_file_can_be_created(string $fileName): void
     {
         $file = $this->migrationStorage->create($fileName, 'content');
@@ -78,9 +50,9 @@ final class MigrationStorageTest extends TestCase
         @rmdir($defaultPath);
     }
 
-    /**
-     * @dataProvider existingFileNameProvider
-     */
+    #[TestWith(['2018_12_01_081000_create_test_index'])]
+    #[TestWith(['2019_08_10_142230_update_test_index_mapping'])]
+    #[TestWith([__DIR__ . '/../../migrations/archive/2017_11_11_100000_create_test_alias.php'])]
     public function test_file_can_be_retrieved_if_exists(string $fileName): void
     {
         /** @var MigrationFile $file */
@@ -89,9 +61,10 @@ final class MigrationStorageTest extends TestCase
         $this->assertSame(basename($fileName, MigrationFile::FILE_EXTENSION), $file->name());
     }
 
-    /**
-     * @dataProvider nonExistingFileNameProvider
-     */
+    #[TestWith(['3030_01_01_000000_non_existing_file'])]
+    #[TestWith(['test'])]
+    #[TestWith([''])]
+    #[TestWith([__DIR__ . '/../../migrations/archive/3030_01_01_000000_non_existing_file.php'])]
     public function test_file_can_not_be_retrieved_if_it_does_not_exist(string $fileName): void
     {
         $file = $this->migrationStorage->whereName($fileName);

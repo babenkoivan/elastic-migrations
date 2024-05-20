@@ -7,10 +7,9 @@ use Elastic\Migrations\Tests\Integration\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Elastic\Migrations\Repositories\MigrationRepository
- */
+#[CoversClass(MigrationRepository::class)]
 final class MigrationRepositoryTest extends TestCase
 {
     use RefreshDatabase;
