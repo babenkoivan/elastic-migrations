@@ -9,11 +9,11 @@ use Illuminate\Console\OutputStyle;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 
-/**
- * @covers \Elastic\Migrations\Migrator
- */
+#[CoversClass(Migrator::class)]
 final class MigratorTest extends TestCase
 {
     use RefreshDatabase;
@@ -56,9 +56,11 @@ final class MigratorTest extends TestCase
         $this->output
             ->expects($this->exactly(2))
             ->method('writeln')
-            ->withConsecutive(
-                ['<comment>Migrating:</comment> 2019_08_10_142230_update_test_index_mapping'],
-                ['<info>Migrated:</info> 2019_08_10_142230_update_test_index_mapping']
+            ->with(
+                $this->callback(static fn (string $message) => in_array($message, [
+                    '<comment>Migrating:</comment> 2019_08_10_142230_update_test_index_mapping',
+                    '<info>Migrated:</info> 2019_08_10_142230_update_test_index_mapping',
+                ]))
             );
 
         $this->assertSame(
@@ -102,9 +104,11 @@ final class MigratorTest extends TestCase
         $this->output
             ->expects($this->exactly(2))
             ->method('writeln')
-            ->withConsecutive(
-                ['<comment>Migrating:</comment> 2019_08_10_142230_update_test_index_mapping'],
-                ['<info>Migrated:</info> 2019_08_10_142230_update_test_index_mapping']
+            ->with(
+                $this->callback(static fn (string $message) => in_array($message, [
+                    '<comment>Migrating:</comment> 2019_08_10_142230_update_test_index_mapping',
+                    '<info>Migrated:</info> 2019_08_10_142230_update_test_index_mapping',
+                ]))
             );
 
         $this->assertSame(
@@ -151,9 +155,11 @@ final class MigratorTest extends TestCase
         $this->output
             ->expects($this->exactly(2))
             ->method('writeln')
-            ->withConsecutive(
-                ['<comment>Rolling back:</comment> 2018_12_01_081000_create_test_index'],
-                ['<info>Rolled back:</info> 2018_12_01_081000_create_test_index']
+            ->with(
+                $this->callback(static fn (string $message) => in_array($message, [
+                    '<comment>Rolling back:</comment> 2018_12_01_081000_create_test_index',
+                    '<info>Rolled back:</info> 2018_12_01_081000_create_test_index',
+                ]))
             );
 
         $this->assertSame(
@@ -197,9 +203,11 @@ final class MigratorTest extends TestCase
         $this->output
             ->expects($this->exactly(2))
             ->method('writeln')
-            ->withConsecutive(
-                ['<comment>Rolling back:</comment> 2019_08_10_142230_update_test_index_mapping'],
-                ['<info>Rolled back:</info> 2019_08_10_142230_update_test_index_mapping']
+            ->with(
+                $this->callback(static fn (string $message) => in_array($message, [
+                    '<comment>Rolling back:</comment> 2019_08_10_142230_update_test_index_mapping',
+                    '<info>Rolled back:</info> 2019_08_10_142230_update_test_index_mapping',
+                ]))
             );
 
         $this->assertSame(
@@ -247,11 +255,13 @@ final class MigratorTest extends TestCase
         $this->output
             ->expects($this->exactly(4))
             ->method('writeln')
-            ->withConsecutive(
-                ['<comment>Rolling back:</comment> 2019_08_10_142230_update_test_index_mapping'],
-                ['<info>Rolled back:</info> 2019_08_10_142230_update_test_index_mapping'],
-                ['<comment>Rolling back:</comment> 2018_12_01_081000_create_test_index'],
-                ['<info>Rolled back:</info> 2018_12_01_081000_create_test_index']
+            ->with(
+                $this->callback(static fn (string $message) => in_array($message, [
+                    '<comment>Rolling back:</comment> 2019_08_10_142230_update_test_index_mapping',
+                    '<info>Rolled back:</info> 2019_08_10_142230_update_test_index_mapping',
+                    '<comment>Rolling back:</comment> 2018_12_01_081000_create_test_index',
+                    '<info>Rolled back:</info> 2018_12_01_081000_create_test_index',
+                ]))
             );
 
         $this->assertSame(
@@ -270,7 +280,7 @@ final class MigratorTest extends TestCase
         ]);
     }
 
-    public function statusDataProvider(): array
+    public static function statusDataProvider(): array
     {
         return [
             'all migrations' => [
@@ -289,9 +299,7 @@ final class MigratorTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider statusDataProvider
-     */
+    #[DataProvider('statusDataProvider')]
     public function test_status_is_displayed_correctly(bool $onlyPending, array $expectedOutput): void
     {
         $this->output

@@ -5,12 +5,11 @@ namespace Elastic\Migrations\Tests\Integration\Console;
 use Elastic\Migrations\Console\MakeCommand;
 use Elastic\Migrations\Filesystem\MigrationStorage;
 use Elastic\Migrations\Tests\Integration\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 
-/**
- * @covers \Elastic\Migrations\Console\MakeCommand
- */
+#[CoversClass(MakeCommand::class)]
 final class MakeCommandTest extends TestCase
 {
     public function test_migration_file_can_be_created(): void
