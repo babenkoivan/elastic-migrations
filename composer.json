@@ -41,7 +41,7 @@
     },
     "require": {
         "php": "^8.2",
-        "babenkoivan/elastic-adapter": "v4.x-dev"
+        "babenkoivan/elastic-adapter": "^4.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^11.0",
@@ -62,7 +62,5 @@
                 "Elastic\\Migrations\\ServiceProvider"
             ]
         }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable" : true
+    }
 }
