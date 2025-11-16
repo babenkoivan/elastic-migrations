@@ -10,7 +10,7 @@ jobs:
         php: [8.2]
         include:
           - php: 8.2
-            testbench: 9.0
+            testbench: 10.0
             phpunit: 11.0
     steps:
       - name: Checkout code
