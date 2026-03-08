@@ -161,7 +161,7 @@ class IndexManagerAdapter implements IndexManagerInterface
         return $this;
     }
 
-    public function putAlias(string $indexName, string $aliasName, array $filter = null): IndexManagerInterface
+    public function putAlias(string $indexName, string $aliasName, ?array $filter = null): IndexManagerInterface
     {
         $prefixedIndexName = prefix_index_name($indexName);
         $prefixedAliasName = prefix_alias_name($aliasName);
