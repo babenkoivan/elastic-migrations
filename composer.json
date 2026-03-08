@@ -51,7 +51,10 @@
         "phpstan/phpstan": "^0.12.32"
     },
     "config": {
-        "bin-dir": "bin"
+        "bin-dir": "bin",
+        "audit": {
+            "block-insecure": false
+        }
     },
     "extra": {
         "laravel": {
